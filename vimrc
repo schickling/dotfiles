@@ -12,12 +12,20 @@ Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
 Bundle 'tpope/vim-fugitive'
+Bundle 'scrooloose/nerdcommenter'
 
 filetype plugin indent on
 
 set number
 syntax enable
 colorscheme solarized
+
+:imap jj <Esc>
+
+" folder specific vimrc
+set exrc            " enable per-directory .vimrc files
+set secure          " disable unsafe commands in local .vimrc files
+
 
 "Airline
 let g:airline_powerline_fonts = 1
