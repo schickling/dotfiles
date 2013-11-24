@@ -13,12 +13,17 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
 Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'elzr/vim-json'
 
 filetype plugin indent on
 
 set number
 syntax enable
 colorscheme solarized
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set mouse=nicr
 
 :imap jj <Esc>
 
@@ -31,3 +36,6 @@ set secure          " disable unsafe commands in local .vimrc files
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
+
+vmap <C-x> :!pbcopy<CR>  
+vmap <C-c> :w !pbcopy<CR><CR> 
