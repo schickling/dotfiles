@@ -23,6 +23,7 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'marcweber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
+Bundle 'nathanaelkane/vim-indent-guides'
 
 filetype plugin indent on
 syntax enable
@@ -44,11 +45,14 @@ set exrc                    " enable per-directory .vimrc files
 set secure                  " disable unsafe commands in local .vimrc files
 set mouse=a
 set laststatus=2            " Always show the status line
-set backspace=indent,eol,start 
+set backspace=indent,eol,start
 
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+
+" Cut trailing whitespaces
+autocmd BufWritePre * :%s/\s\+$//e
 
 " ################
 " # Shortcuts ####
@@ -64,7 +68,7 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
-" Buffer 
+" Buffer
 nmap <C-n> :bp<cr>
 nmap <C-m> :bn<cr>
 nmap <C-z> :bd<cr>
@@ -85,3 +89,7 @@ nmap 50 <c-w>=
 nmap 75 :vertical resize 120<cr>
 
 nmap <C-b> :NERDTreeToggle<cr>
+
+" Really jump to new line
+nnoremap j gj
+nnoremap k gk
