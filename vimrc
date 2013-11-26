@@ -23,11 +23,18 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'marcweber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
-Bundle 'nathanaelkane/vim-indent-guides'
 
 filetype plugin indent on
 syntax enable
+
+" ################
+" # Theme ########
+" ################
+
 colorscheme solarized
+hi Conceal ctermfg=239
+setl conceallevel=2 concealcursor=n
+autocmd InsertEnter,InsertLeave,BufReadPost * :syn match WhiteSpace / / containedin=ALL conceal cchar=·
 
 " ################
 " # Settings #####
