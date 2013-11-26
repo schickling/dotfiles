@@ -19,6 +19,10 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'elzr/vim-json'
 Bundle 'Raimondi/delimitMate'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+Bundle 'marcweber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
 
 filetype plugin indent on
 syntax enable
@@ -40,6 +44,7 @@ set exrc                    " enable per-directory .vimrc files
 set secure                  " disable unsafe commands in local .vimrc files
 set mouse=a
 set laststatus=2            " Always show the status line
+set backspace=indent,eol,start 
 
 " Airline
 let g:airline_powerline_fonts = 1
@@ -58,6 +63,11 @@ nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
+
+" Buffer 
+nmap <C-n> :bp<cr>
+nmap <C-m> :bn<cr>
+nmap <C-z> :bd<cr>
 
 " Fast saves
 nmap <leader>w :w!<cr>
