@@ -24,6 +24,7 @@ Bundle 'honza/vim-snippets'
 Bundle 'marcweber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
 Bundle 'Yggdroot/indentLine'
+Bundle 'airblade/vim-gitgutter'
 
 filetype plugin indent on
 syntax enable
@@ -35,6 +36,7 @@ syntax enable
 colorscheme solarized
 let g:indentLine_color_term = 235
 let g:indentLine_char = '·'
+highlight clear SignColumn
 
 " ################
 " # Settings #####
