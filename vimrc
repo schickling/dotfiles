@@ -23,6 +23,7 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'marcweber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
+Bundle 'Yggdroot/indentLine'
 
 filetype plugin indent on
 syntax enable
@@ -32,9 +33,8 @@ syntax enable
 " ################
 
 colorscheme solarized
-hi Conceal ctermfg=239
-setl conceallevel=2 concealcursor=n
-autocmd InsertEnter,InsertLeave,BufReadPost * :syn match WhiteSpace / / containedin=ALL conceal cchar=·
+let g:indentLine_color_term = 235
+let g:indentLine_char = '·'
 
 " ################
 " # Settings #####
@@ -53,6 +53,7 @@ set secure                  " disable unsafe commands in local .vimrc files
 set mouse=a
 set laststatus=2            " Always show the status line
 set backspace=indent,eol,start
+set clipboard=unnamed       " Use system clipboard
 
 " Airline
 let g:airline_powerline_fonts = 1
