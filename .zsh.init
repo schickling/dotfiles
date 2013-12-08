@@ -1,0 +1,26 @@
+
+#######################
+# dotfiles ############
+#######################
+source mathias/.exports
+source mathias/.functions
+source mathias/.aliases
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+#######################
+# oh-my-zsh ###########
+#######################
+plugins=(git node npm capistrano composer grunt bower yeoman vagrant gem rake heroku brew pip go)
+DEFAULT_USER="johannes"
+UPDATE_ZSH_DAYS=4
+ZSH_THEME="agnoster"
+
+#######################
+# other stuff #########
+#######################
+
+# increase socket limit (open files)
+ulimit -n 1200
+
+# rbenv to enable shims and auto-complete
+eval "$(rbenv init -)"
