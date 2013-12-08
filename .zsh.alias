@@ -1,0 +1,51 @@
+# other aliases #######
+source "$HOME/Dropbox/Apps/ZSH/sub2home.alias"
+
+# misc ################
+alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"
+alias rnginx="sudo nginx -s stop && sudo nginx"
+alias cterm="v $HOME/.dotfiles/zsh"
+alias cvim="v $HOME/.vimrc.local"
+alias rr="source $HOME/.zshrc && clear"
+alias rbundle="rm Gemfile.lock && bundle"
+alias ss="s ./sublime.sublime-project"
+alias rrm="rm -rf"
+alias spf="curl https://j.mp/spf13-vim3 -L -o - | sh"
+
+# uni #################
+alias topo="cd ~/Dropbox/Documents/Computer\ science/WS\ 2013-2014/Ergaenzungsfaecher/Mathematik/Geometrie/Skript && ./update"
+alias cgvm-ssh="ssh cg@127.0.0.1 -p 3022"
+alias cgvm-start="VBoxManage startvm cg && cgvm-ssh"
+alias cgvm-stop="VBoxManage controlvm cg savestate"
+
+# folders #############
+alias d="cd $HOME/Dropbox"
+
+# git #################
+alias gs="git status"
+alias gl="git log"
+alias gps="git push"
+alias gpl="git pull"
+alias gcm="git commit"
+alias ga="git add ."
+alias gfix="git rm -r --cached . && git add ."
+alias gco="git checkout"
+alias gcl="git clone"
+
+# karma ###############
+alias k="karma start"
+alias kd="karma start --browsers /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
+
+# php #################
+alias c="composer"
+alias a="php artisan --env=local"
+alias p="phpunit"
+alias rdb="a migrate:refresh --seed"
+
+# capistrano ##########
+alias deploy="cap production deploy"
+
+# grunt ###############
+alias grsv="grunt server"
+alias grp="grunt publish"
+

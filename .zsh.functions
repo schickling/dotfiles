@@ -1,0 +1,9 @@
+# repeats a command
+function again() {
+	while [ 1 ]; do
+		eval $2 $3 $4 $5
+		sleep $1
+	done
+}
+
+
