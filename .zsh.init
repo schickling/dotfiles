@@ -1,19 +1,11 @@
-
 #######################
 # dotfiles ############
 #######################
-source mathias/.exports
-source mathias/.functions
-source mathias/.aliases
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $DOTFILES/mathias/.exports
+source $DOTFILES/mathias/.functions
+source $DOTFILES/mathias/.aliases
 
-#######################
-# oh-my-zsh ###########
-#######################
-plugins=(git node npm capistrano composer grunt bower yeoman vagrant gem rake heroku brew pip go)
-DEFAULT_USER="johannes"
-UPDATE_ZSH_DAYS=4
-ZSH_THEME="agnoster"
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 #######################
 # other stuff #########
