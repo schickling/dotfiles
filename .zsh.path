@@ -1,5 +1,5 @@
 
-export PATH=/usr/local/bin
+PATH=/usr/local/bin
 PATH=/usr/bin:$PATH
 PATH=/bin:$PATH
 PATH=/usr/sbin:$PATH
@@ -8,5 +8,6 @@ PATH=/usr/local/bin:$PATH
 PATH=/usr/local/sbin:$PATH
 PATH=$HOME/.composer/vendor/bin:$PATH
 PATH=$HOME/Library/Haskell/bin:$PATH
+PATH=$HOME/.rbenv/shims:$PATH
 
-# export PYTHONPATH=/usr/local/lib/python2.7/site-packages
+#PYTHONPATH=/usr/local/lib/python2.7/site-packages
