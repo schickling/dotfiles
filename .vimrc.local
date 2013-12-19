@@ -1,6 +1,7 @@
-nmap <C-R> :so ~/.vimrc<cr>
+nmap \|\| :so ~/.vimrc<cr>
 nmap \\ :noh<cr>
 nmap <C-X> :Sprunge<cr>
+vmap <C-X> :Sprunge<cr>
 imap jj <Esc>       " Easy escaping to normal model
 
 set nofoldenable    " disable folding"
