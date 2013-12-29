@@ -16,6 +16,8 @@ alias rbundle="rm Gemfile.lock && bundle"
 alias ss="s ./sublime.sublime-project"
 alias rrm="rm -rf"
 alias spf="curl https://j.mp/spf13-vim3 -L -o - | sh"
+alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
+alias ard="vlc rtsp://daserste.edges.wowza.gl-systemhaus.de/live/mp4:daserste_int_1600"
 
 # uni #################
 alias topo="cd ~/Dropbox/Documents/Computer\ science/WS\ 2013-2014/Ergaenzungsfaecher/Mathematik/Geometrie/Skript && ./update"
@@ -55,4 +57,5 @@ alias deploy="cap production deploy"
 # grunt ###############
 alias grsv="grunt server"
 alias grp="grunt publish"
+alias grr="grunt reset"
 

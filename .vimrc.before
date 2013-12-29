@@ -1,0 +1,11 @@
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'airlineish'
+
+
+let mapleader = ","
+set clipboard=unnamed
+set visualbell
+set noerrorbells
+set mouse=a
+map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
