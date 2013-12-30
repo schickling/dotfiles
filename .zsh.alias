@@ -15,7 +15,7 @@ alias rr="source $HOME/.zshrc && clear"
 alias rbundle="rm Gemfile.lock && bundle"
 alias ss="s ./sublime.sublime-project"
 alias rrm="rm -rf"
-alias spf="curl https://j.mp/spf13-vim3 -L -o - | sh"
+alias uvim="vim +BundleInstall +qall"
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
 alias ard="vlc rtsp://daserste.edges.wowza.gl-systemhaus.de/live/mp4:daserste_int_1600"
 
