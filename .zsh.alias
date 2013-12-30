@@ -2,7 +2,7 @@
 source "$HOME/Dropbox/Apps/ZSH/sub2home.alias"
 
 # config ##############
-alias cvim="v $DOTFILES/.vimrc.before"
+alias cvim="v $DOTFILES/.vimrc.config"
 alias calias="v $DOTFILES/.zsh.alias"
 alias cpath="v $DOTFILES/.zsh.path"
 alias chost="sudo v /etc/hosts"
