@@ -13,7 +13,10 @@ Bundle 'ervandew/supertab'
 Bundle 'bling/vim-airline'
 Bundle 'paranoida/vim-airlineish'
 Bundle 'kchmck/vim-coffee-script'
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-Bundle "honza/vim-snippets"
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+Bundle 'Shougo/neocomplcache.vim'
+Bundle 'jiangmiao/auto-pairs'
+Bundle 'terryma/vim-multiple-cursors'
