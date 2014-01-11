@@ -3,7 +3,7 @@ source "$HOME/Dropbox/Apps/ZSH/sub2home.alias"
 
 # config ##############
 alias cvim="v $DOTFILES/.vimrc.config"
-alias calias="v $DOTFILES/.zsh.alias"
+alias cterm="v $DOTFILES/.zsh.alias"
 alias cpath="v $DOTFILES/.zsh.path"
 alias chost="sudo v /etc/hosts"
 
@@ -15,9 +15,10 @@ alias rr="source $HOME/.zshrc && clear"
 alias rbundle="rm Gemfile.lock && bundle"
 alias ss="s ./sublime.sublime-project"
 alias rrm="rm -rf"
-alias uvim="vim +BundleInstall +qall"
+alias uvim="vim +BundleUpdate +qall"
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
 alias ard="vlc rtsp://daserste.edges.wowza.gl-systemhaus.de/live/mp4:daserste_int_1600"
+alias l="ls -lh"
 
 # uni #################
 alias topo="cd ~/Dropbox/Documents/Computer\ science/WS\ 2013-2014/Ergaenzungsfaecher/Mathematik/Geometrie/Skript && ./update"

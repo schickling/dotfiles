@@ -2,7 +2,7 @@
 ZSH=$HOME/.oh-my-zsh
 DOTFILES=$HOME/.dotfiles
 
-plugins=(git node npm capistrano composer grunt bower yeoman vagrant gem rake heroku brew pip go)
+plugins=(git node npm capistrano composer grunt bower yeoman vagrant gem rake heroku brew pip go docker)
 DEFAULT_USER="johannes"
 UPDATE_ZSH_DAYS=4
 ZSH_THEME="agnoster"
