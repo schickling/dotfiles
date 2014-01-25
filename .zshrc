@@ -9,7 +9,4 @@ ZSH_THEME="agnoster"
 
 source $ZSH/oh-my-zsh.sh
 source $DOTFILES/.zsh.init
-source $DOTFILES/.zsh.path
-source $DOTFILES/.zsh.alias
-source $DOTFILES/.zsh.functions
 
