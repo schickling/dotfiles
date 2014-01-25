@@ -6,4 +6,12 @@ function again() {
 	done
 }
 
-
+function s() {
+    if [ $# -gt 0 ]; then
+        subl "$@"
+    elif [ -e ".sublime.sublime-project"  ]; then
+        subl .sublime.sublime-project
+    else
+        subl .
+    fi
+}

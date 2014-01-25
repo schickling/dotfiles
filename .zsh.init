@@ -4,6 +4,9 @@
 source $DOTFILES/mathias/.exports
 source $DOTFILES/mathias/.functions
 source $DOTFILES/mathias/.aliases
+source $DOTFILES/.zsh.path
+source $DOTFILES/.zsh.alias
+source $DOTFILES/.zsh.functions
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -18,3 +21,4 @@ ulimit -n 1200
 eval "$(rbenv init -)"
 
 export DOCKER_HOST=localhost
+export FORWARD_DOCKER_PORTS=true
