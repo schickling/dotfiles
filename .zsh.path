@@ -10,4 +10,4 @@ PATH=$HOME/.composer/vendor/bin:$PATH
 PATH=$HOME/Library/Haskell/bin:$PATH
 PATH=$HOME/.rbenv/shims:$PATH
 
-#PYTHONPATH=/usr/local/lib/python2.7/site-packages
+PYTHONPATH=/usr/local/lib/python2.7/site-packages
