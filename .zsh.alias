@@ -7,6 +7,7 @@ alias cterm="v $DOTFILES/.zsh.alias"
 alias cpath="v $DOTFILES/.zsh.path"
 alias chost="sudo v /etc/hosts"
 alias cdot="cd $DOTFILES"
+alias csub="cd ~/Library/Application\ Support/Sublime\ Text\ 3"
 
 # misc ################
 alias v="vim"
@@ -37,8 +38,8 @@ alias d="cd $HOME/Desktop"
 alias p="cd $HOME/Desktop/projects"
 
 # git #################
-alias gs="git status"
-alias gl="git log"
+alias gs="git status -s"
+alias gl="git log --oneline --decorate"
 alias gps="git push"
 alias gpl="git pull"
 alias gcm="git commit"
@@ -46,6 +47,7 @@ alias ga="git add ."
 alias gfix="git rm -r --cached . && git add ."
 alias gco="git checkout"
 alias gcl="git clone"
+alias gr="git clean -fd && git checkout ."
 
 # karma ###############
 alias k="karma start"
