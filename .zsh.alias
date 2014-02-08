@@ -39,7 +39,7 @@ alias p="cd $HOME/Desktop/projects"
 
 # git #################
 alias gs="git status -s"
-alias gl="git log --oneline --decorate"
+alias gl="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short"
 alias gps="git push"
 alias gpl="git pull"
 alias gcm="git commit"
@@ -55,7 +55,7 @@ alias kd="karma start --browsers /Applications/Google\ Chrome\ Canary.app/Conten
 
 # php #################
 alias c="composer"
-alias a="php artisan --env=local"
+alias a="php artisan"
 alias pu="phpunit"
 alias rdb="a migrate:refresh --seed"
 
