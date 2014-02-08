@@ -43,7 +43,7 @@ alias gl="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Cre
 alias gps="git push"
 alias gpl="git pull"
 alias gcm="git commit"
-alias ga="git add ."
+alias ga="git add"
 alias gfix="git rm -r --cached . && git add ."
 alias gco="git checkout"
 alias gcl="git clone"
