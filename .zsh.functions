@@ -15,3 +15,7 @@ function s() {
         subl .
     fi
 }
+
+function gf() {
+    git commit -am '$1' && git push
+}
