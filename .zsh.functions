@@ -17,5 +17,5 @@ function s() {
 }
 
 function gf() {
-    git commit -am '$1' && git push
+    git commit -am $1 && git push
 }
