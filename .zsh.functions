@@ -19,3 +19,10 @@ function s() {
 function gf() {
     git pull && git commit -am $1 && git push
 }
+
+function jj () {
+    jekyll serve -w &
+    sleep 5
+    open http://localhost:4000
+    fg
+}
