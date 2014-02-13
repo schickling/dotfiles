@@ -10,20 +10,23 @@ alias cdot="cd $DOTFILES"
 alias csub="cd ~/Library/Application\ Support/Sublime\ Text\ 3"
 
 # misc ################
-alias v="vim"
 alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"
 alias rnginx="sudo nginx -s stop && sudo nginx"
 alias rr="source $HOME/.zshrc && clear"
 alias rbundle="rm Gemfile.lock && bundle"
 alias rrm="rm -rf"
 alias rmc="cd .. && rm -rf '${OLDPWD}'"
-alias uvim="vim +BundleUpdate +qall"
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
 alias ard="vlc rtsp://daserste.edges.wowza.gl-systemhaus.de/live/mp4:daserste_int_1600"
 alias l="ls -lh"
 alias ym="youtube-dl -x"
 alias web="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
+
+# vim #################
+alias v="vim"
+alias m="mvim"
+alias uvim="vim +BundleUpdate +qall"
 
 # uni #################
 alias topo="cd ~/Dropbox/Documents/Computer\ science/WS\ 2013-2014/Ergaenzungsfaecher/Mathematik/Geometrie/Skript && ./update"
