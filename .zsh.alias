@@ -31,12 +31,6 @@ alias v="vim"
 alias m="mvim"
 alias uvim="vim +BundleUpdate +qall"
 
-# uni #################
-alias topo="cd ~/Dropbox/Documents/Computer\ science/WS\ 2013-2014/Ergaenzungsfaecher/Mathematik/Geometrie/Skript && ./update"
-alias cgvm-ssh="ssh cg@127.0.0.1 -p 3022"
-alias cgvm-up="VBoxManage startvm cg && cgvm-ssh"
-alias cgvm-halt="VBoxManage controlvm cg savestate"
-
 # folders #############
 alias dr="cd $HOME/Dropbox"
 alias d="cd $HOME/Desktop"
