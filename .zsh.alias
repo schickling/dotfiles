@@ -24,6 +24,7 @@ alias web="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias t="touch"
 alias cld="docker ps -a -q | xargs docker rm"
+alias b2d="boot2docker"
 
 # vim #################
 alias v="vim"
