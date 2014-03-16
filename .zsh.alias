@@ -24,7 +24,8 @@ alias web="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias t="touch"
 alias cld="docker ps -a -q | xargs docker rm"
-alias b2d="boot2docker"
+alias b2d="boot2docker-cli"
+alias d="docker"
 
 # vim #################
 alias v="vim"
@@ -33,7 +34,7 @@ alias uvim="vim +BundleUpdate +qall"
 
 # folders #############
 alias dr="cd $HOME/Dropbox"
-alias d="cd $HOME/Desktop"
+alias de="cd $HOME/Desktop"
 alias p="cd $HOME/Desktop/projects"
 
 # git #################
@@ -47,6 +48,7 @@ alias gfix="git rm -r --cached . && git add ."
 alias gco="git checkout"
 alias gcl="git clone"
 alias gr="git clean -fd && git checkout ."
+alias gt="git tag"
 
 # karma ###############
 alias k="karma start"
