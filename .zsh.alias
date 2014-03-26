@@ -50,6 +50,9 @@ alias gcl="git clone"
 alias gr="git clean -fd && git checkout ."
 alias gt="git tag"
 
+# haskell #############
+alias ghci="ghci -v0"
+
 # karma ###############
 alias k="karma start"
 alias kd="karma start --browsers /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
