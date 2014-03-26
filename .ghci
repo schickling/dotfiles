@@ -1,6 +1,7 @@
--- You need to install IPPrint and HsColour with cabal to use this config.
--- If you find all the loading messages anoying you may want to set an alias:
--- alias ghci="ghci -v0"
+-- Install
+-- * IPPrint
+-- * HsColour
+-- * hoogle
  
 :set -XNoMonomorphismRestriction
 :set prompt "\ESC[34mλ\ESC[m "
@@ -22,6 +23,5 @@ let myPrint = putStrLn . HsColour.hscolour (HsColour.TTYg HsColour.XTerm256Compa
 
 
 -- hoogle
-:def hoogle > return $ ":!hoogle \"" ++ x ++ "\""
-:def doc > return $ ":!hoogle --info \"" ++ x ++ "\""
-
+:def hoogle \x -> return $ ":!hoogle \"" ++ x ++ "\""
+:def doc \x -> return $ ":!hoogle --info \"" ++ x ++ "\""
