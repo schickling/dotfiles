@@ -19,3 +19,9 @@ let myColourPrefs = HsColour.defaultColourPrefs { HsColour.conid = [HsColour.For
 let myPrint = putStrLn . HsColour.hscolour (HsColour.TTYg HsColour.XTerm256Compatible) myColourPrefs False False "" False . IPPrint.pshow
  
 :set -interactive-print=myPrint
+
+
+-- hoogle
+:def hoogle > return $ ":!hoogle \"" ++ x ++ "\""
+:def doc > return $ ":!hoogle --info \"" ++ x ++ "\""
+
