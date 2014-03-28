@@ -52,6 +52,7 @@ alias gt="git tag"
 
 # haskell #############
 alias ghci="ghci -v0"
+alias h="ghci"
 
 # karma ###############
 alias k="karma start"
