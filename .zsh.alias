@@ -23,9 +23,12 @@ alias ym="youtube-dl -x"
 alias web="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias t="touch"
-alias cld="docker ps -a -q | xargs docker rm"
-alias b2d="boot2docker-cli"
+
+# docker ##############
 alias d="docker"
+alias dcl="docker ps -q | xargs docker kill && docker ps -a -q | xargs docker rm"
+alias dir="docker run -i -t"
+alias b2d="boot2docker-cli"
 
 # vim #################
 alias v="vim"
