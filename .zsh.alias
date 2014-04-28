@@ -23,6 +23,7 @@ alias ym="youtube-dl -x"
 alias web="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias t="touch"
+alias cor="cordova"
 
 # docker ##############
 alias d="docker"
