@@ -20,4 +20,4 @@ ulimit -n 1200
 # rbenv to enable shims and auto-complete
 eval "$(rbenv init -)"
 
-export DOCKER_HOST=tcp://localhost:4243
+export DOCKER_HOST=tcp://192.168.59.103:2375
