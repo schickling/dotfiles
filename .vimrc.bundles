@@ -24,6 +24,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'chilicuil/vim-sprunge'
 Bundle 'ervandew/supertab'
 Bundle 'majutsushi/tagbar'
+Bundle 'nelstrom/vim-qargs'
 
 " Languages
 Bundle 'plasticboy/vim-markdown'
