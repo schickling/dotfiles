@@ -2,10 +2,10 @@
 source "$HOME/Dropbox/Apps/ZSH/sub2home.alias"
 
 # config ##############
-alias cvim="v $DOTFILES/.vimrc.config"
-alias cbundle="v $DOTFILES/.vimrc.bundles"
-alias cterm="v $DOTFILES/.zsh.alias"
-alias cpath="v $DOTFILES/.zsh.path"
+alias cvim="v $DOTFILES/vim/config.vim"
+alias cbundle="v $DOTFILES/vim/plugins.vim"
+alias cterm="v $DOTFILES/zsh/3-alias.zsh"
+alias cknown="v $HOME/.ssh/known_hosts"
 alias chost="sudo v /etc/hosts"
 alias cdot="cd $DOTFILES"
 alias csub="cd ~/Library/Application\ Support/Sublime\ Text\ 3"
