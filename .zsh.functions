@@ -17,7 +17,10 @@ function s() {
 }
 
 function gf() {
-    git pull && git commit -am $1 && git push
+    git pull
+    git add .
+    git commit -m $1
+    git push
 }
 
 function jj () {
@@ -26,3 +29,5 @@ function jj () {
     open http://localhost:4000
     fg
 }
+
+function haste() { a=$(cat); curl -X POST -s -d "$a" http://hastebin.com/documents | awk -F '"' '{print "http://hastebin.com/"$4}'; }
