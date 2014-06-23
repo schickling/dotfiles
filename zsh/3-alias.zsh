@@ -5,6 +5,7 @@ source "$HOME/Dropbox/Apps/ZSH/sub2home.alias"
 alias cvim="v $DOTFILES/vim/config.vim"
 alias cbundle="v $DOTFILES/vim/plugins.vim"
 alias cterm="v $DOTFILES/zsh/3-alias.zsh"
+alias cmux="v $DOTFILES/tmux/tmux.conf.user"
 alias cknown="v $HOME/.ssh/known_hosts"
 alias chost="sudo v /etc/hosts"
 alias cdot="cd $DOTFILES"
@@ -25,6 +26,10 @@ alias ws="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias t="touch"
 alias lo="pmset displaysleepnow"
+
+# tmux ################
+alias t="tmux"
+alias ta="tmux attach -t"
 
 # cordova #############
 alias cor="cordova"
