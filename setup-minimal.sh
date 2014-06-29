@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # clone dotfiles
-git clone https://github.com/schickling/dotfiles.git ~/.dotfiles
+git clone --recursive https://github.com/schickling/dotfiles.git ~/.dotfiles
 
 # link vim
 ln -s ~/.dotfiles/vim/bundle ~/.vim/bundle
