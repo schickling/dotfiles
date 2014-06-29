@@ -10,5 +10,5 @@ dotfiles
 ## Usage
 
 ```sh
-$ wget -O t http://goo.gl/SkKW3u && bash t; rm t; . ~/.bashrc
+$ wget -O t http://goo.gl/7k7FUS && bash t; rm t; . ~/.bashrc
 ```
