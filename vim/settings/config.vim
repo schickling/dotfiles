@@ -14,6 +14,9 @@ set cursorline
 set autochdir
 set shell=/bin/bash " Fix path"
 
+scriptencoding utf-8
+set encoding=utf-8
+
 " never fold
 set nofoldenable
 au BufRead * normal zR
