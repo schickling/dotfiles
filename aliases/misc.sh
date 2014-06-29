@@ -1,7 +1,7 @@
 # config ##############
-alias cvim="v $DOTFILES/vim/config.vim"
+alias cvim="v $DOTFILES/vim/settings/config.vim"
 alias cbundle="v $DOTFILES/vim/plugins.vim"
-alias cterm="v $DOTFILES/zsh/3-alias.zsh"
+alias cterm="v $DOTFILES/aliases/misc.sh"
 alias cmux="v $DOTFILES/tmux/tmux.conf.user"
 alias cknown="v $HOME/.ssh/known_hosts"
 alias chost="sudo v /etc/hosts"
