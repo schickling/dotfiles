@@ -1,14 +1,8 @@
 dotfiles
 ========
 
-## Dependencies
-
-* wget
-* vim
-* git
-
-## Usage
+## Minimal setup
 
 ```sh
-$ wget -O t http://goo.gl/7k7FUS && bash t; rm t; . ~/.bashrc
+$ git clone https://github.com/schickling/dotfiles.git ~/.dotfiles && ~/.dotfiles/setup-minimal.sh
 ```
