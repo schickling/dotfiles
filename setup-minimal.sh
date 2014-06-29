@@ -1,8 +1,5 @@
 #! /bin/bash
 
-# clone dotfiles
-git clone --recursive https://github.com/schickling/dotfiles.git ~/.dotfiles
-
 # link vim
 mkdir ~/.vim
 ln -s ~/.dotfiles/vim/colors ~/.vim/colors
