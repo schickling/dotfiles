@@ -51,8 +51,8 @@ au BufRead,BufNewFile *.{js} set colorcolumn=80
 " prevent ag terminal output
 set shellpipe=>
 
-" Hastbin
-noremap <leader>c :Sprunge<CR>
+" Display tabs and trailing spaces visually
+set list listchars=tab:\ \ ,trail:·
 
 " Toggles the background color, and reloads the colorscheme.
 command! ToggleBackground call <SID>ToggleBackground()
@@ -62,8 +62,6 @@ function! <SID>ToggleBackground()
         exe "colorscheme " . g:colors_name
     endif
 endfunction
-
-noremap <leader>\ :ToggleBackground<CR>
 
 
 let g:haskell_conceal_wide = 1

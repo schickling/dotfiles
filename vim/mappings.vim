@@ -16,7 +16,7 @@ nmap <Space> i
 
 map \|\| :so $HOME/.vimrc<CR>
 
-" Window
+" Window switching
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
 map <C-L> <C-W>l<C-W>_
@@ -31,3 +31,6 @@ noremap <leader><leader> :e #<CR>
 
 " quick close
 map Q :wqa<CR>
+
+" toggle color schema
+noremap <leader>\ :ToggleBackground<CR>
