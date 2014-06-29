@@ -6,3 +6,6 @@ alias rrm="rm -rf"
 
 alias t="touch"
 alias v="vim"
+
+alias ..="cd .."
+alias ...="cd ..."
