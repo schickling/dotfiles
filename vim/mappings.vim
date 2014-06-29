@@ -14,7 +14,7 @@ noremap k gk
 inoremap kj <Esc>l
 nmap <Space> i
 
-map \|\| :so $MYVIMRC<CR>
+map \|\| :so $HOME/.vimrc<CR>
 
 " Window
 map <C-J> <C-W>j<C-W>_
@@ -27,6 +27,7 @@ noremap <leader>. :bn<CR>
 noremap <leader>m :bp<CR>
 noremap <leader>n :bp<bar>bd #<CR>
 noremap <leader>b :BufOnly<CR>
+noremap <leader><leader> :e #<CR>
 
 " quick close
 map Q :wqa<CR>
