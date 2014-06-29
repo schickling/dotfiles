@@ -21,12 +21,6 @@ alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias lo="pmset displaysleepnow"
 alias tl="translate {=de}"
 
-# tmux ################
-alias t="tmux"
-alias ta="tmux attach -t"
-alias ts="tmux new -s"
-alias tk="tmux kill-session -t"
-
 # cordova #############
 alias cor="cordova"
 alias cb="cordova build"
