@@ -52,7 +52,8 @@ au BufRead,BufNewFile *.{js} set colorcolumn=80
 set shellpipe=>
 
 " Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
+set list
+set listchars=tab:\ \ ,trail:·
 
 " Toggles the background color, and reloads the colorscheme.
 command! ToggleBackground call <SID>ToggleBackground()
