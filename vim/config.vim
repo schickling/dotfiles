@@ -45,6 +45,7 @@ augroup END
 " filetypes
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,config.ru,*.rake} set ft=ruby
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
+au BufRead,BufNewFile *.{coffee} set ft=coffee
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
 " prevent ag terminal output

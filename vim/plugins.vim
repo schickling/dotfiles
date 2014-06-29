@@ -1,5 +1,5 @@
 " Layout
-Plugin 'skwp/vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'itchyny/lightline.vim'
 
 " Tools
@@ -17,11 +17,11 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'schickling/vim-bufonly'
 Plugin 'tpope/vim-surround'
-Plugin 'chilicuil/vim-sprunge'
 Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'bling/vim-bufferline'
 
 " Languages
 Plugin 'plasticboy/vim-markdown'
