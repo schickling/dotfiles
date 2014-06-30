@@ -2,7 +2,7 @@
 alias cvim="v $DOTFILES/vim/settings/config.vim"
 alias cbundle="v $DOTFILES/vim/plugins.vim"
 alias cterm="v $DOTFILES/aliases/misc.sh"
-alias cmux="v $DOTFILES/tmux/tmux.conf.user"
+alias cmux="v $DOTFILES/tmux.conf.user"
 alias cknown="v $HOME/.ssh/known_hosts"
 alias chost="sudo v /etc/hosts"
 alias cdot="cd $DOTFILES"
@@ -65,4 +65,8 @@ function again() {
 		eval $2 $3 $4 $5
 		sleep $1
 	done
+}
+
+function dknown() {
+  vim ~/.ssh/known_hosts +$1 +d +wq
 }
