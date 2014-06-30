@@ -49,15 +49,14 @@ augroup END
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,config.ru,*.rake} set ft=ruby
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
 au BufRead,BufNewFile *.{coffee} set ft=coffee
-au BufRead,BufNewFile *.{Dockerfile} set ft=Dockerfile set syntax=Dockerfile
+au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
 " prevent ag terminal output
 set shellpipe=>
 
 " Display tabs and trailing spaces visually
-set list
-set listchars=tab:\ \ ,trail:·
+set list listchars=tab:\ \ ,trail:·
 
 " Toggles the background color, and reloads the colorscheme.
 command! ToggleBackground call <SID>ToggleBackground()
