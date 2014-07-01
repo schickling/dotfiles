@@ -70,3 +70,11 @@ function again() {
 function dknown() {
   vim ~/.ssh/known_hosts +$1 +d +wq
 }
+
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
