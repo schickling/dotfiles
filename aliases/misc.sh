@@ -2,7 +2,7 @@
 alias cvim="v $DOTFILES/vim/settings/config.vim"
 alias cbundle="v $DOTFILES/vim/plugins.vim"
 alias cterm="v $DOTFILES/aliases/misc.sh"
-alias cmux="v $DOTFILES/tmux.conf.user"
+alias cmux="v $DOTFILES/tmux.conf"
 alias cknown="v $HOME/.ssh/known_hosts"
 alias chost="sudo v /etc/hosts"
 alias cdot="cd $DOTFILES"

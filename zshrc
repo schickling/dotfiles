@@ -1,5 +1,3 @@
-set -o vi
-
 #########################
 # exports ###############
 #########################
@@ -11,9 +9,6 @@ plugins=(git npm composer grunt bower gem rake brew go docker)
 DEFAULT_USER="johannes"
 UPDATE_ZSH_DAYS=4
 ZSH_THEME="agnoster"
-
-export EDITOR=vim
-export VISUAL=vim
 
 # paths
 export DOCKER_HOST=tcp://192.168.59.103:2375
