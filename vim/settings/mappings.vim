@@ -34,3 +34,6 @@ map Q :wqa<CR>
 
 " toggle color schema
 noremap <leader>\ :ToggleBackground<CR>
+
+" clear search highlight
+nnoremap <silent> <C-l> :nohl<CR><C-l>

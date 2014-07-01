@@ -21,10 +21,20 @@ set encoding=utf-8
 set nofoldenable
 au BufRead * normal zR
 
+" Highlight searches
+set hlsearch
+" Ignore case of searches
+set ignorecase
+" Highlight dynamically as pattern is typed
+set incsearch
+
 " undo history
 set hidden " persist undo history
 set undofile
 set undodir=$HOME/.vimundo
+
+set backupdir=~/.vim/backups
+set directory=~/.vim/swaps
 
 let mapleader = ","
 set clipboard=unnamed
