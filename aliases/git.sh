@@ -6,6 +6,7 @@ function _git_fast() {
   git push
 }
 
+alias g="git"
 alias gs="git status -s"
 alias gl="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short"
 alias gps="git push"
