@@ -13,6 +13,7 @@ set backspace+=start,eol,indent
 set cursorline
 set autochdir
 set shell=/bin/bash " Fix path"
+set wildmenu
 
 scriptencoding utf-8
 set encoding=utf-8
@@ -62,6 +63,8 @@ au BufRead,BufNewFile *.{coffee} set ft=coffee
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
+au BufWritePost *.{tex} silent execute 'Latexmk'
+
 " prevent ag terminal output
 set shellpipe=>
 
@@ -81,4 +84,3 @@ endfunction
 let g:haskell_conceal_wide = 1
 
 filetype plugin on
-

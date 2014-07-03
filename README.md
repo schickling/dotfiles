@@ -1,6 +1,10 @@
 dotfiles
 ========
 
+## Fonts
+
+Powerline fonts can be found here: https://github.com/Lokaltog/powerline-fonts/tree/master/SourceCodePro
+
 ## Full setup
 
 ```sh

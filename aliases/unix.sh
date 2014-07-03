@@ -14,3 +14,8 @@ alias v="vim"
 
 alias ..="cd .."
 alias ...="cd ..."
+
+function mkd() {
+  mkdir $1
+  cd $1
+}
