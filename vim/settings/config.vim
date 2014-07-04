@@ -9,7 +9,7 @@ set expandtab
 set visualbell
 set noerrorbells
 set laststatus=2
-set backspace+=start,eol,indent 
+set backspace+=start,eol,indent
 set cursorline
 set autochdir
 set shell=/bin/bash " Fix path"
@@ -60,6 +60,7 @@ augroup END
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,config.ru,*.rake} set ft=ruby
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
 au BufRead,BufNewFile *.{coffee} set ft=coffee
+au BufRead,BufNewFile *.{xtx} set ft=tex
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
@@ -82,5 +83,6 @@ endfunction
 
 
 let g:haskell_conceal_wide = 1
+let g:javascript_conceal = 1
 
-filetype plugin on
+"filetype plugin on

@@ -14,7 +14,7 @@ noremap k gk
 inoremap kj <Esc>l
 nmap <Space> i
 
-map \|\| :so $HOME/.vimrc<CR>
+map \|\| :so $HOME/.vimrc<CR>:e<CR>
 
 " Window switching
 map <C-J> <C-W>j<C-W>_
@@ -36,4 +36,4 @@ map Q :wqa<CR>
 noremap <leader>\ :ToggleBackground<CR>
 
 " clear search highlight
-nnoremap <silent> <C-l> :nohl<CR><C-l>
+nnoremap <silent> <C-l> :nohl<CR>
