@@ -32,8 +32,8 @@ noremap <leader><leader> :e #<CR>
 " quick close
 map Q :wqa<CR>
 
+" clear search highlight
+noremap <leader>/ :nohl<CR>
+
 " toggle color schema
 noremap <leader>\ :ToggleBackground<CR>
-
-" clear search highlight
-nnoremap <silent> <C-l> :nohl<CR>
