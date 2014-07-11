@@ -12,6 +12,8 @@ alias tk="tmux kill-session -t"
 
 alias v="vim"
 
+alias s="ssh"
+
 alias ..="cd .."
 alias ...="cd ..."
 

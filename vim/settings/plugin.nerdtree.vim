@@ -7,3 +7,6 @@ let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git$', '\.hg', '\.svn
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinSize = 30
+
+let NERDTreeMapOpenVSplit = 'v'
+let NERDTreeMapOpenSplit = 's'

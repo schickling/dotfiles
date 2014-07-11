@@ -83,6 +83,3 @@ endfunction
 
 
 let g:haskell_conceal_wide = 1
-let g:javascript_conceal = 1
-
-"filetype plugin on
