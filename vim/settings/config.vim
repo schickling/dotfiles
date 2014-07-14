@@ -2,6 +2,7 @@ syntax enable
 colorscheme solarized
 set background=dark
 set number
+set paste " don't realign on paste in insert mode
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -85,3 +86,8 @@ endfunction
 
 
 let g:haskell_conceal_wide = 1
+
+if &term =~ '^screen'
+    " tmux knows the extended mouse mode
+    set ttymouse=xterm2
+endif
