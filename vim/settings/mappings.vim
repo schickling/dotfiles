@@ -37,3 +37,7 @@ noremap <leader>/ :nohl<CR>
 
 " toggle color schema
 noremap <leader>\ :ToggleBackground<CR>
+
+" vpaste
+map vp :exec "w !vpaste ft=".&ft<CR>
+vmap vp <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>

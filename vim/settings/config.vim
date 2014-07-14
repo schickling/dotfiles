@@ -60,10 +60,12 @@ augroup END
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,config.ru,*.rake} set ft=ruby
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
 au BufRead,BufNewFile *.{coffee} set ft=coffee
+au BufRead,BufNewFile *.{go} set ft=go
 au BufRead,BufNewFile *.{xtx} set ft=tex
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
+au BufWritePre *.{js} :call JsBeautify()
 au BufWritePost *.{tex} silent execute 'Latexmk'
 
 " prevent ag terminal output

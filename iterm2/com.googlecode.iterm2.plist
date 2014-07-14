@@ -684,7 +684,7 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>231 249 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 377 650 501 0 0 1440 900 </string>
+	<string>-255 900 1920 1080 -255 900 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>669 94 730 526 0 0 1440 878 </string>
 	<key>NeverWarnAboutShortLivedSessions_241695EB-1C14-41F3-96CD-E0EFB134AC79</key>
@@ -1255,11 +1255,11 @@
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.56363654136657715</real>
+				<real>0.073641560971736908</real>
 				<key>Green Component</key>
-				<real>0.56485837697982788</real>
+				<real>0.060516688972711563</real>
 				<key>Red Component</key>
-				<real>0.50599193572998047</real>
+				<real>0.90186649560928345</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
@@ -2185,7 +2185,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/johannes/.dotfiles/iTerm2</string>
+	<string>/Users/johannes/.dotfiles/iterm2</string>
 	<key>PromptOnClose</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -2205,7 +2205,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-06-27T07:51:53Z</date>
+	<date>2014-07-11T22:06:12Z</date>
 	<key>SUSkippedVersion</key>
 	<string>1.0.0.20140421</string>
 	<key>SavePasteHistory</key>
@@ -2257,6 +2257,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20140518</string>
+	<string>1.0.0.20140629</string>
 </dict>
 </plist>
