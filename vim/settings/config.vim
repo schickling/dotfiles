@@ -2,7 +2,7 @@ syntax enable
 colorscheme solarized
 set background=dark
 set number
-set paste " don't realign on paste in insert mode
+"set paste " don't realign on paste in insert mode
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -13,7 +13,7 @@ set laststatus=2
 set backspace+=start,eol,indent
 set cursorline
 set autochdir
-set shell=/bin/bash " Fix path"
+"set shell=/bin/bash " Fix path"
 set wildmenu
 
 scriptencoding utf-8
@@ -69,9 +69,6 @@ au BufRead,BufNewFile *.{js} set colorcolumn=80
 au BufWritePre *.{js} :call JsBeautify()
 au BufWritePost *.{tex} silent execute 'Latexmk'
 
-" prevent ag terminal output
-set shellpipe=>
-
 " Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
 
@@ -84,10 +81,12 @@ function! <SID>ToggleBackground()
     endif
 endfunction
 
-
 let g:haskell_conceal_wide = 1
 
 if &term =~ '^screen'
     " tmux knows the extended mouse mode
     set ttymouse=xterm2
 endif
+
+let g:neocomplete#enable_at_startup = 1
+let g:go_snippet_engine = "neosnippet"
