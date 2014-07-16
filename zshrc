@@ -3,7 +3,7 @@
 #########################
 
 # zsh
-ZSH=$HOME/.oh-my-zsh
+ZSH=$HOME/.dotfiles/oh-my-zsh
 DOTFILES=$HOME/.dotfiles
 plugins=(git npm composer grunt bower gem rake brew go docker)
 DEFAULT_USER="johannes"
