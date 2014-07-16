@@ -67,6 +67,7 @@ au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
 au BufWritePre *.{js} :call JsBeautify()
+au BufWritePre *.{html} :call HtmlBeautify()
 au BufWritePost *.{tex} silent execute 'Latexmk'
 
 " Display tabs and trailing spaces visually

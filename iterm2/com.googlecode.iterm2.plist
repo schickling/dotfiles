@@ -684,7 +684,7 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>231 249 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 900 0 0 1440 878 </string>
+	<string>0 377 650 501 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>669 94 730 526 0 0 1440 878 </string>
 	<key>NeverWarnAboutShortLivedSessions_241695EB-1C14-41F3-96CD-E0EFB134AC79</key>
@@ -2923,7 +2923,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-07-13T22:06:13Z</date>
+	<date>2014-07-15T08:58:17Z</date>
 	<key>SUSkippedVersion</key>
 	<string>1.0.0.20140421</string>
 	<key>SavePasteHistory</key>
@@ -2933,7 +2933,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>ShowPaneTitles</key>
 	<false/>
 	<key>SmartPlacement</key>
