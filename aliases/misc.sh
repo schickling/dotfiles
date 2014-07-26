@@ -1,12 +1,12 @@
 # config ##############
-alias cvim="v $DOTFILES/vim/settings/config.vim"
+alias cv="v $DOTFILES/vim/settings/config.vim"
 alias cbundle="v $DOTFILES/vim/settings/plugins.vim"
-alias cterm="v $DOTFILES/aliases/misc.sh"
-alias cmux="v $DOTFILES/tmux.conf"
-alias cknown="v $HOME/.ssh/known_hosts"
-alias chost="sudo v /etc/hosts"
-alias cdot="cd $DOTFILES"
-alias csub="cd ~/Library/Application\ Support/Sublime\ Text\ 3"
+alias ct="v $DOTFILES/aliases/misc.sh"
+alias cm="v $DOTFILES/tmux.conf"
+alias ck="v $HOME/.ssh/known_hosts"
+alias cs="v $HOME/.ssh/config"
+alias ch="sudo v /etc/hosts"
+alias dot="cd $DOTFILES"
 
 # misc ################
 alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"

@@ -11,7 +11,8 @@ nnoremap <silent> <leader>tt :TagbarToggle<CR>
 " Wrapped lines goes down/up to next row, rather than next line in file.
 noremap j gj
 noremap k gk
-nmap <Space> i
+nmap <Space> :call NERDComment('n', 'Toggle')<CR>
+vmap <Space> :call NERDComment('x', 'Toggle')<CR>
 
 map \|\| :so $HOME/.vimrc<CR>:e<CR>
 

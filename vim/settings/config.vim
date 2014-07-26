@@ -82,8 +82,6 @@ function! <SID>ToggleBackground()
     endif
 endfunction
 
-let g:haskell_conceal_wide = 1
-
 if &term =~ '^screen'
     " tmux knows the extended mouse mode
     set ttymouse=xterm2
