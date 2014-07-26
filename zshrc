@@ -2,10 +2,12 @@
 # exports ###############
 #########################
 
-# zsh
-ZSH=$HOME/.dotfiles/oh-my-zsh
 DOTFILES=$HOME/.dotfiles
-plugins=(git npm composer grunt bower gem rake brew go docker)
+
+# oh my zsh
+ZSH=$DOTFILES/oh-my-zsh
+ZSH_CUSTOM=$DOTFILES/oh-my-zsh-custom
+plugins=(git npm grunt bower gem rake brew go docker)
 DEFAULT_USER="johannes"
 UPDATE_ZSH_DAYS=4
 ZSH_THEME="agnoster"
