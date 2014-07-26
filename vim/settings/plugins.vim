@@ -32,4 +32,6 @@ Plugin 'evanmiller/nginx-vim-syntax'
 Plugin 'dag/vim2hs'
 Plugin 'groenewege/vim-less'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
-Plugin 'fatih/vim-go'
+if has('lua')
+  Plugin 'fatih/vim-go'
+end
