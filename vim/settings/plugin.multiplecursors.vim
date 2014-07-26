@@ -1,9 +1,11 @@
-function! Multiple_cursors_before()
+if has('lua')
+  function! Multiple_cursors_before()
     exe 'NeoCompleteLock'
     echo 'Disabled autocomplete'
-endfunction
+  endfunction
 
-function! Multiple_cursors_after()
+  function! Multiple_cursors_after()
     exe 'NeoCompleteUnlock'
     echo 'Enabled autocomplete'
-endfunction
+  endfunction
+endif
