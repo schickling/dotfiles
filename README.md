@@ -17,5 +17,5 @@ $ bash .dotfiles/install.sh
 Full gist: https://gist.github.com/schickling/733bd20b1b276e408fbd
 
 ```sh
-$ wget -O t http://goo.gl/ng6Nys && bash t; rm t; . ~/.bashrc
+$ wget -O t http://goo.gl/ng6Nys && bash t; rm t; . ~/.bash_profile
 ```
