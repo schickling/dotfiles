@@ -27,7 +27,7 @@ Plugin 'bling/vim-bufferline'
 " Languages
 Plugin 'othree/html5.vim'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'honza/dockerfile.vim'
+Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'evanmiller/nginx-vim-syntax'
