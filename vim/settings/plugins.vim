@@ -10,7 +10,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/syntastic'
 if has('lua')
   Plugin 'Shougo/neocomplete.vim'
-end
+endif
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 Plugin 'Raimondi/delimitMate'
@@ -36,4 +36,4 @@ Plugin 'groenewege/vim-less'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 if has('lua')
   Plugin 'fatih/vim-go'
-end
+endif
