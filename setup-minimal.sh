@@ -10,10 +10,10 @@ echo 'export DOTFILES=$HOME/.dotfiles' >> ~/.bashrc
 echo 'source $DOTFILES/aliases/unix.sh' >> ~/.bashrc
 echo 'source $DOTFILES/aliases/git.sh' >> ~/.bashrc
 echo 'source ~/.bashrc' >> ~/.bash_profile
-source ~/.bashrc
 
 # setup dotfiles
 git clone https://github.com/schickling/dotfiles.git ~/.dotfiles
+source ~/.bashrc
 mkdir -p ~/.vim/{backups,swaps}
 ln -s ~/.dotfiles/vim/colors ~/.vim/colors
 ln -s ~/.dotfiles/vimrc ~/.vimrc
