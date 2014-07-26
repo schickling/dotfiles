@@ -21,4 +21,4 @@ ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 
 # setup vundle
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
+#vim +PluginInstall +qall
