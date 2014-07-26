@@ -8,7 +8,9 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/syntastic'
-Plugin 'Shougo/neocomplete.vim'
+if has('lua')
+  Plugin 'Shougo/neocomplete.vim'
+end
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 Plugin 'Raimondi/delimitMate'
@@ -32,4 +34,6 @@ Plugin 'evanmiller/nginx-vim-syntax'
 Plugin 'dag/vim2hs'
 Plugin 'groenewege/vim-less'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
-Plugin 'fatih/vim-go'
+if has('lua')
+  Plugin 'fatih/vim-go'
+end
