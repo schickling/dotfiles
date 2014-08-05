@@ -83,9 +83,15 @@ function! <SID>ToggleBackground()
 endfunction
 
 if &term =~ '^screen'
-    " tmux knows the extended mouse mode
-    set ttymouse=xterm2
 endif
 
 let g:neocomplete#enable_at_startup = 1
 let g:go_snippet_engine = "neosnippet"
+
+if &term =~ '^xterm'
+  " thin cursor in insert mode
+  let &t_SI .= "\<Esc>[6 q"
+  let &t_EI .= "\<Esc>[2 q"
+  " tmux knows the extended mouse mode
+  set ttymouse=xterm2
+endif
