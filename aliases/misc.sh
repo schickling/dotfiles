@@ -32,11 +32,6 @@ alias dci="dcc && docker images -q | xargs docker rmi"
 alias dir="docker run -i -t"
 alias b2d="boot2docker"
 
-# folders #############
-alias dr="cd $HOME/Dropbox"
-alias de="cd $HOME/Desktop"
-alias p="cd $HOME/Desktop/projects"
-
 # haskell #############
 alias ghci="ghci -v0"
 alias h="ghci"
@@ -50,14 +45,6 @@ alias c="composer"
 alias a="php artisan"
 alias pu="phpunit"
 alias rdb="a migrate:refresh --seed"
-
-# capistrano ##########
-alias deploy="cap production deploy"
-
-# grunt ###############
-alias grsv="grunt server"
-alias grp="grunt publish"
-alias grr="grunt reset"
 
 # repeats a command
 function again() {
