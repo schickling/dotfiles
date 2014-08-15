@@ -20,6 +20,7 @@ alias ws="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias lo="pmset displaysleepnow"
 alias tl="translate {=de}"
+alias todo="v ~/Dropbox/Documents/TODO.md"
 
 # cordova #############
 alias cor="cordova"
