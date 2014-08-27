@@ -682,9 +682,9 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>829 87 445 270 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>231 223 924 485 0 0 1440 878 </string>
+	<string>231 223 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 900 0 0 1440 878 </string>
+	<string>0 377 650 501 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>669 94 730 526 0 0 1440 878 </string>
 	<key>NeverWarnAboutShortLivedSessions_241695EB-1C14-41F3-96CD-E0EFB134AC79</key>
@@ -1405,7 +1405,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>Working Directory</key>
 			<string>/Users/johannes</string>
 		</dict>
@@ -2205,7 +2205,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-08-15T06:09:58Z</date>
+	<date>2014-08-23T10:30:00Z</date>
 	<key>SUSkippedVersion</key>
 	<string>1.0.0.20140421</string>
 	<key>SavePasteHistory</key>

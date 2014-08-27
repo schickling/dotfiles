@@ -14,6 +14,8 @@ alias v="vim"
 
 alias s="ssh"
 
+alias w="which"
+
 alias ka="killall"
 alias k9="kill -9"
 
