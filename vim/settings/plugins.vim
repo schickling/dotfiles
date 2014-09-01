@@ -1,6 +1,6 @@
 " Layout
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'itchyny/lightline.vim'
+Plugin 'bling/vim-airline'
 
 " Tools
 Plugin 'scrooloose/nerdcommenter'
@@ -22,7 +22,6 @@ Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'bling/vim-bufferline'
 
 " Languages
 Plugin 'othree/html5.vim'
