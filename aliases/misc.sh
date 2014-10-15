@@ -1,6 +1,6 @@
 # config ##############
-alias cv="v $DOTFILES/vim/settings/config.vim"
-alias cbundle="v $DOTFILES/vim/settings/plugins.vim"
+alias cv="v $DOTFILES/vim/config.vim"
+alias cbundle="v $DOTFILES/vim/plugins.vim"
 alias ct="v $DOTFILES/aliases/misc.sh"
 alias cm="v $DOTFILES/tmux.conf"
 alias ck="v $HOME/.ssh/known_hosts"

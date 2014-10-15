@@ -1,5 +1,4 @@
-syntax enable
-colorscheme solarized
+syntax on
 set background=dark
 set number
 "set paste " don't realign on paste in insert mode
@@ -67,8 +66,7 @@ au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
 au BufWritePre *.{js} :call JsBeautify()
-au BufWritePre *.{html} :call HtmlBeautify()
-au BufWritePost *.{tex} silent execute 'Latexmk'
+"au BufWritePre *.{html} :call HtmlBeautify()
 
 " Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
@@ -95,3 +93,4 @@ if &term =~ '^xterm'
   " tmux knows the extended mouse mode
   set ttymouse=xterm2
 endif
+
