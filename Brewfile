@@ -1,18 +1,26 @@
 update
 upgrade
 
-install jq
-install rbenv
 install vim
+install tmux
 install ag
 install tree
 install git
 install nodejs
-install youtube-dl
-install ffmpeg
+install boot2docker
 
 tap phinze/cask
 install brew-cask
-cask install google-chrome
+cask install google-chrome-canary
+cask install iterm2
+cask install vlc
+cask install sequel-pro
 cask install virtualbox
-cask install vagrant
+cask install tunnelblick
+cask install dropbox
+cask install flux
+cask install firefox
+cask install github
+cask install skype
+cask install macdown
+cask install seil

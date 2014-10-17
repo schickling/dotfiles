@@ -7,6 +7,7 @@ alias ck="v $HOME/.ssh/known_hosts"
 alias cs="v $HOME/.ssh/config"
 alias ch="sudo v /etc/hosts"
 alias dot="cd $DOTFILES"
+alias sec="cd $SECFILES"
 
 # misc ################
 alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"

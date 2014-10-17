@@ -3,6 +3,7 @@
 #########################
 
 DOTFILES=$HOME/.dotfiles
+SECFILES=$HOME/.secret
 
 # oh my zsh
 ZSH=$DOTFILES/oh-my-zsh
