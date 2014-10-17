@@ -3,6 +3,7 @@ upgrade
 
 install vim
 install tmux
+install go
 install ag
 install tree
 install git
@@ -24,3 +25,4 @@ cask install github
 cask install skype
 cask install macdown
 cask install seil
+cask install the-unarchiver
