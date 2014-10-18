@@ -1,28 +1,28 @@
-update
-upgrade
+brew update
+brew upgrade
 
-install vim
-install tmux
-install go
-install ag
-install tree
-install git
-install nodejs
-install boot2docker
+brew install macvim
+brew install tmux
+brew install go
+brew install ag
+brew install z
+brew install tree
+brew install git
+brew install nodejs
+brew install boot2docker
 
-tap phinze/cask
-install brew-cask
-cask install google-chrome-canary
-cask install iterm2
-cask install vlc
-cask install sequel-pro
-cask install virtualbox
-cask install tunnelblick
-cask install dropbox
-cask install flux
-cask install firefox
-cask install github
-cask install skype
-cask install macdown
-cask install seil
-cask install the-unarchiver
+brew tap phinze/cask
+brew install brew-cask
+brew cask install iterm2
+brew cask install vlc
+brew cask install sequel-pro
+brew cask install virtualbox
+brew cask install tunnelblick
+brew cask install dropbox
+brew cask install flux
+brew cask install firefox
+brew cask install github
+brew cask install skype
+brew cask install macdown
+brew cask install seil
+brew cask install the-unarchiver
