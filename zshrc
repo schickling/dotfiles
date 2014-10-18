@@ -40,6 +40,7 @@ PATH=$GOPATH/bin:$PATH
 #########################
 
 source $ZSH/oh-my-zsh.sh
+source $(brew --prefix)/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 for f in $DOTFILES/aliases/*.sh; do source $f; done
