@@ -11,7 +11,7 @@ ZSH_CUSTOM=$DOTFILES/oh-my-zsh-custom
 plugins=(git npm brew go docker)
 DEFAULT_USER="johannes"
 UPDATE_ZSH_DAYS=4
-ZSH_THEME="ys"
+ZSH_THEME="pure"
 
 # paths
 export EDITOR=vim
