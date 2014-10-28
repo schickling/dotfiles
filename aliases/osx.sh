@@ -1,1 +1,2 @@
-# alias vim="mvim -v"
+alias vim="nvim"
+#alias vim="mvim -v"

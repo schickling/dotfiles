@@ -3,6 +3,7 @@ brew upgrade
 
 brew install macvim
 brew install tmux
+brew install hg
 brew install go
 brew install ag
 brew install z
@@ -13,6 +14,8 @@ brew install boot2docker
 
 brew tap phinze/cask
 brew install brew-cask
+
+brew cask install qlmarkdown
 brew cask install iterm2
 brew cask install vlc
 brew cask install sequel-pro

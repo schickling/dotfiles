@@ -1,7 +1,7 @@
 " Layout
 Plugin 'altercation/vim-colors-solarized'
 Bundle 'edkolev/tmuxline.vim'
-Bundle 'bling/vim-airline'
+Bundle 'itchyny/lightline.vim'
 
 " Tools
 Plugin 'scrooloose/nerdcommenter'

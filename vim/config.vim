@@ -9,7 +9,7 @@ set expandtab
 set visualbell
 set noerrorbells
 set laststatus=2
-"set backspace+=start,eol,indent
+set backspace+=start,eol,indent
 set cursorline
 set autochdir
 "set shell=/bin/bash " Fix path"
@@ -94,3 +94,8 @@ if &term =~ '^xterm'
   set ttymouse=xterm2
 endif
 
+
+if has('nvim')
+  runtime! plugin/python_setup.vim
+  set unnamedclip
+endif

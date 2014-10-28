@@ -15,7 +15,9 @@ ZSH_THEME="agnoster"
 
 # paths
 export EDITOR=vim
-export DOCKER_HOST=tcp://192.168.59.103:2375
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
 export GOPATH=$HOME/.go
 export DOTFILES=$HOME/.dotfiles
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages
