@@ -23,9 +23,11 @@ Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'godlygeek/tabular'
 
 " Languages
 Plugin 'othree/html5.vim'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'pangloss/vim-javascript'

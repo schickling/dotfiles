@@ -11,21 +11,13 @@ alias sec="cd $SECFILES"
 
 # misc ################
 alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"
-alias rnginx="sudo nginx -s stop && sudo nginx"
 alias rr="source $HOME/.zshrc && clear"
-alias rbundle="rm Gemfile.lock && bundle"
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
 alias ard="vlc http://daserste_live-lh.akamaihd.net/i/daserste_de@91204/master.m3u8"
-alias ym="youtube-dl -x"
 alias ws="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias lo="pmset displaysleepnow"
-alias tl="translate {=de}"
 alias todo="v ~/Dropbox/Documents/TODO.md"
-
-# cordova #############
-alias cor="cordova"
-alias cb="cordova build"
 
 # docker ##############
 alias d="docker"
@@ -42,12 +34,6 @@ alias h="ghci"
 alias k="karma start"
 alias kd="karma start --browsers /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
 
-# php #################
-alias c="composer"
-alias a="php artisan"
-alias pu="phpunit"
-alias rdb="a migrate:refresh --seed"
-
 # repeats a command
 function again() {
 	while [ 1 ]; do
@@ -57,7 +43,7 @@ function again() {
 }
 
 function dknown() {
-  vim ~/.ssh/known_hosts +$1 +d +wq
+  v ~/.ssh/known_hosts +$1 +d +wq
 }
 
 function o() {
