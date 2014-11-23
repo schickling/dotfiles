@@ -23,7 +23,7 @@ alias todo="v ~/Dropbox/Documents/TODO.md"
 alias d="docker"
 alias dcc="docker ps -q | xargs docker kill ; docker ps -aq | xargs docker rm"
 alias dci="dcc && docker images -q | xargs docker rmi"
-alias dir="docker run -i -t"
+alias dir="docker run -i -t --rm"
 alias b2d="boot2docker"
 
 # haskell #############
@@ -42,8 +42,12 @@ function again() {
 	done
 }
 
+function de() {
+  docker exec -it $1 bash
+}
+
 function dknown() {
-  v ~/.ssh/known_hosts +$1 +d +wq
+  vim ~/.ssh/known_hosts +$1 +d +wq
 }
 
 function o() {
@@ -52,4 +56,8 @@ function o() {
 	else
 		open "$@";
 	fi;
+}
+
+function dri() {
+  docker ps -a | grep $1 | cut -f 1 -d " " | xargs docker kill | xargs docker rm && docker rmi $1
 }

@@ -61,7 +61,9 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} set ft=mkd
 au BufRead,BufNewFile *.{coffee} set ft=coffee
 au BufRead,BufNewFile *.{go} set ft=go
+au BufRead,BufNewFile *.{rs} set ft=rust colorcolumn=99
 au BufRead,BufNewFile *.{xtx} set ft=tex
+au BufRead,BufNewFile *.{toml} set ft=toml
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 

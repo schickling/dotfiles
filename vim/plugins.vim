@@ -27,6 +27,7 @@ Plugin 'godlygeek/tabular'
 
 " Languages
 Plugin 'othree/html5.vim'
+Plugin 'wting/rust.vim'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'ekalinin/Dockerfile.vim'
@@ -36,6 +37,7 @@ Plugin 'evanmiller/nginx-vim-syntax'
 Plugin 'dag/vim2hs'
 Plugin 'groenewege/vim-less'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'cespare/vim-toml'
 if has('lua')
   Plugin 'fatih/vim-go'
 endif

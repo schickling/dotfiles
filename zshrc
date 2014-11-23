@@ -46,3 +46,16 @@ source $(brew --prefix)/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 for f in $DOTFILES/aliases/*.sh; do source $f; done
+
+#########################
+# keybinding ############
+#########################
+
+#set -o vi
+
+#typeset -A key
+#key[Up]=${terminfo[kcuu1]}
+#key[Down]=${terminfo[kcud1]}
+
+#[[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   history-search-backward
+#[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" history-search-forward
