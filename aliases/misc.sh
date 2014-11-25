@@ -24,6 +24,7 @@ alias d="docker"
 alias dcc="docker ps -q | xargs docker kill ; docker ps -aq | xargs docker rm"
 alias dci="dcc && docker images -q | xargs docker rmi"
 alias dir="docker run -i -t --rm"
+alias di="docker images"
 alias b2d="boot2docker"
 
 # haskell #############

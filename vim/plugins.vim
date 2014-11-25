@@ -24,6 +24,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'nelstrom/vim-qargs'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'godlygeek/tabular'
+Plugin 'bling/vim-bufferline'
 
 " Languages
 Plugin 'othree/html5.vim'
