@@ -24,8 +24,10 @@ alias d="docker"
 alias dcc="docker ps -q | xargs docker kill ; docker ps -aq | xargs docker rm"
 alias dci="dcc && docker images -q | xargs docker rmi"
 alias dir="docker run -i -t --rm"
+alias dirv="docker run -i -t --rm -v $(pwd):/source -w /source"
 alias di="docker images"
 alias b2d="boot2docker"
+
 
 # haskell #############
 alias ghci="ghci -v0"
@@ -36,22 +38,22 @@ alias k="karma start"
 alias kd="karma start --browsers /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
 
 # repeats a command
-function again() {
+again() {
 	while [ 1 ]; do
 		eval $2 $3 $4 $5
 		sleep $1
 	done
 }
 
-function de() {
+de() {
   docker exec -it $1 bash
 }
 
-function dknown() {
+dknown() {
   vim ~/.ssh/known_hosts +$1 +d +wq
 }
 
-function o() {
+o() {
 	if [ $# -eq 0 ]; then
 		open .;
 	else
@@ -59,6 +61,43 @@ function o() {
 	fi;
 }
 
-function dri() {
+dri() {
   docker ps -a | grep $1 | cut -f 1 -d " " | xargs docker kill | xargs docker rm && docker rmi $1
+}
+
+rmc() {
+  old_dir=$(pwd)
+  ask "Do you really want to delete the current directory?" "Y" && cd .. && rm -rf $old_dir
+}
+
+ask() {
+    # http://djm.me/ask
+    while true; do
+ 
+        if [ "${2:-}" = "Y" ]; then
+            opts="Y/n"
+            default=Y
+        elif [ "${2:-}" = "N" ]; then
+            opts="y/N"
+            default=N
+        else
+            opts="y/n"
+            default=
+        fi
+ 
+        # Ask the question
+        read "REPLY?$1 [$opts]"
+ 
+        # Default?
+        if [ -z "$REPLY" ]; then
+            REPLY=$default
+        fi
+ 
+        # Check if the reply is valid
+        case "$REPLY" in
+            Y*|y*) return 0 ;;
+            N*|n*) return 1 ;;
+        esac
+ 
+    done
 }
