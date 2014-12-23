@@ -9,7 +9,7 @@ function _git_fast() {
 alias g="git"
 alias gs="git status -s"
 alias gd="git diff"
-alias gl="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short"
+alias gl="git log --pretty=format:'%C(yellow)%h %Cred%ar %Cblue%an%Cgreen%d %Creset%s' --date=short"
 alias gps="git push"
 alias gp="git pull"
 alias gh="git reset --hard"

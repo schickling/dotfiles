@@ -21,6 +21,7 @@ export DOCKER_TLS_VERIFY=1
 export GOPATH=$HOME/.go
 export DOTFILES=$HOME/.dotfiles
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages
+export NVM_DIR=~/.nvm
 
 PATH=/usr/local/bin
 PATH=/usr/bin:$PATH
@@ -44,6 +45,7 @@ PATH=$GOPATH/bin:$PATH
 source $ZSH/oh-my-zsh.sh
 source $(brew --prefix)/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $(brew --prefix nvm)/nvm.sh
 
 for f in $DOTFILES/aliases/*.sh; do source $f; done
 

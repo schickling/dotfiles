@@ -18,6 +18,7 @@ alias ws="python -m SimpleHTTPServer"
 alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias lo="pmset displaysleepnow"
 alias todo="v ~/Dropbox/Documents/TODO.md"
+alias :q="exit"
 
 # docker ##############
 alias d="docker"
