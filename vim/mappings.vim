@@ -47,5 +47,12 @@ noremap <leader>\ :ToggleBackground<CR>
 noremap <leader>g :Gstatus<CR>
 
 " vpaste
-map vv :exec "w !vpaste ft=".&ft<CR>
-vmap vv <ESC>:exec "'<,'>w !vpaste ft=".&ft<CR>
+map <leader>\ :exe "w !vpaste ft=".&ft<CR><CR>
+vmap <leader>\ <ESC>:exe "'<,'>w !vpaste ft=".&ft<CR><CR>
+
+" Yank text to the OS X clipboard
+noremap <leader>y "*y
+noremap <leader>yy "*Y
+
+" Preserve indentation while pasting text from the OS X clipboard
+noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>

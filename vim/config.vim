@@ -38,7 +38,7 @@ set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 
 let mapleader = ","
-set clipboard=unnamed
+"set clipboard=unnamed
 set visualbell
 set noerrorbells
 set mouse=a
@@ -61,6 +61,7 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} set ft=mkd
 au BufRead,BufNewFile *.{coffee} set ft=coffee
 au BufRead,BufNewFile *.{go} set ft=go
+au BufRead,BufNewFile *.{less} set ft=less
 au BufRead,BufNewFile *.{rs} set ft=rust colorcolumn=99
 au BufRead,BufNewFile *.{xtx} set ft=tex
 au BufRead,BufNewFile *.{toml} set ft=toml

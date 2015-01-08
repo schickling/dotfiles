@@ -7,7 +7,8 @@ export EXCLUDE=${3:-"node_modules"}
 # sync current directory to ~/share on the vm
 boot2docker_sync() {
   echo -n "sync $(basename $SRC)"
-  rsync -rlz --force --delete --exclude ".git" --exclude $EXCLUDE $SRC $DEST
+  rsync -rlz --force --exclude ".git" --exclude $EXCLUDE $SRC $DEST
+  #rsync -rlz --force --delete --exclude ".git" --exclude $EXCLUDE $SRC $DEST
   echo " ($(date +'%T'))"
 }
 
