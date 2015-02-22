@@ -67,6 +67,7 @@ au BufRead,BufNewFile *.{rs} set ft=rust colorcolumn=99
 au BufRead,BufNewFile *.{py} set colorcolumn=79
 au BufRead,BufNewFile *.{xtx} set ft=tex
 au BufRead,BufNewFile *.{toml} set ft=toml
+au BufRead,BufNewFile *.{fish} set ft=fish
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
