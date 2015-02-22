@@ -51,7 +51,7 @@ alias gco "git checkout"
 alias gcl "git clone"
 alias gr "ask; and git clean -fd; and git checkout ."
 alias gt "git tag"
-alias gf "git pull; and git add -A .; and git commit -m $argv; and git push"
+alias gf "_git_fast"
 
 # misc ################
 alias sshkey "cat ~/.ssh/id_rsa.pub | pbcopy; and echo 'Copied to clipboard.'"
