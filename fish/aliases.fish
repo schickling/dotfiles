@@ -51,7 +51,7 @@ alias gco "git checkout"
 alias gcl "git clone"
 alias gr "ask; and git clean -fd; and git checkout ."
 alias gt "git tag"
-alias gf "git pull; and git add -A .; and git commit -m '$1'; and git push"
+alias gf "git pull; and git add -A .; and git commit -m $argv; and git push"
 
 # misc ################
 alias sshkey "cat ~/.ssh/id_rsa.pub | pbcopy; and echo 'Copied to clipboard.'"
@@ -73,7 +73,7 @@ alias dcc "docker ps -q | xargs docker kill ; docker ps -aq | xargs docker rm"
 alias dci "dcc; and docker images -q | xargs docker rmi"
 alias dir "docker run -i -t --rm"
 alias dirv "docker run -i -t --rm -v (pwd):/source -w /source"
-alias dri "docker ps -a | grep $1 | cut -f 1 -d ' ' | xargs docker kill | xargs docker rm; and docker rmi $1"
+alias dri "docker ps -a | grep $argv | cut -f 1 -d ' ' | xargs docker kill | xargs docker rm; and docker rmi $argv"
 alias di "docker images"
 alias b2d "boot2docker"
 
