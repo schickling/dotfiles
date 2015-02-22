@@ -1,6 +1,7 @@
 set -x DOTFILES $HOME/.config
 set -x SECFILES $HOME/.secret
 
+# Define path
 set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin
 
 # Set where to install casks
@@ -28,4 +29,5 @@ eval (direnv hook fish)
 # Enable autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and . /usr/local/share/autojump/autojump.fish
 
-source aliases.fish
+# Import aliases
+[ -f $DOTFILES/fish/aliases.fish ]; and . $DOTFILES/fish/aliases.fish
