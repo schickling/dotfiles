@@ -41,7 +41,7 @@ map Q :wqa<CR>
 noremap <leader>/ :nohl<CR>
 
 " toggle color schema
-noremap <leader>\ :ToggleBackground<CR>
+noremap <leader>] :ToggleBackground<CR>
 
 " fugitive (git)
 noremap <leader>g :Gstatus<CR>

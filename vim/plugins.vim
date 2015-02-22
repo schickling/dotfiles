@@ -25,6 +25,7 @@ Plugin 'nelstrom/vim-qargs'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'godlygeek/tabular'
 Plugin 'bling/vim-bufferline'
+Plugin 'tpope/vim-abolish' " Case convertion
 
 " Languages
 Plugin 'othree/html5.vim'
@@ -39,6 +40,4 @@ Plugin 'groenewege/vim-less'
 Plugin 'cespare/vim-toml'
 Plugin 'fatih/vim-go'
 Plugin 'mxw/vim-jsx'
-if has('lua')
-  Plugin 'fatih/vim-go'
-endif
+Plugin 'nvie/vim-flake8'

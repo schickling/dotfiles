@@ -12,8 +12,9 @@ set laststatus=2
 set backspace+=start,eol,indent
 set cursorline
 set autochdir
-"set shell=/bin/bash " Fix path"
 set wildmenu
+
+set nowritebackup " prevent vim from creating ultra shortliving tmp files
 
 scriptencoding utf-8
 set encoding=utf-8
@@ -38,7 +39,7 @@ set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 
 let mapleader = ","
-"set clipboard=unnamed
+set clipboard=unnamed
 set visualbell
 set noerrorbells
 set mouse=a
@@ -63,6 +64,7 @@ au BufRead,BufNewFile *.{coffee} set ft=coffee
 au BufRead,BufNewFile *.{go} set ft=go
 au BufRead,BufNewFile *.{less} set ft=less
 au BufRead,BufNewFile *.{rs} set ft=rust colorcolumn=99
+au BufRead,BufNewFile *.{py} set colorcolumn=79
 au BufRead,BufNewFile *.{xtx} set ft=tex
 au BufRead,BufNewFile *.{toml} set ft=toml
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
@@ -97,8 +99,6 @@ if &term =~ '^xterm'
   set ttymouse=xterm2
 endif
 
-
-if has('nvim')
-  runtime! plugin/python_setup.vim
-  set unnamedclip
-endif
+"if has('nvim')
+  "let g:python_host_prog=/usr/local/bin/python
+"end

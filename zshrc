@@ -4,6 +4,7 @@
 
 DOTFILES=$HOME/.dotfiles
 SECFILES=$HOME/.secret
+PROJECTS=$HOME/Desktop/projects
 
 # oh my zsh
 ZSH=$DOTFILES/oh-my-zsh
@@ -18,10 +19,13 @@ export EDITOR=vim
 export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=1
-export GOPATH=$HOME/.go
+export GOPATH=$PROJECTS/go
 export DOTFILES=$HOME/.dotfiles
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages
+#export PYTHONPATH=/usr/local/lib/python2.7/site-packages
+#export PYTHONPATH=/usr/local/lib/python3.4/site-packages
 export NVM_DIR=~/.nvm
+
+unset PYTHONPATH
 
 PATH=/usr/local/bin
 PATH=/usr/bin:$PATH
@@ -33,9 +37,7 @@ PATH=/usr/local/bin:$PATH
 PATH=/usr/local/sbin:$PATH
 PATH=$HOME/.bin:$PATH
 PATH=$DOTFILES/bin:$PATH
-PATH=$HOME/.composer/vendor/bin:$PATH
 PATH=$HOME/Library/Haskell/bin:$PATH
-PATH=$HOME/.rbenv/shims:$PATH
 PATH=$GOPATH/bin:$PATH
 
 #########################
@@ -48,6 +50,8 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix nvm)/nvm.sh
 
 for f in $DOTFILES/aliases/*.sh; do source $f; done
+
+eval "$(direnv hook zsh)"
 
 #########################
 # keybinding ############

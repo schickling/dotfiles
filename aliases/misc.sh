@@ -19,6 +19,9 @@ alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias lo="pmset displaysleepnow"
 alias todo="v ~/Dropbox/Documents/TODO.md"
 alias :q="exit"
+alias p="python"
+alias p2="python2"
+alias p3="python3"
 
 # docker ##############
 alias d="docker"
@@ -54,12 +57,28 @@ dknown() {
   vim ~/.ssh/known_hosts +$1 +d +wq
 }
 
+join() { local IFS="$1"; shift; echo "$*"; }
+
+tunnel() {
+  n=$#@[@]
+  host=$@[$n]
+  ports=("${@[@]:1:$n-1}")
+  mapped_ports=()
+  for port in ${ports[@]}
+  do
+    mapped_ports+=("-L $port":localhost:"$port")
+    mapped_ports+=("-L $(lip)":"$port":localhost:"$port")
+  done
+  ports_str=$(join " " ${mapped_ports[@]})
+  ssh $(echo "-nNT $ports_str $host")
+}
+
 o() {
-	if [ $# -eq 0 ]; then
-		open .;
-	else
-		open "$@";
-	fi;
+  if [ $# -eq 0 ]; then
+    open .;
+  else
+    open "$@";
+  fi;
 }
 
 dri() {
@@ -72,33 +91,33 @@ rmc() {
 }
 
 ask() {
-    # http://djm.me/ask
-    while true; do
- 
-        if [ "${2:-}" = "Y" ]; then
-            opts="Y/n"
-            default=Y
-        elif [ "${2:-}" = "N" ]; then
-            opts="y/N"
-            default=N
-        else
-            opts="y/n"
-            default=
-        fi
- 
-        # Ask the question
-        read "REPLY?$1 [$opts]"
- 
-        # Default?
-        if [ -z "$REPLY" ]; then
-            REPLY=$default
-        fi
- 
-        # Check if the reply is valid
-        case "$REPLY" in
-            Y*|y*) return 0 ;;
-            N*|n*) return 1 ;;
-        esac
- 
-    done
+  # http://djm.me/ask
+  while true; do
+
+    if [ "${2:-}" = "Y" ]; then
+      opts="Y/n"
+      default=Y
+    elif [ "${2:-}" = "N" ]; then
+      opts="y/N"
+      default=N
+    else
+      opts="y/n"
+      default=
+    fi
+
+    # Ask the question
+    read "REPLY?$1 [$opts]"
+
+    # Default?
+    if [ -z "$REPLY" ]; then
+      REPLY=$default
+    fi
+
+    # Check if the reply is valid
+    case "$REPLY" in
+      Y*|y*) return 0 ;;
+      N*|n*) return 1 ;;
+    esac
+
+  done
 }

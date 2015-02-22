@@ -21,6 +21,8 @@ alias k9="kill -9"
 
 alias ..="cd .."
 alias ...="cd ..."
+alias ....="cd ...."
+alias .....="cd ....."
 
 function mkd() {
   mkdir $1
