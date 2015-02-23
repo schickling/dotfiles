@@ -1,84 +1,88 @@
+# reset abbreviations
 set -U fish_user_abbreviations
+
 # config ##############
-alias cv="v $DOTFILES/vim/config.vim"
-alias ct="v $DOTFILES/aliases/misc.sh"
-alias cm="v $DOTFILES/tmux.conf"
-alias ck="v $HOME/.ssh/known_hosts"
-alias cs="v $HOME/.ssh/config"
-alias ch="sudo v /etc/hosts"
-alias dot="cd $DOTFILES"
-alias sec="cd $SECFILES"
+alias cv "v $DOTFILES/vim/config.vim"
+alias cf "v $DOTFILES/fish/aliases.fish"
+alias cm "v $DOTFILES/tmux/.tmux.conf"
+alias ck "v $HOME/.ssh/known_hosts"
+alias cs "v $HOME/.ssh/config"
+alias ch "sudo v /etc/hosts"
+alias dot "cd $DOTFILES"
+alias sec "cd $SECFILES"
 
 
 # listing #############
-alias l="ls -lh"
+alias l "ls -lh"
 
-abbr rrm="rm -rf"
+short rrm "rm -rf"
 
-abbr t="tmux"
-abbr tl="tmux ls"
-abbr ta="tmux attach -t"
-abbr ts="tmux new -s"
-abbr tk="tmux kill-session -t"
+short t "tmux"
+short tl "tmux ls"
+short ta "tmux attach -t"
+short ts "tmux new -s"
+short tk "tmux kill-session -t"
 
-alias v="nvim"
+alias v "nvim"
 
-alias z="j"
+alias z "j"
 
-abbr s="ssh"
+short s "ssh"
 
-abbr ka="killall"
-abbr k9="kill -9"
+short ka "killall"
+short k9 "kill -9"
 
-alias ..="cd .."
-alias ...="cd ..."
-alias ....="cd ...."
-alias .....="cd ....."
+alias .. "cd .."
+alias ... "cd ..."
+alias .... "cd ...."
+alias ..... "cd ....."
 
 
 # git ################
-abbr g="git"
-abbr gs="git status -s"
-abbr gd="git diff"
-abbr gps="git push"
-abbr gp="git pull"
-abbr gcm="git commit"
-abbr ga="git add"
-abbr gco="git checkout"
-abbr gcl="git clone"
-abbr gt="git tag"
-alias gfix="git rm -r --cached .; and git add ."
-alias gl="git log --pretty=format:'%C(yellow)%h %Cred%ar %Cblue%an%Cgreen%d %Creset%s' --date=short"
-alias gr="ask; and git clean -fd; and git checkout ."
-alias gf="_git_fast"
+short g "git"
+short gs "git status -s"
+short gd "git diff"
+short gps "git push"
+short gp "git pull"
+short gcm "git commit"
+short ga "git add"
+short gco "git checkout"
+short gcl "git clone"
+short gt "git tag"
+alias gfix "git rm -r --cached .; and git add ."
+alias gl "git log --pretty=format:'%C(yellow)%h %Cred%ar %Cblue%an%Cgreen%d %Creset%s' --date=short"
+alias gr "ask; and git clean -fd; and git checkout ."
+alias gf "_git_fast"
 
 # misc ################
-alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy; and echo 'Copied to clipboard.'"
-alias rr="source $HOME/.zshrc; and clear"
-alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
-alias ard="vlc http://daserste_live-lh.akamaihd.net/i/daserste_de@91204/master.m3u8"
-alias ws="python -m SimpleHTTPServer"
-alias lip="ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
-alias lo="pmset displaysleepnow"
-alias todo="v ~/Dropbox/Documents/TODO.md"
-alias :q="exit"
-abbr p="python"
-abbr p2="python2"
-abbr p3="python3"
+alias sshkey "cat ~/.ssh/id_rsa.pub | pbcopy; and echo 'Copied to clipboard.'"
+alias rr "source $HOME/.zshrc; and clear"
+alias vlc "/Applications/VLC.app/Contents/MacOS/VLC"
+alias ard "vlc http://daserste_live-lh.akamaihd.net/i/daserste_de@91204/master.m3u8"
+alias ws "python -m SimpleHTTPServer"
+alias lip "ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
+alias lo "pmset displaysleepnow"
+alias todo "v ~/Dropbox/Documents/TODO.md"
+alias :q "exit"
+
+alias python "python3"
+short p "python"
+short p2 "python2"
+short p3 "python3"
 
 # docker ##############
-alias d="docker"
-alias dcc="docker ps -q | xargs docker kill ; docker ps -aq | xargs docker rm"
-alias dci="dcc; and docker images -q | xargs docker rmi"
-alias dir="docker run -i -t --rm"
-alias dirv="docker run -i -t --rm -v (pwd):/source -w /source"
-alias dri="docker ps -a | grep $argv | cut -f 1 -d ' ' | xargs docker kill | xargs docker rm; and docker rmi $argv"
-alias di="docker images"
-alias b2d="boot2docker"
+short d "docker"
+short di "docker images"
+short b2d "boot2docker"
+short dir "docker run -i -t --rm"
+short dirv "docker run -i -t --rm -v (pwd):/source -w /source"
+alias dcc "docker ps -q | xargs docker kill ; docker ps -aq | xargs docker rm"
+alias dci "dcc; and docker images -q | xargs docker rmi"
+alias dri "docker ps -a | grep $argv | cut -f 1 -d ' ' | xargs docker kill | xargs docker rm; and docker rmi $argv"
 
 # haskell #############
-alias ghci="ghci -v0"
-alias h="ghci"
+alias ghci "ghci -v0"
+alias h "ghci"
 
 
 #again() {
@@ -96,7 +100,7 @@ alias h="ghci"
   #vim ~/.ssh/known_hosts +$1 +d +wq
 #}
 
-#join() { local IFS="$1"; shift; echo="$*"; }
+#join() { local IFS "$1"; shift; echo "$*"; }
 
 #tunnel() {
   #n=$#@[@]
@@ -108,52 +112,52 @@ alias h="ghci"
     #mapped_ports+=("-L $port":localhost:"$port")
     #mapped_ports+=("-L $(lip)":"$port":localhost:"$port")
   #done
-  #ports_str=$(join="=" ${mapped_ports[@]})
-  #ssh $(echo="-nNT $ports_str $host")
+  #ports_str=$(join " " ${mapped_ports[@]})
+  #ssh $(echo "-nNT $ports_str $host")
 #}
 
 #o() {
   #if [ $# -eq 0 ]; then
     #open .;
   #else
-    #open="$@";
+    #open "$@";
   #fi;
 #}
 
 #dri() {
-  #docker ps -a | grep $1 | cut -f 1 -d="=" | xargs docker kill | xargs docker rm && docker rmi $1
+  #docker ps -a | grep $1 | cut -f 1 -d " " | xargs docker kill | xargs docker rm && docker rmi $1
 #}
 
 #rmc() {
   #old_dir=$(pwd)
-  #ask="Do you really want to delete the current directory?"="Y" && cd .. && rm -rf $old_dir
+  #ask "Do you really want to delete the current directory?" "Y" && cd .. && rm -rf $old_dir
 #}
 
 #ask() {
   ## http://djm.me/ask
   #while true; do
 
-    #if [="${2:-}" =="Y" ]; then
-      #opts="Y/n"
+    #if [ "${2:-}" = "Y" ]; then
+      #opts "Y/n"
       #default=Y
-    #elif [="${2:-}" =="N" ]; then
-      #opts="y/N"
+    #elif [ "${2:-}" = "N" ]; then
+      #opts "y/N"
       #default=N
     #else
-      #opts="y/n"
+      #opts "y/n"
       #default=
     #fi
 
     ## Ask the question
-    #read="REPLY?$1 [$opts]"
+    #read "REPLY?$1 [$opts]"
 
     ## Default?
-    #if [ -z="$REPLY" ]; then
+    #if [ -z "$REPLY" ]; then
       #REPLY=$default
     #fi
 
     ## Check if the reply is valid
-    #case="$REPLY" in
+    #case "$REPLY" in
       #Y*|y*) return 0 ;;
       #N*|n*) return 1 ;;
     #esac

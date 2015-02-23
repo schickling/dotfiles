@@ -1,11 +1,18 @@
 set -x DOTFILES $HOME/.config
 set -x SECFILES $HOME/.secret
 
-# Define path
-set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin
+set -x GOPATH $HOME/.go
+
+# Define global path
+set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/bin
 
 # Set where to install casks
 set -x HOMEBREW_CASK_OPTS "--appdir=/Applications"
+
+# Prepare boot2docker
+set -x DOCKER_HOST tcp://192.168.59.103:2376
+set -x DOCKER_CERT_PATH $HOME/.boot2docker/certs/boot2docker-vm
+set -x DOCKER_TLS_VERIFY 1
 
 # Setup terminal, and turn on colors
 set -x TERM xterm-256color

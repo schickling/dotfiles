@@ -3,6 +3,7 @@ set background=dark
 set number
 "set paste " don't realign on paste in insert mode
 set smartindent
+set shell=/bin/bash
 set tabstop=2
 set shiftwidth=2
 set expandtab

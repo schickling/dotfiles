@@ -26,6 +26,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'godlygeek/tabular'
 Plugin 'bling/vim-bufferline'
 Plugin 'tpope/vim-abolish' " Case convertion
+Plugin 'zimbatm/direnv.vim'
 
 " Languages
 Plugin 'othree/html5.vim'
