@@ -33,9 +33,9 @@ short ka "killall"
 short k9 "kill -9"
 
 alias .. "cd .."
-alias ... "cd ..."
-alias .... "cd ...."
-alias ..... "cd ....."
+alias ... "cd ../.."
+alias .... "cd ../../.."
+alias ..... "cd ../../../.."
 
 
 # git ################
