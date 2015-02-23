@@ -4,7 +4,7 @@ set -x SECFILES $HOME/.secret
 set -x GOPATH $HOME/.go
 
 # Define global path
-set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/bin
+set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/bin $HOME/.bin
 
 # Set where to install casks
 set -x HOMEBREW_CASK_OPTS "--appdir=/Applications"
