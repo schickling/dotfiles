@@ -36,6 +36,8 @@ alias .. "cd .."
 alias ... "cd ../.."
 alias .... "cd ../../.."
 alias ..... "cd ../../../.."
+alias ...... "cd ../../../../.."
+alias ....... "cd ../../../../../.."
 
 
 # git ################
@@ -59,12 +61,14 @@ alias sshkey "cat ~/.ssh/id_rsa.pub | pbcopy; and echo 'Copied to clipboard.'"
 alias rr "source $HOME/.zshrc; and clear"
 alias vlc "/Applications/VLC.app/Contents/MacOS/VLC"
 alias ard "vlc http://daserste_live-lh.akamaihd.net/i/daserste_de@91204/master.m3u8"
-alias ws "python -m SimpleHTTPServer"
+alias ws "python -m http.server"
 alias lip "ifconfig en0 | grep 'inet ' | cut -d' ' -f2"
 alias lo "pmset displaysleepnow"
 alias todo "v ~/Dropbox/Documents/TODO.md"
 alias :q "exit"
+alias pw "pwgen -Bsn 20 1 | pbcopy; echo 'Password copied to clipboard'"
 
+alias pip "pip3"
 alias python "python3"
 short p "python"
 short p2 "python2"
@@ -78,7 +82,6 @@ short dir "docker run -i -t --rm"
 short dirv "docker run -i -t --rm -v (pwd):/source -w /source"
 alias dcc "docker ps -q | xargs docker kill ; docker ps -aq | xargs docker rm"
 alias dci "dcc; and docker images -q | xargs docker rmi"
-alias dri "docker ps -a | grep $argv | cut -f 1 -d ' ' | xargs docker kill | xargs docker rm; and docker rmi $argv"
 
 # haskell #############
 alias ghci "ghci -v0"
@@ -164,3 +167,4 @@ alias h "ghci"
 
   #done
 #}
+

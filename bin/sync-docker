@@ -2,13 +2,17 @@
 
 export DEST=${1:-"b2d:~/share"}
 export SRC=$(cd ${2:-$(pwd)}; pwd)/
-export EXCLUDE="node_modules"
+export EXCLUDE='--exclude ".git" --exclude "node_modules"'
+export REMOTE_HOST=${DEST%%:*}
+export REMOTE_DIR=${DEST#*:}
+
+ssh $REMOTE_HOST mkdir -p $REMOTE_DIR
 
 echo -n "syncing $(basename $SRC)"
-rsync -rlz --force --exclude ".git" --exclude $EXCLUDE $SRC $DEST
+rsync -rlz --force $EXCLUDE $SRC $DEST
 echo -e "\033[2K\r$(date +'%T')"
 
-fswatch --exclude ".git" --exclude $EXCLUDE $SRC | while read changed_file
+fswatch $EXCLUDE $SRC | while read changed_file
   do
     echo -n "syncing $(basename $SRC)"
     rel_base=${changed_file#$SRC}

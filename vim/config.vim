@@ -72,7 +72,7 @@ au BufRead,BufNewFile *.{fish} set ft=fish
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 
-au BufWritePre *.{js} :call JsBeautify()
+"au BufWritePre *.{js} :call JsBeautify()
 "au BufWritePre *.{html} :call HtmlBeautify()
 
 " Display tabs and trailing spaces visually
@@ -101,6 +101,10 @@ if &term =~ '^xterm'
   set ttymouse=xterm2
 endif
 
+" TODO remove: https://github.com/neovim/neovim/issues/2294
+nmap <BS> <C-W>h
+
 "if has('nvim')
   "let g:python_host_prog=/usr/local/bin/python
 "end
+
