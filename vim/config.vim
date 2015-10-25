@@ -1,5 +1,5 @@
 syntax on
-set background=dark
+"set background=dark
 set number
 "set paste " don't realign on paste in insert mode
 set smartindent
@@ -39,7 +39,7 @@ set undodir=$HOME/.vimundo
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 
-let mapleader = ","
+let mapleader = "\<Space>"
 set clipboard=unnamed
 set visualbell
 set noerrorbells
@@ -63,6 +63,7 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} set ft=mkd
 au BufRead,BufNewFile *.{coffee} set ft=coffee
 au BufRead,BufNewFile *.{go} set ft=go
+au BufRead,BufNewFile *.{swift} set ft=swift
 au BufRead,BufNewFile *.{less} set ft=less
 au BufRead,BufNewFile *.{rs} set ft=rust colorcolumn=99
 au BufRead,BufNewFile *.{py} set colorcolumn=79
@@ -71,6 +72,7 @@ au BufRead,BufNewFile *.{toml} set ft=toml
 au BufRead,BufNewFile *.{fish} set ft=fish
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
+au BufRead,BufNewFile *.{go} silent SyntasticToggleMode
 
 "au BufWritePre *.{js} :call JsBeautify()
 "au BufWritePre *.{html} :call HtmlBeautify()

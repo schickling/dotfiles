@@ -1692,7 +1692,9 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/.dotfiles/iterm2</string>
+	<string>~</string>
+	<key>NSNavPanelExpandedSizeForOpenMode</key>
+	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -1716,10 +1718,15 @@
 	<array/>
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
+	<key>NSToolbar Configuration com.apple.NSColorPanel</key>
+	<dict>
+		<key>TB Is Shown</key>
+		<integer>1</integer>
+	</dict>
 	<key>NSWindow Frame Preferences</key>
 	<string>269 116 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-268 900 1920 1080 -268 900 1920 1057 </string>
+	<string>502 1208 650 501 -242 900 1920 1200 </string>
 	<key>NeverWarnAboutShortLivedSessions_241695EB-1C14-41F3-96CD-E0EFB134AC79</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -2689,7 +2696,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Text</key>
-			<string></string>
+			<string>set -x OUTSIDE 1</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -3022,9 +3029,9 @@
 			<key>Selection Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.79781103134155273</real>
+				<real>0.42396673560142517</real>
 				<key>Green Component</key>
-				<real>0.89001238346099854</real>
+				<real>0.42997199296951294</real>
 				<key>Red Component</key>
 				<real>0.91611063480377197</real>
 			</dict>
@@ -3168,6 +3175,10 @@
 			<string>/Users/johannes</string>
 		</dict>
 	</array>
+	<key>NoSyncTimeOfLastPromo</key>
+	<real>453371540.20622402</real>
+	<key>NoSyncTimeOfLastPromoDownload</key>
+	<real>464621393.50601298</real>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
 	<key>OpenArrangementAtStartup</key>
@@ -3234,7 +3245,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-04-16T10:27:33Z</date>
+	<date>2015-09-23T12:06:27Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -3289,6 +3300,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>2.0.0.20150412</string>
+	<string>2.1.1</string>
 </dict>
 </plist>

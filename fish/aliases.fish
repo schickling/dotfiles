@@ -53,8 +53,9 @@ short gcl "git clone"
 short gt "git tag"
 alias gfix "git rm -r --cached .; and git add ."
 alias gl "git log --pretty=format:'%C(yellow)%h %Cred%ar %Cblue%an%Cgreen%d %Creset%s' --date=short"
-alias gr "ask; and git clean -fd; and git checkout ."
+short gx "git clean -fd; and git checkout ."
 alias gf "_git_fast"
+alias gr "_git_release"
 
 # misc ################
 alias sshkey "cat ~/.ssh/id_rsa.pub | pbcopy; and echo 'Copied to clipboard.'"
@@ -77,9 +78,12 @@ short p3 "python3"
 # docker ##############
 short d "docker"
 short di "docker images"
+short dc "docker-compose"
+short dm "docker-machine"
 short b2d "boot2docker"
 short dir "docker run -i -t --rm"
 short dirv "docker run -i -t --rm -v (pwd):/source -w /source"
+short de "docker exec -it"
 alias dcc "docker ps -q | xargs docker kill ; docker ps -aq | xargs docker rm"
 alias dci "dcc; and docker images -q | xargs docker rmi"
 

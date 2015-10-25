@@ -27,6 +27,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'bling/vim-bufferline'
 Plugin 'tpope/vim-abolish' " Case convertion
 Plugin 'zimbatm/direnv.vim'
+Plugin 'terryma/vim-expand-region'
 
 " Languages
 Plugin 'othree/html5.vim'
@@ -43,3 +44,4 @@ Plugin 'fatih/vim-go'
 Plugin 'mxw/vim-jsx'
 Plugin 'nvie/vim-flake8'
 Plugin 'dag/vim-fish'
+Plugin 'keith/swift.vim'

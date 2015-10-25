@@ -23,6 +23,8 @@ set -x LC_CTYPE "en_US.UTF-8"
 set -x LC_MESSAGES "en_US.UTF-8"
 set -x LC_COLLATE C
 
+set -x EDITOR "vim"
+
 # Enable direnv
 eval (direnv hook fish)
 
