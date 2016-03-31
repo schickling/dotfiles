@@ -3,21 +3,23 @@ function tng
   set -e TMUX
 
   set gotty_port 34567
-  set gotty_profile "/tmp/gotty_profile.json"
+  set gotty_profile "/tmp/gotty_profile"
   set tmux_id (tmux display -p '#S')
 
   # prepare gotty profile file
-  printf '{
-    "enable-bold": false,
-    "background-color": "#002B36",
-    "foreground-color": "#839496",
-    "font-size": 13,
-    "font-family": "Menlo",
-    "font-smoothing": "subpixel-antialiased"
-  }' > $gotty_profile
+  printf '
+preferences {
+  enable_bold = true
+  background_color = "#002B36"
+  foreground_color = "#839496"
+  font_size = 13
+  font_family = "\'Menlo\'"
+  font_smoothing = "subpixel-antialiased"
+}
+' > $gotty_profile
 
   gotty --port=$gotty_port \
-        --reconnect="1" \
+        --reconnect \
         --config=$gotty_profile \
         tmux attach -t $tmux_id &
 

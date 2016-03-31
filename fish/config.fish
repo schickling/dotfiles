@@ -36,3 +36,6 @@ eval (direnv hook fish)
 
 # Import secret config
 [ -f $SECFILES/fish/config.fish ]; and . $SECFILES/fish/config.fish
+
+# Set docker host
+# eval (docker-machine env dev)
