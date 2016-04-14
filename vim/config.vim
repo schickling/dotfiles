@@ -1,6 +1,9 @@
 syntax on
-"set background=dark
-set number
+
+colorscheme gruvbox
+
+set background=dark
+set number " enable line numbers
 "set paste " don't realign on paste in insert mode
 set smartindent
 set shell=/bin/bash
@@ -75,9 +78,6 @@ au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 au BufRead,BufNewFile *.{go} silent SyntasticToggleMode
 
-"au BufWritePre *.{js} :call JsBeautify()
-"au BufWritePre *.{html} :call HtmlBeautify()
-
 " Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
 
@@ -90,16 +90,10 @@ function! <SID>ToggleBackground()
     endif
 endfunction
 
-if &term =~ '^screen'
-endif
-
 let g:neocomplete#enable_at_startup = 1
 let g:go_snippet_engine = "neosnippet"
 
 if &term =~ '^xterm'
-  " thin cursor in insert mode
-  let &t_SI .= "\<Esc>[6 q"
-  let &t_EI .= "\<Esc>[2 q"
   " tmux knows the extended mouse mode
   set ttymouse=xterm2
 endif
@@ -107,7 +101,7 @@ endif
 " TODO remove: https://github.com/neovim/neovim/issues/2294
 nmap <BS> <C-W>h
 
-"if has('nvim')
-  "let g:python_host_prog=/usr/local/bin/python
-"end
-
+if has('nvim')
+  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
+endif

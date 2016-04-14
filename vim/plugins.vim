@@ -1,5 +1,7 @@
+call plug#begin('~/.vim/plugged')
+
 " Layout
-Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 Plug 'edkolev/tmuxline.vim'
 Plug 'itchyny/lightline.vim'
 
@@ -13,7 +15,6 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Raimondi/delimitMate'
 Plug 'kris89/vim-multiple-cursors'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'schickling/vim-bufonly'
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
@@ -26,8 +27,8 @@ Plug 'tpope/vim-abolish' " Case convertion
 Plug 'zimbatm/direnv.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'Shougo/deoplete.nvim'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-Plug 'flowtype/vim-flow'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
+Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 
 " Languages
 Plug 'othree/html5.vim'
@@ -35,13 +36,16 @@ Plug 'wting/rust.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'kchmck/vim-coffee-script'
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'pangloss/vim-javascript'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'dag/vim2hs'
 Plug 'groenewege/vim-less'
 Plug 'cespare/vim-toml'
 Plug 'fatih/vim-go'
-Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'nvie/vim-flake8'
 Plug 'dag/vim-fish'
 Plug 'keith/swift.vim'
+
+call plug#end()
