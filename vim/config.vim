@@ -73,7 +73,7 @@ au BufRead,BufNewFile *.{py} set colorcolumn=79
 au BufRead,BufNewFile *.{xtx} set ft=tex
 au BufRead,BufNewFile *.{toml} set ft=toml
 au BufRead,BufNewFile *.{fish} set ft=fish
-au BufRead,BufNewFile *.{ts} set ft=typescript
+au BufRead,BufNewFile *.{ts,tsx} set ft=typescript
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 au BufRead,BufNewFile *.{go} silent SyntasticToggleMode
@@ -90,7 +90,6 @@ function! <SID>ToggleBackground()
     endif
 endfunction
 
-let g:neocomplete#enable_at_startup = 1
 let g:go_snippet_engine = "neosnippet"
 
 if &term =~ '^xterm'

@@ -1,15 +1,16 @@
 set -x DOTFILES $HOME/.config
 set -x SECFILES $HOME/.secret
 
+set -x GOPATH $HOME/.go
+
 # Define global path
-set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $HOME/.bin
+set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $HOME/.bin $HOME/.go/bin
 
 # Set where to install casks
 set -x HOMEBREW_CASK_OPTS "--appdir=/Applications"
 
 # Setup terminal, and turn on colors
 set -x TERM xterm-256color
-set -xU LS_COLORS "di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34:su=0:sg=0:tw=0:ow=0:"
 
 # Enable color in grep
 set -x GREP_OPTIONS '--color=auto'

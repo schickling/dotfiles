@@ -26,9 +26,11 @@ Plug 'bling/vim-bufferline'
 Plug 'tpope/vim-abolish' " Case convertion
 Plug 'zimbatm/direnv.vim'
 Plug 'terryma/vim-expand-region'
-Plug 'Shougo/deoplete.nvim'
+"Plug 'Shougo/deoplete.nvim'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
-Plug 'flowtype/vim-flow', { 'for': 'javascript' }
+Plug 'Quramy/tsuquyomi', { 'for': 'javascript' }
+Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
 
 " Languages
 Plug 'othree/html5.vim'
@@ -47,5 +49,6 @@ Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'nvie/vim-flake8'
 Plug 'dag/vim-fish'
 Plug 'keith/swift.vim'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
