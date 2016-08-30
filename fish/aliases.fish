@@ -56,6 +56,7 @@ alias gl "git log --pretty=format:'%C(yellow)%h %Cred%ar %Cblue%an%Cgreen%d %Cre
 short gx "git clean -fd; and git checkout ."
 alias gf "_git_fast"
 alias gr "_git_release"
+alias gm "_git_merge"
 
 # misc ################
 alias sshkey "cat ~/.ssh/id_rsa.pub | pbcopy; and echo 'Copied to clipboard.'"
@@ -90,6 +91,8 @@ alias dci "dcc; and docker images -q | xargs docker rmi"
 # haskell #############
 alias ghci "ghci -v0"
 alias h "ghci"
+
+short findport "sudo lsof -iTCP -sTCP:LISTEN -n -P | grep"
 
 
 #again() {

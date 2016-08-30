@@ -73,7 +73,7 @@ au BufRead,BufNewFile *.{py} set colorcolumn=79
 au BufRead,BufNewFile *.{xtx} set ft=tex
 au BufRead,BufNewFile *.{toml} set ft=toml
 au BufRead,BufNewFile *.{fish} set ft=fish
-au BufRead,BufNewFile *.{ts,tsx} set ft=typescript
+au BufRead,BufNewFile *.{ts,tsx} set ft=typescript colorcolumn=120
 au BufRead,BufNewFile Dockerfile set ft=Dockerfile
 au BufRead,BufNewFile *.{js} set colorcolumn=80
 au BufRead,BufNewFile *.{go} silent SyntasticToggleMode
