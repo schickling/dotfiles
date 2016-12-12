@@ -1,6 +1,7 @@
 function _git_fast
-  git pull
+  set -x WIP_BRANCH (git symbolic-ref --short HEAD)
+  git pull origin $WIP_BRANCH
   git add -A
-  git commit -S -m $argv[1]
-  git push origin HEAD
+  git commit -m $argv[1]
+  git push origin $WIP_BRANCH
 end

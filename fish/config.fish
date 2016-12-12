@@ -30,11 +30,14 @@ set -x EDITOR "vim"
 eval (direnv hook fish)
 
 # Start or re-use a gpg-agent.
-gpgconf --launch gpg-agent
+#gpgconf --launch gpg-agent
 
 # Ensure that GPG Agent is used as the SSH agent
 set -e SSH_AUTH_SOCK
 set -U -x SSH_AUTH_SOCK ~/.gnupg/S.gpg-agent.ssh
+
+# aws autocompletion
+complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
 
 # Enable autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and . /usr/local/share/autojump/autojump.fish
