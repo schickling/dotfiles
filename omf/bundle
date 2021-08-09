@@ -1,0 +1,4 @@
+package foreign-env
+package https://github.com/brgmnn/fish-docker-compose
+theme bobthefish
+theme default

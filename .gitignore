@@ -1,3 +1,9 @@
 *.swp
 direnv
+
 configstore
+
+yarn/global/node_modules
+
+*.log
+/tmp

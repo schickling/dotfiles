@@ -25,7 +25,7 @@ short tk "tmux kill-session -t"
 
 alias v "nvim"
 
-alias z "j"
+#alias z "j"
 
 short s "ssh"
 
@@ -59,6 +59,7 @@ alias gr "_git_release"
 alias gm "_git_merge"
 
 # misc ################
+alias nr "_npm_release"
 alias sshkey "cat ~/.ssh/id_rsa.pub | pbcopy; and echo 'Copied to clipboard.'"
 alias rr "source $HOME/.zshrc; and clear"
 alias vlc "/Applications/VLC.app/Contents/MacOS/VLC"
@@ -72,7 +73,7 @@ alias pw "pwgen -Bsn 20 1 | pbcopy; echo 'Password copied to clipboard'"
 
 #alias pip "pip3"
 #alias python "python3"
-short p "python"
+short p "prisma"
 short p2 "python2"
 short p3 "python3"
 

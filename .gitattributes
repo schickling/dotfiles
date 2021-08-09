@@ -1,0 +1,2 @@
+.aws filter=git-crypt diff=git-crypt
+gh/hosts.yml filter=git-crypt diff=git-crypt
