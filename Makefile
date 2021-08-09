@@ -13,9 +13,9 @@ default:
 	ln -sfv $(dot)/haskell/.ghci ~/.ghci
 
 	# ssh
-	ln -snF $(dot)/ssh ~/.ssh
+	ln -sfv $(dot)/ssh ~/.ssh
 
 	# other
-	ln -snF $(dot)/.netrc ~/.netrc
-	ln -snF $(dot)/.npmrc ~/.npmrc
-	ln -snF $(dot)/.dockercfg ~/.dockercfg
+	ln -sfv $(dot)/home/.netrc ~/.netrc
+	ln -sfv $(dot)/home/.npmrc ~/.npmrc
+	ln -sfv $(dot)/home/.dockercfg ~/.dockercfg

@@ -11,10 +11,10 @@ fish/config/secret.fish filter=git-crypt diff=git-crypt
 ssh/config filter=git-crypt diff=git-crypt
 
 # netrc (https://everything.curl.dev/usingcurl/netrc)
-.netrc filter=git-crypt diff=git-crypt
+home/.netrc filter=git-crypt diff=git-crypt
 
 # npmrc
-.npmrc filter=git-crypt diff=git-crypt
+home/.npmrc filter=git-crypt diff=git-crypt
 
 # docker
-.dockercfg filter=git-crypt diff=git-crypt
+home/.dockercfg filter=git-crypt diff=git-crypt
