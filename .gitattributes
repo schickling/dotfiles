@@ -1,2 +1,3 @@
 .aws filter=git-crypt diff=git-crypt
 gh/hosts.yml filter=git-crypt diff=git-crypt
+fish/config/secret.fish filter=git-crypt diff=git-crypt
