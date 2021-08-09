@@ -1,3 +1,20 @@
+# aws
 .aws filter=git-crypt diff=git-crypt
+
+# gh
 gh/hosts.yml filter=git-crypt diff=git-crypt
+
+# fish + env vars
 fish/config/secret.fish filter=git-crypt diff=git-crypt
+
+# ssh
+ssh/config filter=git-crypt diff=git-crypt
+
+# netrc (https://everything.curl.dev/usingcurl/netrc)
+.netrc filter=git-crypt diff=git-crypt
+
+# npmrc
+.npmrc filter=git-crypt diff=git-crypt
+
+# docker
+.dockercfg filter=git-crypt diff=git-crypt

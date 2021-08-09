@@ -1,1 +1,1 @@
-/Users/schickling/.config/vim/.vimrc
+/Users/schickling/.dotfiles/vim/.vimrc
