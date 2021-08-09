@@ -1,4 +1,4 @@
-!sockets/.gitkeep
 sockets/*
+!sockets/.gitkeep
 certs/*
 known_hosts
