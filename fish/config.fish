@@ -3,7 +3,7 @@ set -x SECFILES $HOME/.secret
 
 
 # Define global path
-set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/bin $HOME/.npm-global/bin $HOME/.cargo/bin $HOME/.deno/bin
+# set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/bin $HOME/.npm-global/bin $HOME/.cargo/bin $HOME/.deno/bin
 
 
 # Setup terminal, and turn on colors
@@ -17,7 +17,7 @@ set -x GREP_COLOR '3;33'
 # set -x fish_greeting ""
 
 # needed for gpg-agent
-set -x GPG_TTY (tty)
+# set -x GPG_TTY (tty)
 
 set -x LANG en_US.UTF-8
 set -x LC_CTYPE "en_US.UTF-8"
@@ -33,7 +33,7 @@ eval (direnv hook fish)
 # set fish_function_path $fish_function_path ~/.config/fish/plugin-foreign-env/functions
 
 # Source Nix setup script
-fenv source ~/.nix-profile/etc/profile.d/nix.sh
+# fenv source ~/.nix-profile/etc/profile.d/nix.sh
 
 # Start or re-use a gpg-agent.
 #gpgconf --launch gpg-agent
