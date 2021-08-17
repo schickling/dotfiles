@@ -19,7 +19,7 @@
   };
 
   home.sessionPath = [
-    "~/.npm-global-packages/bin"
+    "$HOME/.npm-global-packages/bin"
   ];
 
   # environment.variables.PATH = [
