@@ -21,3 +21,6 @@ systemd
 
 *.log
 /tmp
+
+# js tooling
+nextjs-nodejs/config.json
