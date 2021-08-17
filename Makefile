@@ -1,6 +1,9 @@
 dot = $(shell pwd)
 
 default:
+	# fish
+	# curl -L https://get.oh-my.fish | fish
+	
 	# tmux
 	ln -sfv $(dot)/tmux/.tmux.conf ~/.tmux.conf
 

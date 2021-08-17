@@ -28,7 +28,7 @@ Plug 'tpope/vim-repeat' " Repeat plugin commands using `.`
 Plug 'zimbatm/direnv.vim'
 Plug 'terryma/vim-expand-region'
 "Plug 'Shougo/deoplete.nvim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 "Plug 'ternjs/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
 Plug 'Quramy/tsuquyomi', { 'for': 'javascript' }
 Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
