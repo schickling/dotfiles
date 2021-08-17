@@ -4,7 +4,9 @@ direnv
 configstore
 
 yarn/global/node_modules
+
 nvim/init.vim
+vim/plugged
 
 # nix
 environment.d
