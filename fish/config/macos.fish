@@ -17,7 +17,7 @@ set -x SSH_AUTH_SOCK /Users/schickling/Library/Containers/com.maxgoedjen.Secreti
 
 
 # Source Nix setup script
-# fenv source ~/.nix-profile/etc/profile.d/nix.sh
+fenv source ~/.nix-profile/etc/profile.d/nix.sh
 
 
 # Set docker host
