@@ -11,7 +11,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'kien/ctrlp.vim'
-Plug 'scrooloose/syntastic'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Raimondi/delimitMate'
@@ -29,12 +28,13 @@ Plug 'tpope/vim-repeat' " Repeat plugin commands using `.`
 Plug 'zimbatm/direnv.vim'
 Plug 'terryma/vim-expand-region'
 "Plug 'Shougo/deoplete.nvim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 "Plug 'ternjs/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
 Plug 'Quramy/tsuquyomi', { 'for': 'javascript' }
 Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
 
 " Languages
+Plug 'LnL7/vim-nix'
 Plug 'othree/html5.vim'
 "Plug 'wting/rust.vim'
 Plug 'plasticboy/vim-markdown'

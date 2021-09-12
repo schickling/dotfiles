@@ -5,5 +5,22 @@ configstore
 
 yarn/global/node_modules
 
+nvim/init.vim
+vim/plugged
+
+# nix
+environment.d
+
+# set up by nix HM
+git/config
+
+# don't care (yet) about a custom bottom config
+bottom
+
+systemd
+
 *.log
 /tmp
+
+# js tooling
+nextjs-nodejs/config.json

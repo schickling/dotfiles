@@ -2,13 +2,22 @@
 # Set where to install casks
 set -x HOMEBREW_CASK_OPTS "--appdir=/Applications"
 
-set -x GOPATH $HOME/Desktop/go
+set -x GOPATH $HOME/Code/go
+
+set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/bin $HOME/.npm-global/bin $HOME/.cargo/bin $HOME/.deno/bin
 
 set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 
+# needed for gpg-agent
+set -x GPG_TTY (tty)
+
 # secretive
 set -x SSH_AUTH_SOCK /Users/schickling/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+
+
+# Source Nix setup script
+# fenv source ~/.nix-profile/etc/profile.d/nix.sh
 
 
 # Set docker host

@@ -1,1 +1,0 @@
-/Users/schickling/.config/vim/.vimrc
