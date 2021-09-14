@@ -20,6 +20,7 @@
 
   home.sessionPath = [
     "$HOME/.npm-global-packages/bin"
+    # "$HOME/.vscode-server/bin/e7d7e9a9348e6a8cc8c03f877d39cb72e5dfb1ff/bin"
   ];
 
   # environment.variables.PATH = [
@@ -35,6 +36,9 @@
     pkgs.neovim
     pkgs.python38
     pkgs.go
+    pkgs.cloc
+    pkgs.docker
+    pkgs.docker-compose
     pkgs.rnix-lsp
   ];
 
@@ -51,7 +55,7 @@
   };
 
   services.gpg-agent = {
-    # enable = true;
+    enable = false;
     defaultCacheTtl = 1800;
   };
 

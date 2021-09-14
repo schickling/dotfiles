@@ -8,8 +8,7 @@ alias cm "v $DOTFILES/tmux/.tmux.conf"
 alias ck "v $HOME/.ssh/known_hosts"
 alias cs "v $HOME/.ssh/config"
 alias ch "sudo v /etc/hosts"
-alias dot "cd $DOTFILES"
-alias sec "cd $SECFILES"
+alias dotfiles "cd $DOTFILES"
 
 
 # listing #############
