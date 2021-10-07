@@ -40,6 +40,10 @@
     pkgs.docker
     pkgs.docker-compose
     pkgs.rnix-lsp
+    # github cli
+    pkgs.gitAndTools.gh
+    # needed for headless chrome
+    pkgs.chromium
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
