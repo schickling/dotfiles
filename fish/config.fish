@@ -15,9 +15,6 @@ set -x LC_COLLATE C
 
 set -x EDITOR vim
 
-# Enable direnv
-eval (direnv hook fish)
-
 # Start or re-use a gpg-agent.
 #gpgconf --launch gpg-agent
 
@@ -32,3 +29,6 @@ complete --command aws --no-files --arguments '(begin; set --local --export COMP
 
 [ (uname) = Darwin ]; and . $DOTFILES/fish/config/macos.fish
 [ (hostname) = dev2 ]; and . $DOTFILES/fish/config/nixos/nixos.fish
+
+# Enable direnv
+eval (direnv hook fish)
