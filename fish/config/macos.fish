@@ -4,7 +4,7 @@ set -x HOMEBREW_CASK_OPTS "--appdir=/Applications"
 
 set -x GOPATH $HOME/Code/go
 
-set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/bin $HOME/.npm-global/bin $HOME/.cargo/bin $HOME/.deno/bin
+set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/bin $HOME/.cargo/bin $HOME/.deno/bin $HOME/.npm-global-packages/bin
 
 set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
