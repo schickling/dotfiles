@@ -23,6 +23,7 @@ default:
 
 	# other
 	ln -sfv $(dot)/home/.netrc ~/.netrc
+	ln -sfv $(dot)/home/.gitconfig ~/.gitconfig
 	ln -sfv $(dot)/home/.npmrc ~/.npmrc
 	ln -sfv $(dot)/home/.yarnrc.yml ~/.yarnrc.yml
 	ln -sfv $(dot)/home/.dockercfg ~/.dockercfg
