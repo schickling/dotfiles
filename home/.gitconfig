@@ -4,10 +4,12 @@
 [user]
 	name = Johannes Schickling
 	email = schickling.j@gmail.com
-	signingkey = F73B485D
+	signingkey = 8E9046ABA7CA018432E4A4897D614C236B9A75E6
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
 [url "git@github.com:"]
   insteadOf = https://github.com/
+[gpg]
+	program = gpg
