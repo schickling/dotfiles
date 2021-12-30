@@ -27,8 +27,11 @@ complete --command aws --no-files --arguments '(begin; set --local --export COMP
 # Import aliases
 [ -f $DOTFILES/fish/aliases.fish ]; and . $DOTFILES/fish/aliases.fish
 
+# todo set up via nix / home-manager
 [ (uname) = Darwin ]; and . $DOTFILES/fish/config/macos.fish
 [ (hostname) = dev2 ]; and . $DOTFILES/fish/config/nixos/nixos.fish
 
 # Enable direnv
-eval (direnv hook fish)
+if command -v direnv &>/dev/null
+    eval (direnv hook fish)
+end

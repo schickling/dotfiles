@@ -8,7 +8,6 @@ set -x PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $DOTFILES/bin $GOPATH/b
 
 set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-
 # needed for gpg-agent
 set -x GPG_TTY (tty)
 
@@ -17,7 +16,13 @@ set -x SSH_AUTH_SOCK /Users/schickling/Library/Containers/com.maxgoedjen.Secreti
 
 
 # Source Nix setup script
-fenv source ~/.nix-profile/etc/profile.d/nix.sh
+fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+# Nix
+# if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+#   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+# fi
+# End Nix
 
 
 # Set docker host

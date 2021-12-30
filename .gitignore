@@ -19,6 +19,8 @@ bottom
 
 systemd
 
+raycast
+
 *.log
 /tmp
 
