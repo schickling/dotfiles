@@ -27,6 +27,7 @@
     nodejs
     neovim
     python38
+    jq
     go
     cloc
     docker
