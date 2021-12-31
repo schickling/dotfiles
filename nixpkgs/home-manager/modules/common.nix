@@ -17,6 +17,8 @@
 
   home.packages = with pkgs; [
     gnupg
+    tmux
+    wget
     bat
     tree
     awscli
@@ -37,4 +39,10 @@
     # needed for headless chrome
     # chromium
   ];
+
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+  };
+
 }
