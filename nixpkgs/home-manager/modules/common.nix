@@ -24,6 +24,7 @@
     awscli
     graphviz
     git-crypt
+    youtube-dl
     nodejs
     neovim
     python38
