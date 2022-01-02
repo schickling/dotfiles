@@ -24,8 +24,12 @@
     awscli
     graphviz
     git-crypt
+
     youtube-dl
-    nodejs
+
+    # nodejs
+    # TODO improve: node 14 needed for remote vsc server
+    nodejs-14_x
     neovim
     python38
     jq
