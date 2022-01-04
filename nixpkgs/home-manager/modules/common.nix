@@ -51,4 +51,8 @@
     clock24 = true;
   };
 
+  programs.dircolors = {
+    enable = true;
+  };
+
 }
