@@ -30,6 +30,7 @@ complete --command aws --no-files --arguments '(begin; set --local --export COMP
 # todo set up via nix / home-manager
 [ (uname) = Darwin ]; and . $DOTFILES/fish/config/macos.fish
 [ (hostname) = dev2 ]; and . $DOTFILES/fish/config/nixos/nixos.fish
+[ (whoami) = gitpod ]; and . $DOTFILES/fish/config/nixos/nixos.fish
 
 # Enable direnv
 if command -v direnv &>/dev/null
