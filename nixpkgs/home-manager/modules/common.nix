@@ -20,6 +20,7 @@
     tmux
     wget
     bat
+    bottom
 
     # Requires a patched font
     # https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md#patched-fonts
