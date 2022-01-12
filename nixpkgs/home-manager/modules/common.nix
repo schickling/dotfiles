@@ -34,6 +34,7 @@
     # nodejs
     # TODO improve: node 14 needed for remote vsc server
     nodejs-14_x
+    yarn
     neovim
     python38
     jq
