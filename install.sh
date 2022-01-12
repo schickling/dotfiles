@@ -3,9 +3,6 @@
 # install script for gitpod dotfiles support
 # https://gitpod.notion.site/Dotfiles-in-Gitpod-workspaces-b46b8723e9fe4efdbede72daa311961f
 
-mv ~/.config ~/.config-backup
-ln -sv $HOME/.dotfiles $HOME/.config
-
 nix-channel --update
 nix-env -iA nixpkgs.nix
 
