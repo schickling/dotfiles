@@ -4,6 +4,7 @@
   "editor.renderIndentGuides": false,
   "editor.tabCompletion": "on",
   "terminal.integrated.defaultProfile.osx": "fish",
+  "terminal.integrated.defaultProfile.linux": "fish",
   "terminal.integrated.profiles.osx": {
     "bash": {
       "path": "bash",
