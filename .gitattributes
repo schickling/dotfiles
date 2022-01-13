@@ -4,9 +4,6 @@
 # gh
 gh/hosts.yml filter=git-crypt diff=git-crypt
 
-# fish + env vars
-fish/config/secret.fish filter=git-crypt diff=git-crypt
-
 # ssh
 ssh/config filter=git-crypt diff=git-crypt
 
