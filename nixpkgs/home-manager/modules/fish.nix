@@ -3,7 +3,7 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      set PATH ~/.local/bin ~/.cargo/bin ~/.deno/bin $GOPATH/bin ~/.npm-global-packages/bin $PATH
+      set PATH ~/.nix-profile/bin /nix/var/nix/profiles/default/bin ~/.cargo/bin ~/.deno/bin $GOPATH/bin ~/.npm-global-packages/bin $PATH
 
       # Setup terminal, and turn on colors
       set -x TERM xterm-256color
@@ -72,6 +72,7 @@
       s = "ssh";
       g = "git";
       gs = "git status -s";
+      ga = "git add";
       gd = "git diff";
       gp = "git pull";
       gps = "git push";
