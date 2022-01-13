@@ -24,8 +24,9 @@ raycast
 *.log
 /tmp
 
-# tmux is managed by nix
+# managed by nix
 tmux/tmux.conf
+fish
 
 # js tooling
 nextjs-nodejs/config.json
