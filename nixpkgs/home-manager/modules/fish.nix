@@ -73,6 +73,7 @@
       g = "git";
       gs = "git status -s";
       ga = "git add";
+      gl = "git log --pretty=format:'%C(yellow)%h %Cred%ar %Cblue%an%Cgreen%d %Creset%s' --date=short";
       gd = "git diff";
       gp = "git pull";
       gps = "git push";
