@@ -13,7 +13,11 @@
 
   # http://czyzykowski.com/posts/gnupg-nix-osx.html
   # adds file to `~/.nix-profile/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac`
-  home.packages = with pkgs; [ pinentry_mac ];
+  home.packages = with pkgs; [
+    pinentry_mac
+    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerdfonts/default.nix
+    # nerdfonts
+  ];
 
   # TODO
   # https://aregsar.com/blog/2020/turn-on-key-repeat-for-macos-text-editors/
