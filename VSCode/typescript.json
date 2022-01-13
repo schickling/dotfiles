@@ -1,0 +1,7 @@
+{
+  "Print to console": {
+    "prefix": "xx",
+    "body": ["console.log($1)"],
+    "description": "Log output to console"
+  }
+}

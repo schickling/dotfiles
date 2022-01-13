@@ -1,0 +1,80 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+  {
+    "key": "ctrl+h",
+    "command": "extension.vim_navigateLeft",
+    "when": "vim.active"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "extension.vim_navigateRight",
+    "when": "vim.active"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "extension.vim_navigateDown",
+    "when": "vim.active"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "extension.vim_navigateUp",
+    "when": "vim.active"
+  },
+  {
+    "key": "cmd+shift+l",
+    "command": "editor.action.formatDocument",
+    "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+;",
+    "command": "extension.showCmdLine",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
+  },
+  {
+    "key": "alt+enter",
+    "command": "editor.action.quickFix",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "f1",
+    "command": "editor.action.goToTypeDefinition",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "settings.cycle.files.exclude",
+    "when": ""
+  },
+  { "key": "cmd+shift+j", "command": "workbench.action.terminal.focusNext" },
+  {
+    "key": "cmd+shift+k",
+    "command": "workbench.action.terminal.focusPrevious"
+  },
+  {
+    "key": "shift+alt+cmd+o",
+    "command": "workbench.action.openRecent"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "-workbench.action.openRecent"
+  },
+  {
+    "key": "cmd+alt+/",
+    "command": "editor.action.blockComment",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+m",
+    "command": "-editor.action.toggleTabFocusMode"
+  },
+  {
+    "key": "cmd+]",
+    "command": "editor.action.revealDefinitionAside",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+  {
+    "key": "cmd+k f12",
+    "command": "-editor.action.revealDefinitionAside",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  }
+]

@@ -1,0 +1,223 @@
+{
+  "workbench.activityBar.visible": true,
+  "editor.tabSize": 2,
+  "editor.renderIndentGuides": false,
+  "editor.tabCompletion": "on",
+  "terminal.integrated.defaultProfile.osx": "fish",
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "path": "bash",
+      "args": ["-l"],
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "zsh",
+      "args": ["-l"]
+    },
+    "fish": {
+      "path": "/opt/homebrew/bin/fish",
+      "args": ["-l"]
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+  // "editor.snippetSuggestions": "top",
+  // "vim.leader": "<space>",
+  "vim.useSystemClipboard": true,
+  "extensions.ignoreRecommendations": true,
+  "workbench.startupEditor": "newUntitledFile",
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.semi": false,
+  "editor.fontFamily": "JetBrainsMono Nerd Font, JetBrains Mono, Fira Code, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 13,
+  "terminal.integrated.fontSize": 13,
+  "editor.renderControlCharacters": false,
+  "workbench.statusBar.visible": true,
+  "editor.minimap.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "files.associations": {
+    "*.mdx": "markdown"
+  },
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "breadcrumbs.enabled": true,
+  "[markdown]": {},
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
+  },
+  "settings.cycle": [
+    {
+      "id": "files.exclude",
+      "values": [
+        {
+          "files.exclude": {
+            "**/.git": true,
+            "**/.svn": true,
+            "**/.hg": true,
+            "**/CVS": true,
+            "**/.DS_Store": true,
+            "**/node_modules": true
+          }
+        },
+        {
+          "files.exclude": {
+            "**/.git": true,
+            "**/.svn": true,
+            "**/.hg": true,
+            "**/CVS": true,
+            "**/.DS_Store": true
+          }
+        }
+      ]
+    }
+  ],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "go.formatTool": "goimports",
+  "remote.SSH.remotePlatform": {
+    "dev": "linux",
+    "rpi-eggisried": "linux",
+    "rpi2": "linux",
+    "hetzner": "linux",
+    "chocolate-jaguar-wd9mg2iq": "linux"
+  },
+  // No longer needed due to https://github.com/microsoft/vscode-remote-release/issues/3190
+  // "remote.SSH.defaultForwardedPorts": [
+  //   {
+  //     "localPort": 3000,
+  //     "name": "Vite Web",
+  //     "remotePort": 3000
+  //   },
+  //   {
+  //     "localPort": 3001,
+  //     "name": "Vite VSC",
+  //     "remotePort": 3001
+  //   },
+  //   {
+  //     "localPort": 44000,
+  //     "name": "Nexus",
+  //     "remotePort": 44000
+  //   },
+  // ],
+  "git.enableSmartCommit": true,
+  "terminals.multiplexer": "screen",
+  "debug.onTaskErrors": "debugAnyway",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "codespaces.accountProvider": "GitHub",
+  "vscode-pastery.api-key": "4QBEUSRfVWYKcUYbFdEzSXh6xJJJhGbv",
+  "git.confirmSync": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.linkedEditing": true,
+  "workbench.editor.wrapTabs": true,
+  "workbench.iconTheme": "file-icons",
+  "window.autoDetectColorScheme": true,
+  "gist.defaultPrivate": true,
+  "workbench.editor.revealIfOpen": false,
+  "editor.cursorStyle": "line",
+  "editor.insertSpaces": false,
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "editor.wordWrap": "off",
+  // needed to keep task starting fast (https://github.com/microsoft/vscode/issues/63055#issuecomment-438957634)
+  "npm.autoDetect": "off",
+  "typescript.tsc.autoDetect": "off",
+  "gulp.autoDetect": "off",
+  "grunt.autoDetect": "off",
+  "jake.autoDetect": "off",
+  "taskExplorer.enableAnt": false,
+  "taskExplorer.enableGradle": false,
+  // other
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": false,
+    "source.fixAll": true,
+    "source.addMissingImports": true
+  },
+  "terminal.integrated.scrollback": 10000,
+  "git.postCommitCommand": "sync",
+  "editor.inlineSuggest.enabled": true,
+  "git.enableCommitSigning": true,
+  "github.copilot.enable": {
+    "*": false,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false,
+    "typescript": true,
+    "typescriptreact": true,
+    "javascript": true
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      // To be used together with `NODE_OPTIONS='--inspect'`
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Attach to Node debugger",
+        "skipFiles": ["<node_internals>/**"],
+        "port": 9229
+      }
+    ]
+  },
+  "git.alwaysShowStagedChangesResourceGroup": true,
+  "remote.SSH.useLocalServer": false,
+  // disable because of secretive
+  "git.autofetch": "all",
+  "nix.serverPath": "/Users/schickling/.nix-profile/bin/rnix-lsp",
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "redhat.telemetry.enabled": false,
+  "editor.bracketPairColorization.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "iridium.npm.packageManager": "yarn",
+  "editor.largeFileOptimizations": false,
+  "workbench.colorTheme": "Default Dark+",
+  "editor.guides.bracketPairs": "active",
+  "typescript.tsserver.log": "off",
+  "typescript.referencesCodeLens.enabled": true,
+  "nix.formatterPath": "/Users/schickling/.nix-profile/bin/nixpkgs-fmt",
+  "nix.enableLanguageServer": true,
+  // disable since otherwise VSC can hog CPU
+  // See https://github.com/microsoft/vscode-remote-release/issues/3857#issuecomment-750982375
+  "remote.SSH.localServerDownload": "off",
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust"
+  },
+  // 5 min
+  "git.autofetchPeriod": 300,
+  "terminal.integrated.customGlyphs": false
+}
