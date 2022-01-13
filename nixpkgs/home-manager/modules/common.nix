@@ -21,6 +21,7 @@
     wget
     bat
     bottom
+    fzf
 
     # Requires a patched font
     # https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md#patched-fonts

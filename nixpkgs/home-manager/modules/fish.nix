@@ -60,6 +60,7 @@
       v = "nvim";
       l = "lsd";
       gf = "_git_fast";
+      fz = "fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'";
       # cw =
       #   "cargo watch -s 'clear; cargo check --tests --all-features --color=always 2>&1 | head -40'";
       # cwa =
