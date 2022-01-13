@@ -194,8 +194,6 @@
   },
   "git.alwaysShowStagedChangesResourceGroup": true,
   "remote.SSH.useLocalServer": false,
-  // disable because of secretive
-  "git.autofetch": "all",
   "nix.serverPath": "/Users/schickling/.nix-profile/bin/rnix-lsp",
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -219,6 +217,7 @@
     "editor.defaultFormatter": "rust-lang.rust"
   },
   // 5 min
+  "git.autofetch": "all",
   "git.autofetchPeriod": 300,
   "terminal.integrated.customGlyphs": false
 }

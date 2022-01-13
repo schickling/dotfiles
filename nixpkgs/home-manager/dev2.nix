@@ -17,13 +17,13 @@
   home.username = "schickling";
   home.homeDirectory = "/home/schickling";
 
-  # I've disabled this option as I manually manage it (by temporarily having the option below
-  # and having copied the file contents to `~/.config/fish/config/nixos/home-manager-gen.fish).
-  # Also see https://github.com/nix-community/home-manager/blob/db00b39a9abec04245486a01b236b8d9734c9ad0/modules/programs/fish.nix#L339
-  # programs.fish.enable = true;
+  home.packages = with pkgs; [
+    # TODO improve: node 14 needed for remote vsc server
+    nodejs-14_x
 
-  # TODO
-  # https://github.com/schickling/dotfiles/issues/5
+    fishPlugins.foreign-env
+  ];
+
 
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [

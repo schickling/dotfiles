@@ -2,6 +2,8 @@
 
 set -e
 
+# link VSC settings
+
 # install script for gitpod dotfiles support
 # https://gitpod.notion.site/Dotfiles-in-Gitpod-workspaces-b46b8723e9fe4efdbede72daa311961f
 

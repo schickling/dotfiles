@@ -11,10 +11,19 @@
   # changes in each release.
   home.stateVersion = "20.09";
 
+  programs.fish.interactiveShellInit = ''
+    set -x SSH_AUTH_SOCK "~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+
+    set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  '';
+
   # http://czyzykowski.com/posts/gnupg-nix-osx.html
   # adds file to `~/.nix-profile/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac`
   home.packages = with pkgs; [
     pinentry_mac
+
+    nodejs
+
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerdfonts/default.nix
     # nerdfonts
   ];

@@ -1,15 +1,5 @@
 { config, pkgs, libs, ... }:
 {
-  home.sessionPath = [
-    "$HOME/.npm-global-packages/bin"
-    # "$HOME/.vscode-server/bin/e7d7e9a9348e6a8cc8c03f877d39cb72e5dfb1ff/bin"
-  ];
-
-  home.sessionVariables = {
-    # NIX_PATH = "nixpkgs=$HOME/Repositories/nix/nix-dotfiles/home-manager/compat";
-    EDITOR = "nvim";
-  };
-
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
   programs.direnv.enable = true;
@@ -33,9 +23,6 @@
 
     youtube-dl
 
-    # nodejs
-    # TODO improve: node 14 needed for remote vsc server
-    nodejs-14_x
     yarn
     neovim
     python38
