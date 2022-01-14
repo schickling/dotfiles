@@ -1,33 +1,9 @@
 {
   "workbench.activityBar.visible": true,
   "editor.tabSize": 2,
-  "editor.renderIndentGuides": false,
   "editor.tabCompletion": "on",
   "terminal.integrated.defaultProfile.osx": "fish",
   "terminal.integrated.defaultProfile.linux": "fish",
-  "terminal.integrated.profiles.osx": {
-    "bash": {
-      "path": "bash",
-      "args": ["-l"],
-      "icon": "terminal-bash"
-    },
-    "zsh": {
-      "path": "zsh",
-      "args": ["-l"]
-    },
-    "fish": {
-      "path": "/opt/homebrew/bin/fish",
-      "args": ["-l"]
-    },
-    "tmux": {
-      "path": "tmux",
-      "icon": "terminal-tmux"
-    },
-    "pwsh": {
-      "path": "pwsh",
-      "icon": "terminal-powershell"
-    }
-  },
   // "editor.snippetSuggestions": "top",
   // "vim.leader": "<space>",
   "vim.useSystemClipboard": true,
@@ -40,6 +16,7 @@
   "editor.fontFamily": "JetBrainsMono Nerd Font, JetBrains Mono, Fira Code, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
   "terminal.integrated.fontSize": 13,
   "editor.renderControlCharacters": false,
   "workbench.statusBar.visible": true,
@@ -104,7 +81,6 @@
     }
   ],
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "go.formatTool": "goimports",
   "remote.SSH.remotePlatform": {
     "dev": "linux",
     "rpi-eggisried": "linux",
@@ -137,14 +113,12 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "codespaces.accountProvider": "GitHub",
-  "vscode-pastery.api-key": "4QBEUSRfVWYKcUYbFdEzSXh6xJJJhGbv",
   "git.confirmSync": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.linkedEditing": true,
   "workbench.editor.wrapTabs": true,
   "workbench.iconTheme": "file-icons",
   "window.autoDetectColorScheme": true,
-  "gist.defaultPrivate": true,
   "workbench.editor.revealIfOpen": false,
   "editor.cursorStyle": "line",
   "editor.insertSpaces": false,
@@ -212,12 +186,12 @@
   // disable since otherwise VSC can hog CPU
   // See https://github.com/microsoft/vscode-remote-release/issues/3857#issuecomment-750982375
   "remote.SSH.localServerDownload": "off",
-  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust"
   },
+  // don't autofetch since it's annoying in combination with Secretive
+  "git.autofetch": false,
   // 5 min
-  "git.autofetch": "all",
-  "git.autofetchPeriod": 300,
+  // "git.autofetchPeriod": 300,
   "terminal.integrated.customGlyphs": false
 }

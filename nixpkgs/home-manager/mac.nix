@@ -12,7 +12,7 @@
   home.stateVersion = "20.09";
 
   programs.fish.interactiveShellInit = ''
-    set -x SSH_AUTH_SOCK "~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+    set -x SSH_AUTH_SOCK "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
 
     set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   '';
