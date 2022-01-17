@@ -26,6 +26,15 @@
       end
     '';
     functions = {
+
+      o = ''
+        if test (count $argv) -eq 0
+          open .
+        else
+          open $argv
+        end
+      '';
+
       # TODO doesn't work yet
       _git_fast = ''
         function _git_fast --argument-names 'message'
@@ -61,6 +70,7 @@
       l = "lsd";
       gf = "_git_fast";
       fz = "fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'";
+      cdg = "cd (git rev-parse --show-toplevel)";
       # cw =
       #   "cargo watch -s 'clear; cargo check --tests --all-features --color=always 2>&1 | head -40'";
       # cwa =
