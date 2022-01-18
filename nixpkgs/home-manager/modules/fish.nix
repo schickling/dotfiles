@@ -35,24 +35,28 @@
         end
       '';
 
+      hm = ''
+        pushd ~/.config/nixpkgs
+        home-manager switch --flake .#$argv[1]
+        popd
+      '';
+
       # TODO doesn't work yet
       _git_fast = ''
-        function _git_fast --argument-names 'message'
-          if begin not type -q commitizen; and test -z $message; end
-            echo "No commit message provided or `commitizen` not installed"
-            exit 1
-          end
-
-          set -x WIP_BRANCH (git symbolic-ref --short HEAD)
-          git pull origin $WIP_BRANCH
-          git add -A
-          if test -z $message
-            git cz
-          else
-            git commit -m $message
-          end
-          and git push origin $WIP_BRANCH
+        if begin not type -q commitizen; and test -z $argv[1]; end
+          echo "No commit message provided or `commitizen` not installed"
+          exit 1
         end
+
+        set -x WIP_BRANCH (git symbolic-ref --short HEAD)
+        git pull origin $WIP_BRANCH
+        git add -A
+        if test -z $argv[1]
+          git cz
+        else
+          git commit -m $argv[1]
+        end
+        and git push origin $WIP_BRANCH
 
       '';
     };
@@ -88,6 +92,7 @@
       gp = "git pull";
       gps = "git push";
       gcm = "git commit";
+      gco = "git checkout";
 
       findport = "sudo lsof -iTCP -sTCP:LISTEN -n -P | grep";
     };
