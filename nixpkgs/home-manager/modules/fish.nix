@@ -41,7 +41,15 @@
         popd
       '';
 
-      # TODO doesn't work yet
+      fixgpg = ''
+        ssh $argv 'killall gpg-agent'
+        rm ~/.ssh/sockets/*
+        killall gpg-agent
+        echo 'test' | gpg --clearsign
+        ssh $argv 'ls /run/user/1000/gnupg/'
+        ssh $argv 'echo 'test' | gpg --clearsign'
+      '';
+
       _git_fast = ''
         if begin not type -q commitizen; and test -z $argv[1]; end
           echo "No commit message provided or `commitizen` not installed"
@@ -93,6 +101,7 @@
       gps = "git push";
       gcm = "git commit";
       gco = "git checkout";
+      gcl = "git clone";
 
       findport = "sudo lsof -iTCP -sTCP:LISTEN -n -P | grep";
     };
