@@ -102,6 +102,10 @@
       gcm = "git commit";
       gco = "git checkout";
       gcl = "git clone";
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      "....." = "cd ../../../..";
 
       findport = "sudo lsof -iTCP -sTCP:LISTEN -n -P | grep";
     };
