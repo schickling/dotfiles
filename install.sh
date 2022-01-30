@@ -1,6 +1,8 @@
 #!/usr/bin/bash -i
 
-set -e
+set -ex
+
+date
 
 # link VSC settings
 
