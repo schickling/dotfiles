@@ -7,8 +7,8 @@ set -e
 # install script for gitpod dotfiles support
 # https://gitpod.notion.site/Dotfiles-in-Gitpod-workspaces-b46b8723e9fe4efdbede72daa311961f
 
-mv ~/.config ~/.config-backup
-ln -sv $HOME/.dotfiles $HOME/.config
+# mv ~/.config ~/.config-backup
+# ln -sv $HOME/.dotfiles $HOME/.config
 
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
 nix-channel --update
@@ -18,6 +18,11 @@ nix-env -iA nixpkgs.nix
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 
 nix-shell '<home-manager>' -A install
+
+# use VSC settings.json from dotfiles
+# mv /workspace/.vscode-remote/data/Machine/settings.json /workspace/.vscode-remote/data/Machine/settings.json-backup
+# ln -s $HOME/.config/VSCode/settings.json /workspace/.vscode-remote/data/Machine/settings.json
+
 
 
 pushd ~/.dotfiles/nixpkgs
