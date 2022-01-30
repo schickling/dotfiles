@@ -41,4 +41,4 @@
 
   # Unlock the terminals
   touch "$_await_file";
-)
+) & disown
