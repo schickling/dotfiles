@@ -23,10 +23,12 @@ export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 
 nix-shell '<home-manager>' -A install
 
+pushd ~/.config/nixpkgs
+home-manager switch --flake .#gitpod
+popd
+
 # use VSC settings.json from dotfiles
 mkdir -p $HOME/.config/Code/User
 ln -s $HOME/.dotfiles/VSCode/settings.json $HOME/.config/Code/User/settings.json
 
-pushd ~/.config/nixpkgs
-home-manager switch --flake .#gitpod
-popd
+date
