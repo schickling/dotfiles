@@ -1,10 +1,10 @@
-#!/usr/bin/bash -iex
+#!/usr/bin/bash -ix
 
 (
 
   _await_file="/tmp/await-dotfile";
   _bashrc="$(< "$HOME/.bashrc")";
-  printf '%s\n' "until test -e \"$_await_file\"; do printf . && sleep 1; done" "$_bashrc" > "$HOME/.bashrc";
+  printf '%s\n' "until test -e \"$_await_file\"; do sleep 1; done" "$_bashrc" > "$HOME/.bashrc";
   
   date
 
