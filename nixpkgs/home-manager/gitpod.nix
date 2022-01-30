@@ -29,6 +29,6 @@
   # };
 
   # disable gpg signing on Gitpod since there's no easy way to forward my gpg-agent
-  programs.git.signing.signByDefault = false;
+  # programs.git.signing.signByDefault = false;
 
 }
