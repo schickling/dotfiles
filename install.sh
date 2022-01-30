@@ -29,6 +29,7 @@ popd
 
 # use VSC settings.json from dotfiles
 mkdir -p $HOME/.config/Code/User
+mv $HOME/.config/Code/User/settings.json $HOME/.config/Code/User/settings.json-backup
 ln -s $HOME/.dotfiles/VSCode/settings.json $HOME/.config/Code/User/settings.json
 
 date
