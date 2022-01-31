@@ -24,8 +24,6 @@
     fishPlugins.foreign-env
   ];
 
-
-
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "vscode-extension-ms-vscode-remote-remote-ssh"
   ];
@@ -35,4 +33,5 @@
     defaultCacheTtl = 1800;
   };
 
+  programs.git.signing.signByDefault = true;
 }
