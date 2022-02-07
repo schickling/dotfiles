@@ -131,6 +131,7 @@
   "gulp.autoDetect": "off",
   "grunt.autoDetect": "off",
   "jake.autoDetect": "off",
+  "taskExplorer.exclude": ["*", "!.vscode/tasks.json"],
   "taskExplorer.enableAnt": false,
   "taskExplorer.enableGradle": false,
   // other
@@ -193,5 +194,6 @@
   "git.autofetch": false,
   // 5 min
   // "git.autofetchPeriod": 300,
-  "terminal.integrated.customGlyphs": false
+  "terminal.integrated.customGlyphs": false,
+  "workbench.experimental.layoutControl.enabled": true
 }
