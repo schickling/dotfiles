@@ -17,6 +17,8 @@
     # https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md#patched-fonts
     lsd
     tree
+    # better du alternative
+    du-dust
     awscli
     graphviz
     git-crypt

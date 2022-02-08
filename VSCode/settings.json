@@ -131,7 +131,10 @@
   "gulp.autoDetect": "off",
   "grunt.autoDetect": "off",
   "jake.autoDetect": "off",
-  "taskExplorer.exclude": ["*", "!.vscode/tasks.json"],
+  "taskExplorer.exclude": [
+    "*",
+    "!.vscode/tasks.json"
+  ],
   "taskExplorer.enableAnt": false,
   "taskExplorer.enableGradle": false,
   // other
