@@ -50,6 +50,11 @@
         ssh $argv 'echo 'test' | gpg --clearsign'
       '';
 
+      # This is a workaround needed to "fix" VSC on NixOS which is self-updating
+      fixremotevsc = ''
+        ssh $argv 'for DIR in ~/.vscode-server/bin/*; rm $DIR/node; ln -s (which node) $DIR/node; end'
+      '';
+
       _git_fast = ''
         if begin not type -q commitizen; and test -z $argv[1]; end
           echo "No commit message provided or `commitizen` not installed"

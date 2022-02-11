@@ -131,10 +131,7 @@
   "gulp.autoDetect": "off",
   "grunt.autoDetect": "off",
   "jake.autoDetect": "off",
-  "taskExplorer.exclude": [
-    "*",
-    "!.vscode/tasks.json"
-  ],
+  "taskExplorer.exclude": ["*", "!.vscode/tasks.json"],
   "taskExplorer.enableAnt": false,
   "taskExplorer.enableGradle": false,
   // other
@@ -198,5 +195,8 @@
   // 5 min
   // "git.autofetchPeriod": 300,
   "terminal.integrated.customGlyphs": false,
-  "workbench.experimental.layoutControl.enabled": true
+  "workbench.experimental.layoutControl.enabled": true,
+  "todo-tree.highlights.enabled": false,
+  "todo-tree.general.tags": ["BUG", "HACK", "FIXME", "TODO", "XXX"],
+  "gitlens.codeLens.enabled": false
 }
