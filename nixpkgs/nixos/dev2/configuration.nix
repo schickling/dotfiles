@@ -110,11 +110,11 @@
   #   pinentryFlavor = "tty";
   # };
 
-	virtualisation.podman = {
-     enable = true; 
-     dockerCompat = true;
-     dockerSocket.enable = true;
-   };
+  virtualisation.podman = {
+    enable = true; 
+    dockerCompat = true;
+    dockerSocket.enable = true;
+  };
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "vscode-extension-ms-vscode-remote-remote-ssh"
