@@ -78,6 +78,8 @@
   # users.users.root.initialHashedPassword = "";
   # services.openssh.permitRootLogin = "prohibit-password";
 
+  security.sudo.wheelNeedsPassword = false;
+
   users.users.root.openssh.authorizedKeys.keys = [
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLXMVzwr9BKB67NmxYDxedZC64/qWU6IvfTTh4HDdLaJe18NgmXh7mofkWjBtIy+2KJMMlB4uBRH4fwKviLXsSM= MBP2020@secretive.MacBook-Pro-Johannes.local"
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM7UIxnOjfmhXMzEDA1Z6WxjUllTYpxUyZvNFpS83uwKj+eSNuih6IAsN4QAIs9h4qOHuMKeTJqanXEanFmFjG0= MM2021@secretive.Johannes’s-Mac-mini.local"
@@ -123,6 +125,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     vim
+    direnv
     tree
     jq
     bottom
