@@ -4,6 +4,9 @@ set -ex
 
 date
 
+# TMP Return early
+exit 0
+
 # link VSC settings
 
 # install script for gitpod dotfiles support
