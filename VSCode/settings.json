@@ -48,11 +48,11 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "files.exclude": {
-    "**/.git": false,
-    "**/.svn": false,
-    "**/.hg": false,
-    "**/CVS": false,
-    "**/.DS_Store": false
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
   },
   "settings.cycle": [
     {
@@ -198,5 +198,6 @@
   "todo-tree.highlights.enabled": false,
   "todo-tree.general.tags": ["BUG", "HACK", "FIXME", "TODO", "XXX"],
   "gitlens.codeLens.enabled": false,
-  "terminal.integrated.shellIntegration.enabled": true
+  "terminal.integrated.shellIntegration.enabled": true,
+  "workbench.colorTheme": "Default Dark+"
 }
