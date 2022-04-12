@@ -97,6 +97,8 @@
 
     shellAbbrs = {
       s = "ssh";
+
+      # git
       g = "git";
       gs = "git status -s";
       ga = "git add";
@@ -107,6 +109,9 @@
       gcm = "git commit";
       gco = "git checkout";
       gcl = "git clone";
+
+      dc = "docker compose";
+
       ".." = "cd ..";
       "..." = "cd ../..";
       "...." = "cd ../../..";
