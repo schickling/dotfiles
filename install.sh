@@ -17,22 +17,22 @@ echo "${SSHKEY_PRIVATE}" | base64 --decode > ~/.ssh/id_rsa
 echo "${SSHKEY_PUBLIC}" | base64 --decode > ~/.ssh/id_rsa.pub
 chmod 400 ~/.ssh/id_rsa
 
-# ssh -o "StrictHostKeyChecking no" schickling@100.110.12.76 "echo ok"
+ssh -o "StrictHostKeyChecking no" schickling@100.110.12.76 "echo ok"
 
-wget https://storage.googleapis.com/gitpod-test/nix-store.tar
-
-time
-
-tar -xvf nix-store.tar -C /
-
-time
-
-
-# nix-copy-closure --from schickling@100.110.12.76 /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation
+# wget --no-verbose https://storage.googleapis.com/gitpod-test/nix-store.tar
 
 # date
 
-# /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation/activate
+# tar -xv nix-store.tar -C /
+
+# date
+
+
+nix-copy-closure --from schickling@100.110.12.76 /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation
+
+date
+
+/nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation/activate
 
 date
 
