@@ -10,6 +10,7 @@ sudo tailscaled > ~/.tailscale.log &
 sudo -E tailscale up --hostname "gitpod-${GITPOD_WORKSPACE_ID}" --authkey "${TAILSCALE_AUTHKEY}"
 
 
+mkdir -p ~/.ssh
 # created via `cat ~/.ssh/id_rsa | base64 -w 0`
 echo "${SSHKEY_PRIVATE}" | base64 --decode > ~/.ssh/id_rsa
 echo "${SSHKEY_PUBLIC}" | base64 --decode > ~/.ssh/id_rsa.pub
