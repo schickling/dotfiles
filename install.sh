@@ -9,6 +9,7 @@ sudo tailscaled &> ~/.tailscale.log &
 
 time sudo -E tailscale up --hostname "gitpod-${GITPOD_WORKSPACE_ID}" --authkey "${TAILSCALE_AUTHKEY}"
 
+date
 
 mkdir -p ~/.ssh
 # created via `cat ~/.ssh/id_rsa | base64 -w 0`
@@ -19,6 +20,8 @@ chmod 400 ~/.ssh/id_rsa
 ssh -o "StrictHostKeyChecking no" schickling@100.110.12.76 "echo ok"
 
 time nix-copy-closure --from schickling@100.110.12.76 /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation
+
+date
 
 /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation/activate
 
