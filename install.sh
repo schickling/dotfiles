@@ -7,7 +7,7 @@ date
 # Run in background as it's blocking
 sudo tailscaled &> ~/.tailscale.log &
 
-sudo -E tailscale up --hostname "gitpod-${GITPOD_WORKSPACE_ID}" --authkey "${TAILSCALE_AUTHKEY}"
+time sudo -E tailscale up --hostname "gitpod-${GITPOD_WORKSPACE_ID}" --authkey "${TAILSCALE_AUTHKEY}"
 
 
 mkdir -p ~/.ssh
