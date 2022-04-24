@@ -9,8 +9,13 @@ sudo tailscaled > ~/.tailscale.log &
 
 sudo -E tailscale up --hostname "gitpod-${GITPOD_WORKSPACE_ID}" --authkey "${TAILSCALE_AUTHKEY}"
 
-echo $SSHKEY_PRIVATE | base64 --decode > ~/.ssh/id_rsa
-echo $SSHKEY_PUBLIC | base64 --decode > ~/.ssh/id_rsa.pub
+
+# created via `cat ~/.ssh/id_rsa | base64 -w 0`
+echo "${SSHKEY_PRIVATE}" | base64 --decode > ~/.ssh/id_rsa
+echo "${SSHKEY_PUBLIC}" | base64 --decode > ~/.ssh/id_rsa.pub
+chmod 400 ~/.ssh/id_rsa
+
+ssh -o "StrictHostKeyChecking no" schickling@100.110.12.76 "echo ok"
 
 time nix-copy-closure --from schickling@100.110.12.76 /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation
 
