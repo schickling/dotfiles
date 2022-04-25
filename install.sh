@@ -17,7 +17,7 @@ setup_tailscale() {
   # Run in background as it's blocking
   sudo tailscaled &> ~/.tailscale.log &
 
-  time sudo -E tailscale up --hostname "gitpod-${GITPOD_WORKSPACE_ID}" --authkey "${TAILSCALE_AUTHKEY}"
+  sudo -E tailscale up --hostname "gitpod-${GITPOD_WORKSPACE_ID}" --authkey "${TAILSCALE_AUTHKEY}"
 
   date
 
