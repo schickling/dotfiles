@@ -32,10 +32,18 @@ fi
 
 # date
 
-sudo apt-get install lz4
-curl https://storage.googleapis.com/gitpod-test/nix-store.tar.lz4 | tar vx  -I lz4 -C /
+date
+
+RESULT_PATH=$(curl https://storage.googleapis.com/gitpod-test/result.closure.lz4 | lz4 -d  | nix-store --import | tail -1)
 
 date
+
+$RESULT_PATH/activate
+
+# sudo apt-get install lz4
+# curl https://storage.googleapis.com/gitpod-test/nix-store.tar.lz4 | tar vx  -I lz4 -C /
+
+# date
 
 
 # nix-copy-closure --from schickling@100.110.12.76 /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation
