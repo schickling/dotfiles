@@ -32,6 +32,8 @@ fi
 
 # date
 
+sudo apt-get install lz4
+
 date
 
 RESULT_PATH=$(curl https://storage.googleapis.com/gitpod-test/result.closure.lz4 | lz4 -d  | nix-store --import | tail -1)
