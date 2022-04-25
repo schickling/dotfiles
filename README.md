@@ -16,7 +16,7 @@ NOTE: These dotfiles a heavily work in progress. Most things are being moved to 
 
 ## Related
 
-- https://youtu.be/1dzgVkgQ5mE
+- Video of me helping @paulshen to set up Nix on macOS: https://youtu.be/1dzgVkgQ5mE
 
 ## Inspiration
 

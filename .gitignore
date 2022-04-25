@@ -22,6 +22,7 @@ systemd
 raycast
 
 rclone
+gcloud
 
 *.log
 /tmp
@@ -29,6 +30,7 @@ rclone
 # managed by nix
 tmux/tmux.conf
 fish
+git
 
 # js tooling
 nextjs-nodejs/config.json
