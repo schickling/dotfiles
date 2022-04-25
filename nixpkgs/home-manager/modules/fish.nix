@@ -110,6 +110,7 @@
       gco = "git checkout";
       gcl = "git clone";
 
+      d = "docker";
       dc = "docker compose";
 
       ".." = "cd ..";

@@ -21,6 +21,8 @@ systemd
 
 raycast
 
+rclone
+
 *.log
 /tmp
 

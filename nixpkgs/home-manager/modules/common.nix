@@ -32,6 +32,12 @@
     go
     cloc
     docker
+
+    # compression
+    zip
+    pigz # parallel gzip
+    lz4
+
     # docker-compose
     # Nix VSC
     rnix-lsp
