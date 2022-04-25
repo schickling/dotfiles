@@ -27,6 +27,7 @@ ssh -o "StrictHostKeyChecking no" schickling@100.110.12.76 "echo ok"
 
 # date
 
+sudo apt-get install lz4
 curl https://storage.googleapis.com/gitpod-test/nix-store.tar.lz4 | tar vx  -I lz4 -C /
 
 date
