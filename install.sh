@@ -19,7 +19,7 @@ chmod 400 ~/.ssh/id_rsa
 
 ssh -o "StrictHostKeyChecking no" schickling@100.110.12.76 "echo ok"
 
-if [[ -z "${GITPOD_DOTFILES_SKIP}" ]]; then
+if [[ -n "${GITPOD_DOTFILES_SKIP}" ]]; then
 	echo "Exiting Gitpod install.sh early..."
 	exit
 fi
