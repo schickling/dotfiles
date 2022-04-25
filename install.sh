@@ -27,14 +27,18 @@ ssh -o "StrictHostKeyChecking no" schickling@100.110.12.76 "echo ok"
 
 # date
 
-
-nix-copy-closure --from schickling@100.110.12.76 /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation
-
-date
-
-/nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation/activate
+curl https://storage.googleapis.com/gitpod-test/nix-store.tar.lz4 | tar vx  -I lz4 -C /
 
 date
+
+
+# nix-copy-closure --from schickling@100.110.12.76 /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation
+
+# date
+
+# /nix/store/jvkqf636nzw4y6j9908innfgwyyh9f2z-home-manager-generation/activate
+
+# date
 
 # TMP Return early
 exit 0
