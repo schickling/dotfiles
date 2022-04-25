@@ -27,6 +27,7 @@
     curlie
 
     youtube-dl
+    speedtest-cli
 
     yarn
     neovim
