@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "create-tauri-app": "^1.0.0-rc.2",
-    "prettier": "^1.4.2"
-  }
-}

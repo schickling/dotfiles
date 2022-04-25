@@ -20,6 +20,7 @@ bottom
 systemd
 
 raycast
+spotifyd
 
 rclone
 gcloud
@@ -33,6 +34,6 @@ fish
 git
 
 # js tooling
-nextjs-nodejs/config.json
-
+nextjs-nodejs
+yarn
 gatsby
