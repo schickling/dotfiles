@@ -23,6 +23,9 @@
     graphviz
     git-crypt
 
+    httpstat
+    curlie
+
     youtube-dl
 
     yarn
