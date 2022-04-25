@@ -23,3 +23,4 @@ NOTE: These dotfiles a heavily work in progress. Most things are being moved to 
 
 - https://github.com/nitsky/config
 - https://github.com/pimeys/nixos
+- https://github.dev/Mic92/dotfiles/blob/master/nixos/eve/modules/home-assistant/weather.nix
