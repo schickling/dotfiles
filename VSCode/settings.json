@@ -4,6 +4,7 @@
   "editor.tabCompletion": "on",
   "terminal.integrated.defaultProfile.osx": "fish",
   "terminal.integrated.defaultProfile.linux": "fish",
+  "terminal.integrated.shellIntegration.enabled": true,
   // "editor.snippetSuggestions": "top",
   // "vim.leader": "<space>",
   "vim.useSystemClipboard": true,
@@ -54,32 +55,6 @@
     "**/CVS": true,
     "**/.DS_Store": true
   },
-  "settings.cycle": [
-    {
-      "id": "files.exclude",
-      "values": [
-        {
-          "files.exclude": {
-            "**/.git": true,
-            "**/.svn": true,
-            "**/.hg": true,
-            "**/CVS": true,
-            "**/.DS_Store": true,
-            "**/node_modules": true
-          }
-        },
-        {
-          "files.exclude": {
-            "**/.git": true,
-            "**/.svn": true,
-            "**/.hg": true,
-            "**/CVS": true,
-            "**/.DS_Store": true
-          }
-        }
-      ]
-    }
-  ],
   "javascript.updateImportsOnFileMove.enabled": "always",
   "remote.SSH.remotePlatform": {
     "dev": "linux",
@@ -107,12 +82,10 @@
   //   },
   // ],
   "git.enableSmartCommit": true,
-  "terminals.multiplexer": "screen",
   "debug.onTaskErrors": "debugAnyway",
   "[html]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "codespaces.accountProvider": "GitHub",
   "git.confirmSync": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.linkedEditing": true,
@@ -154,6 +127,7 @@
     "typescriptreact": true,
     "javascript": true
   },
+  // Default launch setup if no `.vscode/launch.json` file is available in project
   "launch": {
     "version": "0.2.0",
     "configurations": [
@@ -194,10 +168,9 @@
   // 5 min
   // "git.autofetchPeriod": 300,
   "terminal.integrated.customGlyphs": false,
-  "workbench.experimental.layoutControl.enabled": true,
+  "workbench.layoutControl.enabled": true,
   "todo-tree.highlights.enabled": false,
   "todo-tree.general.tags": ["BUG", "HACK", "FIXME", "TODO", "XXX"],
   "gitlens.codeLens.enabled": false,
-  "terminal.integrated.shellIntegration.enabled": true,
-  "workbench.colorTheme": "Default Dark+"
+  "workbench.colorTheme": "Default Dark+",
 }
