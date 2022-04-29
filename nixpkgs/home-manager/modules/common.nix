@@ -12,7 +12,6 @@
     bat
     bottom
     fzf
-    iputils # provides ping, ifconfig, ...
 
     # Requires a patched font
     # https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md#patched-fonts
@@ -38,6 +37,8 @@
     cloc
     docker
 
+    ran # quick local webserver (`-r [folder]`)
+
     # compression
     zip
     pigz # parallel gzip
@@ -51,6 +52,10 @@
     gitAndTools.gh
     # needed for headless chrome
     # chromium
+  ] ++ lib.optionals stdenv.isDarwin [
+    coreutils # provides `dd` with --status=progress
+  ] ++ lib.optionals stdenv.isLinux [
+    iputils # provides `ping`, `ifconfig`, ...
   ];
 
   programs.tmux = {
