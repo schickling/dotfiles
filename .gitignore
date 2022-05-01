@@ -23,6 +23,7 @@ systemd
 raycast
 spotifyd
 ncspot
+packer
 
 rclone
 gcloud

@@ -48,10 +48,13 @@
     # Nix VSC
     rnix-lsp
     nixpkgs-fmt
-    # github cli
-    gitAndTools.gh
     # needed for headless chrome
     # chromium
+
+    git
+    # github cli
+    gitAndTools.gh
+
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils # provides `dd` with --status=progress
   ] ++ lib.optionals stdenv.isLinux [
