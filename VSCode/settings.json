@@ -24,7 +24,8 @@
   "editor.minimap.enabled": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "files.associations": {
-    "*.mdx": "markdown"
+    "*.mdx": "markdown",
+    ".envrc*": "shellscript"
   },
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
@@ -172,5 +173,17 @@
   "todo-tree.highlights.enabled": false,
   "todo-tree.general.tags": ["BUG", "HACK", "FIXME", "TODO", "XXX"],
   "gitlens.codeLens.enabled": false,
-  "workbench.colorTheme": "Default Dark+",
+  "explorer.fileNesting.patterns": {
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts, ${capture}.d.ts.map",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.${capture}.json",
+    "flake.nix": "flake.lock",
+    "README.md": "LICENSE, CONTRIBUTING.md",
+    "prettier.config.js": ".prettierignore",
+    ".envrc": ".envrc.*",
+    "package.json": "package-lock.json, yarn.lock, .yarnrc.yml",
+    "*.ts": "${capture}.typegen.ts"
+  },
+  "explorer.fileNesting.enabled": true,
 }

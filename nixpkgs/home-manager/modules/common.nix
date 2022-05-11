@@ -12,7 +12,6 @@
     bat
     bottom
     fzf
-    libuuid # `uuidgen`
 
     # Requires a patched font
     # https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md#patched-fonts
@@ -60,6 +59,8 @@
     coreutils # provides `dd` with --status=progress
   ] ++ lib.optionals stdenv.isLinux [
     iputils # provides `ping`, `ifconfig`, ...
+
+    libuuid # `uuidgen` (already pre-installed on mac)
   ];
 
   programs.tmux = {
