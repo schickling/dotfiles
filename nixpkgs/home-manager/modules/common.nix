@@ -26,6 +26,8 @@
     httpstat
     curlie
 
+    nodePackages.fkill-cli
+
     youtube-dl
     speedtest-cli
 
