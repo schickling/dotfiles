@@ -126,7 +126,11 @@
     "markdown": false,
     "typescript": true,
     "typescriptreact": true,
-    "javascript": true
+    "javascript": true,
+    "rust": true,
+    "json": true,
+    "jsonc": true,
+    "mdx": false
   },
   // Default launch setup if no `.vscode/launch.json` file is available in project
   "launch": {
@@ -186,4 +190,6 @@
     "*.ts": "${capture}.typegen.ts"
   },
   "explorer.fileNesting.enabled": true,
+  "thunder-client.htmlView": "Preview",
+  "testing.automaticallyOpenPeekView": "never"
 }
