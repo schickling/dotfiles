@@ -26,6 +26,7 @@
     httpstat
     curlie
 
+    # https://github.com/sindresorhus/fkill
     nodePackages.fkill-cli
 
     youtube-dl
