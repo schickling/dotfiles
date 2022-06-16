@@ -19,6 +19,9 @@ pushd ~/.dotfiles/nixpkgs
 home-manager switch --flake .#gitpod
 popd
 
+# Requires `gcloud auth login` (e.g. via `nix shell nixpkgs#google-cloud-sdk`) before running
+
 nix shell nixpkgs#google-cloud-sdk
 
 gsutil cp result.closure.lz4 gs://schickling-gitpod-nix/result.closure.lz4
+gsutil acl ch -u AllUsers:R gs://schickling-gitpod-nix/result.closure.lz4
