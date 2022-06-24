@@ -11,6 +11,7 @@
   outputs = inputs: {
     homeConfigurations = {
       mbp2021 = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
         system = "aarch64-darwin";
         homeDirectory = "/home/schickling";
         username = "schickling";
@@ -24,6 +25,7 @@
       };
 
       dev2 = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
         system = "x86_64-linux";
         homeDirectory = "/home/schickling";
         username = "schickling";
@@ -37,6 +39,7 @@
       };
 
       gitpod = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
         system = "x86_64-linux";
         homeDirectory = "/home/gitpod";
         username = "gitpod";

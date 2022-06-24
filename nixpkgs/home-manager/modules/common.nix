@@ -19,7 +19,7 @@
     tree
     # better du alternative
     du-dust
-    awscli
+    # awscli
     graphviz
     git-crypt
 
