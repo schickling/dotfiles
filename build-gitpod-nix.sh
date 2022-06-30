@@ -21,8 +21,9 @@ pushd ~/.dotfiles/nixpkgs
 home-manager switch --flake .#gitpod
 popd
 
-# get path via `home-manager generations`
-nix-store --export (nix-store -qR /nix/store/mpkhk2l3036rb1516b2cfzbr4bb8gpag-home-manager-generation) | lz4 > result.closure.lz4
+# get latest home-manager path via `home-manager generations`
+HM_PATH=$(home-manager generations | cut -d' ' -f7 | head -n 1)
+nix-store --export $(nix-store -qR $HM_PATH) | lz4 > result.closure.lz4
 
 # Requires `gcloud auth login` before running
 # (will prompt to run a similar command on machine with visual browser e.g. Mac)
