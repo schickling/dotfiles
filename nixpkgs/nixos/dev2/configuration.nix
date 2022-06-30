@@ -2,7 +2,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -18,9 +19,9 @@
   # Increase the amount of inotify watchers
   # Note that inotify watches consume 1kB on 64-bit machines.
   boot.kernel.sysctl = {
-    "fs.inotify.max_user_watches"   = 1048576;   # default:  8192
-    "fs.inotify.max_user_instances" =    1024;   # default:   128
-    "fs.inotify.max_queued_events"  =   32768;   # default: 16384
+    "fs.inotify.max_user_watches" = 1048576; # default:  8192
+    "fs.inotify.max_user_instances" = 1024; # default:   128
+    "fs.inotify.max_queued_events" = 32768; # default: 16384
   };
 
   time.timeZone = "CET";
@@ -102,8 +103,12 @@
 
   services.openssh.enable = true;
 
-  # needed for gpg agent forwarding
-  services.openssh.extraConfig = ''StreamLocalBindUnlink yes'';
+  services.openssh.extraConfig = ''
+    # needed for gpg agent forwarding
+    StreamLocalBindUnlink yes
+    # needed for ssh agent forwarding
+    AllowAgentForwarding yes
+  '';
 
   users.defaultUserShell = pkgs.fish;
 
@@ -113,7 +118,7 @@
   # };
 
   virtualisation.podman = {
-    enable = true; 
+    enable = true;
     dockerCompat = true;
     dockerSocket.enable = true;
   };
@@ -149,7 +154,7 @@
   # enable the tailscale daemon; this will do a variety of tasks:
   # 1. create the TUN network device
   # 2. setup some IP routes to route through the TUN
-  services.tailscale.enable = true; 
+  services.tailscale.enable = true;
 
   # FIXME
   # This value determines the NixOS release with which your system is to be
