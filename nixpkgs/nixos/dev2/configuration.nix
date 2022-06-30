@@ -1,11 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix # Include the results of the hardware scan.
+    ../configuration-common.nix
+  ];
 
   # Use GRUB2 as the boot loader.
   # We don't use systemd-boot because Hetzner uses BIOS legacy boot.
@@ -23,8 +22,6 @@
     "fs.inotify.max_user_instances" = 1024; # default:   128
     "fs.inotify.max_queued_events" = 32768; # default: 16384
   };
-
-  time.timeZone = "CET";
 
   networking.hostName = "dev2";
 
@@ -75,18 +72,6 @@
   };
 
 
-  # Initial empty root password for easy login:
-  # users.users.root.initialHashedPassword = "";
-  # services.openssh.permitRootLogin = "prohibit-password";
-
-  security.sudo.wheelNeedsPassword = false;
-
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLXMVzwr9BKB67NmxYDxedZC64/qWU6IvfTTh4HDdLaJe18NgmXh7mofkWjBtIy+2KJMMlB4uBRH4fwKviLXsSM= MBP2020@secretive.MacBook-Pro-Johannes.local"
-    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM7UIxnOjfmhXMzEDA1Z6WxjUllTYpxUyZvNFpS83uwKj+eSNuih6IAsN4QAIs9h4qOHuMKeTJqanXEanFmFjG0= MM2021@secretive.Johannes’s-Mac-mini.local"
-    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPkfRqtIP8Lc7qBlJO1CsBeb+OEZN87X+ZGGTfNFf8V588Dh/lgv7WEZ4O67hfHjHCNV8ZafsgYNxffi8bih+1Q= MBP2021@secretive.Johannes’s-MacBook-Pro.local"
-  ];
-
   # only allow access via tailscale
   services.openssh.openFirewall = false;
 
@@ -97,44 +82,14 @@
     openssh.authorizedKeys.keys = users.users.root.openssh.authorizedKeys.keys;
   };
 
-  services.openssh.enable = true;
-
-  services.openssh.extraConfig = ''
-    # needed for gpg agent forwarding
-    StreamLocalBindUnlink yes
-    # needed for ssh agent forwarding
-    AllowAgentForwarding yes
-  '';
-
-  users.defaultUserShell = pkgs.fish;
 
   # programs.gnupg.agent = {
   #   enable = true;
   #   pinentryFlavor = "tty";
   # };
 
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true;
-    dockerSocket.enable = true;
-  };
-
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "vscode-extension-ms-vscode-remote-remote-ssh"
-  ];
-
-  environment.systemPackages = with pkgs; [
-    neovim
-    vim
-    direnv
-    tree
-    jq
-    bottom
-    bat
-    tailscale
-    git
-    gnumake
-    killall
   ];
 
   nix.package = pkgs.nixUnstable;

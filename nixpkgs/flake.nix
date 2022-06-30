@@ -65,6 +65,12 @@
 
     systemConfigurations = {
 
+      dev2 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [ ./nixos/homepi/configuration.nix ];
+      };
+
       homepiImage = inputs.nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = { inherit inputs; };
@@ -77,6 +83,7 @@
     };
 
     images = {
+      # nix build .#images.homepi
       homepi = self.systemConfigurations.homepiImage.config.system.build.sdImage;
     };
   };
