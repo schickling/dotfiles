@@ -8,7 +8,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs: {
+  outputs = { self, ... }@inputs: {
     homeConfigurations = {
       mbp2021 = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
@@ -61,6 +61,23 @@
         ];
       };
 
+    };
+
+    systemConfigurations = {
+
+      homepiImage = inputs.nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+          ./nixos/homepi/sd-image.nix
+        ];
+      };
+
+    };
+
+    images = {
+      homepi = self.systemConfigurations.homepiImage.config.system.build.sdImage;
     };
   };
 }

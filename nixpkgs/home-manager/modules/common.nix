@@ -39,6 +39,7 @@
     go
     cloc
     docker
+    tailscale
 
     ran # quick local webserver (`-r [folder]`)
 
