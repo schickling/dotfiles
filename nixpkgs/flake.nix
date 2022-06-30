@@ -12,43 +12,52 @@
     homeConfigurations = {
       mbp2021 = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
-        system = "aarch64-darwin";
-        homeDirectory = "/home/schickling";
-        username = "schickling";
-        configuration.imports = [
+        modules = [
           ./home-manager/modules/home-manager.nix
           ./home-manager/modules/fish.nix
           ./home-manager/modules/common.nix
           ./home-manager/modules/git.nix
           ./home-manager/mac.nix
+          {
+            home = {
+              homeDirectory = "/home/schickling";
+              username = "schickling";
+            };
+          }
         ];
       };
 
       dev2 = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-        system = "x86_64-linux";
-        homeDirectory = "/home/schickling";
-        username = "schickling";
-        configuration.imports = [
+        modules = [
           ./home-manager/modules/home-manager.nix
           ./home-manager/modules/fish.nix
           ./home-manager/modules/common.nix
           ./home-manager/modules/git.nix
           ./home-manager/dev2.nix
+          {
+            home = {
+              homeDirectory = "/home/schickling";
+              username = "schickling";
+            };
+          }
         ];
       };
 
       gitpod = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-        system = "x86_64-linux";
-        homeDirectory = "/home/gitpod";
-        username = "gitpod";
-        configuration.imports = [
+        modules = [
           ./home-manager/modules/home-manager.nix
           ./home-manager/modules/fish.nix
           ./home-manager/modules/common.nix
           ./home-manager/modules/git.nix
           ./home-manager/gitpod.nix
+          {
+            home = {
+              homeDirectory = "/home/gitpod";
+              username = "gitpod";
+            };
+          }
         ];
       };
 
