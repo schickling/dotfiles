@@ -19,6 +19,7 @@
 
           devShell = with pkgs; pkgs.mkShell {
             buildInputs = [
+              pkgs.home-manager
               packer
               # NOTE currently disabled as it's broken on darwin
               # awscli # needed for some packer workflows
@@ -55,6 +56,23 @@
             ./nixpkgs/home-manager/modules/common.nix
             ./nixpkgs/home-manager/modules/git.nix
             ./nixpkgs/home-manager/dev2.nix
+            {
+              home = {
+                homeDirectory = "/home/schickling";
+                username = "schickling";
+              };
+            }
+          ];
+        };
+
+        homepi = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgsStable.legacyPackages.x86_64-linux;
+          modules = [
+            ./nixpkgs/home-manager/modules/home-manager.nix
+            ./nixpkgs/home-manager/modules/fish.nix
+            ./nixpkgs/home-manager/modules/common.nix
+            ./nixpkgs/home-manager/modules/git.nix
+            ./nixpkgs/home-manager/homepi.nix
             {
               home = {
                 homeDirectory = "/home/schickling";

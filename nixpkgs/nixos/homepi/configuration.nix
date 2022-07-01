@@ -73,11 +73,11 @@
     '';
   };
 
-  users.users.homepi = {
+  users.users.schickling = {
     isNormalUser = true;
-    home = "/home/homepi";
+    home = "/home/schickling";
     extraGroups = [ "wheel" "networkmanager" "podman" ];
-    openssh.authorizedKeys.keys = users.users.root.openssh.authorizedKeys.keys;
+    openssh.authorizedKeys.keys = common.sshKeys;
   };
 
   # enable the tailscale daemon; this will do a variety of tasks:
