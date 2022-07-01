@@ -93,6 +93,13 @@
           modules = [ ./nixpkgs/nixos/dev2/configuration.nix ];
         };
 
+        # sudo nixos-rebuild switch --flake .#homepi
+        homepi = inputs.nixpkgsStable.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = { common = self.common; inherit inputs; };
+          modules = [ ./nixpkgs/nixos/homepi/configuration.nix ];
+        };
+
         homepiImage = inputs.nixpkgsStable.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = { common = self.common; inherit inputs; };
