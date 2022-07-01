@@ -66,7 +66,7 @@
         };
 
         homepi = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgsStable.legacyPackages.x86_64-linux;
+          pkgs = inputs.nixpkgsStable.legacyPackages.aarch64-linux;
           modules = [
             ./nixpkgs/home-manager/modules/home-manager.nix
             ./nixpkgs/home-manager/modules/fish.nix
