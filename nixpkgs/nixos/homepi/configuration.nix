@@ -20,7 +20,7 @@
     loader = {
       raspberryPi = { enable = true; version = 4; };
       grub.enable = false;
-    }
+    };
   };
 
   # Required for the Wireless firmware
