@@ -43,3 +43,8 @@ gatsby
 stackbit-*
 
 result.closure.lz4
+result
+
+.envrc.*
+.direnv
+*.pem

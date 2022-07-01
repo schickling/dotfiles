@@ -17,22 +17,18 @@
       # A lot GUI programs need this, nearly all wayland applications
       "cma=128M"
     ];
+    loader = {
+      raspberryPi = { enable = true; version = 4; };
+      grub.enable = false;
+    }
   };
-
-  boot.loader.raspberryPi = {
-    enable = true;
-    version = 4;
-  };
-  boot.loader.grub.enable = false;
 
   # Required for the Wireless firmware
   hardware.enableRedistributableFirmware = true;
 
   networking = {
     hostName = "homepi";
-    networkmanager = {
-      enable = true;
-    };
+    networkmanager.enable = true;
   };
 
   networking.nameservers = [ "8.8.8.8" ];
@@ -54,17 +50,14 @@
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
+    # needed for nix-direnv
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+
+      experimental-features = nix-command flakes
+    '';
   };
-
-  nix.package = pkgs.nixUnstable;
-
-  # needed for nix-direnv
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-
-    experimental-features = nix-command flakes
-  '';
 
   users.users.homepi = {
     isNormalUser = true;

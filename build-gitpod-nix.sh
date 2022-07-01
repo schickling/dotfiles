@@ -1,6 +1,7 @@
 #!/usr/bin/bash -i
 
 # This script is ideally run on a Gitpod workspace.
+# TODO turn this script into a Nix flake build target
 
 set -ex
 

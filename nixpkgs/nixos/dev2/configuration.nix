@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, common, ... }:
 
 {
   imports = [
@@ -23,8 +23,6 @@
     "fs.inotify.max_queued_events" = 32768; # default: 16384
   };
 
-  networking.hostName = "dev2";
-
   # The mdadm RAID1s were created with 'mdadm --create ... --homehost=hetzner',
   # but the hostname for each machine may be different, and mdadm's HOMEHOST
   # setting defaults to '<system>' (using the system hostname).
@@ -42,8 +40,9 @@
   '';
   # The RAIDs are assembled in stage1, so we need to make the config
   # available there.
-  boot.initrd.mdadmConf = config.environment.etc."mdadm.conf".text;
+  boot.initrd.services.swraid.mdadmConf = config.environment.etc."mdadm.conf".text;
 
+  networking.hostName = "dev2";
   # Network (Hetzner uses static IP assignments, and we don't use DHCP here)
   networking.useDHCP = false;
   networking.interfaces."enp7s0".ipv4.addresses = [
@@ -69,6 +68,8 @@
     allowedUDPPorts = [ config.services.tailscale.port ];
     # allow you to SSH in over the public internet
     allowedTCPPorts = [ 22 ];
+    # Needed by Tailscale to allow for exit nodes and subnet routing
+    checkReversePath = "loose";
   };
 
 
@@ -79,9 +80,8 @@
     isNormalUser = true;
     home = "/home/schickling";
     extraGroups = [ "wheel" "networkmanager" "podman" ];
-    openssh.authorizedKeys.keys = users.users.root.openssh.authorizedKeys.keys;
+    openssh.authorizedKeys.keys = common.sshKeys;
   };
-
 
   # programs.gnupg.agent = {
   #   enable = true;
@@ -91,8 +91,6 @@
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "vscode-extension-ms-vscode-remote-remote-ssh"
   ];
-
-  nix.package = pkgs.nixUnstable;
 
   # needed for nix-direnv
   nix.extraOptions = ''
