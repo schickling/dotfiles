@@ -13,7 +13,6 @@ NOTE: These dotfiles a heavily work in progress. Most things are being moved to 
 
 - Vim/Nvim (unify)
 - Tmux
-- Makefile stuff
 
 ## Gitpod workflows
 

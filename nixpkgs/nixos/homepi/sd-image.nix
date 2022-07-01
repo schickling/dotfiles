@@ -2,11 +2,43 @@
 , pkgs
 , inputs
 , common
+, lib
 , ...
 }: {
   imports = [
     "${inputs.nixpkgsStable}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+    # "${inputs.nixpkgsStable}/nixos/modules/profiles/base.nix"
+    # "${inputs.nixpkgsStable}/nixos/modules/profiles/installation-device.nix"
+    # "${inputs.nixpkgsStable}/nixos/modules/installer/sd-card/sd-image.nix"
+    # "${inputs.nixpkgsStable}/nixos/modules/installer/cd-dvd/sd-image.nix"
   ];
+
+  # boot.loader.grub.enable = false;
+  # boot.loader.raspberryPi.enable = true;
+  # boot.loader.raspberryPi.version = 4;
+  # boot.kernelPackages = pkgs.linuxPackages_rpi4;
+
+  # boot.consoleLogLevel = lib.mkDefault 7;
+
+  # boot.kernelParams = [
+  #   # Increase `cma` to 64M to allow to use all of the RAM.
+  #   "cma=64M"
+  #   "console=tty0"
+  #   # To enable the serial console, uncomment the following line.
+  #   # "console=ttyS0,115200n8" "console=ttyAMA0,115200n8"
+  #   # Some Raspberry Pi 4 fail to boot correctly without the following. See issue #20.
+  #   "8250.nr_uarts=1"
+  # ];
+
+  # Remove some kernel modules added for AllWinner SOCs that are not available for RPi's kernel. See https://git.io/JOlb3
+  # boot.initrd.availableKernelModules = [
+  #   # Allows early (earlier) modesetting for the Raspberry Pi
+  #   "vc4"
+  #   "bcm2835_dma"
+  #   "i2c_bcm2835"
+  # ];
+
+  sdImage.compressImage = false;
 
   time.timeZone = "CET";
 
@@ -31,6 +63,10 @@
 
   users.users.root.openssh.authorizedKeys.keys = common.sshKeys;
 
+  # The installer starts with a "nixos" user to allow installation, so add the SSH key to
+  # that user. Note that the key is, at the time of writing, put in `/etc/ssh/authorized_keys.d`
+  # users.extraUsers.nixos.openssh.authorizedKeys.keys = common.sshKeys;
+
   services.openssh = {
     enable = true;
     extraConfig = ''
@@ -41,5 +77,5 @@
     '';
   };
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "22.05";
 }

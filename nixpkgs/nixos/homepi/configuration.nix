@@ -26,6 +26,18 @@
   # Required for the Wireless firmware
   hardware.enableRedistributableFirmware = true;
 
+  # fileSystems = lib.mkForce {
+  #   # There is no U-Boot on the Pi 4, thus the firmware partition needs to be mounted as /boot.
+  #   "/boot" = {
+  #     device = "/dev/disk/by-label/FIRMWARE";
+  #     fsType = "vfat";
+  #   };
+  #   "/" = {
+  #     device = "/dev/disk/by-label/NIXOS_SD";
+  #     fsType = "ext4";
+  #   };
+  # };
+
   networking = {
     hostName = "homepi";
     networkmanager.enable = true;
@@ -41,6 +53,8 @@
   #   allowedUDPPorts = [ config.services.tailscale.port ];
   #   # allow you to SSH in over the public internet
   #   allowedTCPPorts = [ 22 ];
+  #   # Needed by Tailscale to allow for exit nodes and subnet routing
+  #   checkReversePath = "loose";
   # };
 
   nix = {
