@@ -115,6 +115,7 @@
         homepi = inputs.nixpkgsStable.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = { common = self.common; inherit inputs; };
+          # TODO load home-manager dotfiles also for root user
           modules = [ ./nixpkgs/nixos/homepi/configuration.nix ];
         };
 
