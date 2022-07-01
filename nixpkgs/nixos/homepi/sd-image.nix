@@ -23,19 +23,13 @@
     hostName = "homepi";
     networkmanager.enable = true;
     firewall.enable = false;
+    nameservers = [ "8.8.8.8" ];
   };
 
-  users.groups.networkmanager.members = config.users.groups.wheel.members;
-  users.mutableUsers = false;
-  users.users.homepi = {
-    name = "homepi";
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = common.sshKeys;
-  };
-  users.defaultUserShell = pkgs.fish;
+  # Enable SSH in the boot process https://nixos.wiki/wiki/Creating_a_NixOS_live_CD#SSH
+  systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
 
-  security.sudo.wheelNeedsPassword = false;
+  users.users.root.openssh.authorizedKeys.keys = common.sshKeys;
 
   services.openssh = {
     enable = true;
