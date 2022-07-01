@@ -1,3 +1,10 @@
+## Building
+
+```bash
+cd build-image
+packer build build.pkr.hcl
+```
+
 ## Flashing RPI on macOS
 
 ```bash
