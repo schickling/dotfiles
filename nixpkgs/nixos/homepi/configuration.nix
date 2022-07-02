@@ -77,9 +77,11 @@
   users.users.schickling = {
     isNormalUser = true;
     home = "/home/schickling";
-    extraGroups = [ "wheel" "networkmanager" "podman" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
     openssh.authorizedKeys.keys = common.sshKeys;
   };
+
+  virtualisation.docker.enable = true;
 
   # enable the tailscale daemon; this will do a variety of tasks:
   # 1. create the TUN network device

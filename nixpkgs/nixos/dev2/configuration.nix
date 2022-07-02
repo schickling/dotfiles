@@ -83,6 +83,12 @@
     openssh.authorizedKeys.keys = common.sshKeys;
   };
 
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    dockerSocket.enable = true;
+  };
+
   # programs.gnupg.agent = {
   #   enable = true;
   #   pinentryFlavor = "tty";

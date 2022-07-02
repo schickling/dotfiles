@@ -7,12 +7,6 @@
 
   users.users.root.openssh.authorizedKeys.keys = common.sshKeys;
 
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true;
-    dockerSocket.enable = true;
-  };
-
   services.openssh = {
     enable = true;
     extraConfig = ''

@@ -19,7 +19,7 @@
 
           devShell = with pkgs; pkgs.mkShell {
             buildInputs = [
-              pkgs.home-manager
+              # pkgs.home-manager # this might not be needed?
               packer
               # NOTE currently disabled as it's broken on darwin
               # awscli # needed for some packer workflows
@@ -116,7 +116,19 @@
           system = "aarch64-linux";
           specialArgs = { common = self.common; inherit inputs; };
           # TODO load home-manager dotfiles also for root user
-          modules = [ ./nixpkgs/nixos/homepi/configuration.nix ];
+          modules = [
+            ./nixpkgs/nixos/homepi/configuration.nix
+            # home-manager.nixosModules.home-manager
+            # {
+            #   home-manager.useGlobalPkgs = true;
+            #   home-manager.useUserPackages = true;
+            #   home-manager.users.jdoe = import ./home.nix;
+
+            #   # Optionally, use home-manager.extraSpecialArgs to pass
+            #   # arguments to home.nix
+            # }
+          ];
+
         };
 
         homepiImage = inputs.nixpkgsStable.lib.nixosSystem {
