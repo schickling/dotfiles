@@ -6,19 +6,31 @@
 {
   imports =
     [
-      (modulesPath + "/installer/scan/not-detected.nix")
+      (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
-  # boot.initrd.availableKernelModules = [ "xhci_pci" ];
+  boot.loader.grub = {
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    device = "nodev";
+  };
+
+  # boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "usbhid" ];
   # boot.initrd.kernelModules = [ ];
   # boot.kernelModules = [ ];
   # boot.extraModulePackages = [ ];
 
-  # fileSystems."/" =
-  #   {
-  #     device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-  #     fsType = "ext4";
-  #   };
+  fileSystems."/" =
+    {
+      device = "/dev/disk/by-uuid/5e0eaa36-1101-416a-b524-b855f57e043a";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    {
+      device = "/dev/disk/by-uuid/91F4-F0EA";
+      fsType = "vfat";
+    };
 
   swapDevices = [ ];
 
@@ -27,8 +39,6 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 }

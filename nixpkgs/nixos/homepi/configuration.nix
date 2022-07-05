@@ -1,13 +1,16 @@
-{ config, pkgs, lib, common, ... }:
+{ config, pkgs, inputs, lib, common, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
+    # ./tailscale.nix
     ../configuration-common.nix
+    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_rpi4;
+    # TODO re-enable when fixed https://github.com/NixOS/nixpkgs/issues/154163
+    # kernelPackages = pkgs.linuxPackages_rpi4;
     tmpOnTmpfs = true;
     initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
     # ttyAMA0 is the serial console broken out to the GPIO
@@ -18,14 +21,16 @@
       # A lot GUI programs need this, nearly all wayland applications
       "cma=128M"
     ];
-    loader = {
-      raspberryPi = { enable = true; version = 4; };
-      grub.enable = false;
-    };
+    # loader = {
+    #   raspberryPi = { enable = true; version = 4; };
+    #   grub.enable = false;
+    # };
   };
 
   # Required for the Wireless firmware
-  hardware.enableRedistributableFirmware = true;
+  # hardware.enableRedistributableFirmware = true;
+
+  sdImage.compressImage = false;
 
   # fileSystems = lib.mkForce {
   #   # There is no U-Boot on the Pi 4, thus the firmware partition needs to be mounted as /boot.
@@ -77,11 +82,20 @@
   users.users.schickling = {
     isNormalUser = true;
     home = "/home/schickling";
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+      # "podman"
+    ];
     openssh.authorizedKeys.keys = common.sshKeys;
   };
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    # Needed since Docker by default surpases firewall https://github.com/NixOS/nixpkgs/issues/111852#issuecomment-1031051463
+    extraOptions = ''--iptables=false --ip6tables=false'';
+  };
 
   # enable the tailscale daemon; this will do a variety of tasks:
   # 1. create the TUN network device

@@ -24,6 +24,10 @@ variable "cachix_cache" {
   default = "schickling"
 }
 
+variable "image_name" {
+  type = string
+}
+
 source "amazon-ebs" "nixos_sd_image_builder" {
   ami_name            = "nixos_sd_image_builder"
   region              = var.region
@@ -73,7 +77,7 @@ build {
   }
 
   provisioner "file" {
-    sources     = ["../flake.nix", "../flake.lock"]
+    sources     = ["../flake.nix", "../flake.lock", "../.envrc", "../.envrc.local"]
     destination = "./"
   }
 
@@ -95,6 +99,7 @@ build {
   provisioner "shell" {
     inline_shebang = "/bin/sh -ex"
     inline = [
+      "direnv allow"
       // NOTE disabled cachix for now as uploading the final img artifacts takes multiple minutes
       // and nullifies the speed up gained by Cachix 🙈
 
@@ -103,7 +108,7 @@ build {
       // "cachix use ${var.cachix_cache}",
       // "sudo nixos-rebuild switch",
       // "cachix watch-exec ${var.cachix_cache} nix -- build .#images.homepi",
-      "nix --extra-experimental-features \"nix-command flakes\" build .#images.homepi",
+      "nix --extra-experimental-features \"nix-command flakes\" build .#images.${var.image_name}",
       "ls result/sd-image"
     ]
   }

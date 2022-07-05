@@ -79,15 +79,26 @@
   users.users.schickling = {
     isNormalUser = true;
     home = "/home/schickling";
-    extraGroups = [ "wheel" "networkmanager" "podman" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+      # "podman"
+    ];
     openssh.authorizedKeys.keys = common.sshKeys;
   };
 
-  virtualisation.podman = {
+  virtualisation.docker = {
     enable = true;
-    dockerCompat = true;
-    dockerSocket.enable = true;
+    # Needed since Docker by default surpases firewall https://github.com/NixOS/nixpkgs/issues/111852#issuecomment-1031051463
+    extraOptions = ''--iptables=false --ip6tables=false'';
   };
+
+  # virtualisation.podman = {
+  #   enable = true;
+  #   dockerCompat = true;
+  #   dockerSocket.enable = true;
+  # };
 
   # programs.gnupg.agent = {
   #   enable = true;

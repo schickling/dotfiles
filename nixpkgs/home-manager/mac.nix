@@ -1,20 +1,25 @@
 { config, lib, pkgs, ... }:
 
 {
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
+  imports = [
+    ./modules/home-manager.nix
+    ./modules/fish.nix
+    ./modules/common.nix
+    ./modules/git.nix
+  ];
+
+  home.homeDirectory = "/home/schickling";
+  home.username = "schickling";
+
   home.stateVersion = "20.09";
 
   programs.fish.interactiveShellInit = ''
     set -x SSH_AUTH_SOCK "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
 
     set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+    # nix-darwin binaries
+    set -x PATH $PATH "/run/current-system/sw/bin/"
   '';
 
   # http://czyzykowski.com/posts/gnupg-nix-osx.html

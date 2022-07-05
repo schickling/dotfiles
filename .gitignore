@@ -17,6 +17,7 @@ git/config
 
 # don't care (yet) about a custom bottom config
 bottom
+neofetch
 
 systemd
 

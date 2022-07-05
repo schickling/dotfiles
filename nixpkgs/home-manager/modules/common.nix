@@ -12,6 +12,7 @@
     bat
     bottom
     fzf
+    neofetch # fancy system + hardware info
 
     # Requires a patched font
     # https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md#patched-fonts

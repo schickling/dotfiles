@@ -1,3 +1,5 @@
+# NOTE this file isn't needed/used anymore (see ./configuration.nix instead)
+# TODO remove this file soon
 { config
 , pkgs
 , inputs
@@ -6,11 +8,11 @@
 , ...
 }: {
   imports = [
-    "${inputs.nixpkgsStable}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-    # "${inputs.nixpkgsStable}/nixos/modules/profiles/base.nix"
-    # "${inputs.nixpkgsStable}/nixos/modules/profiles/installation-device.nix"
-    # "${inputs.nixpkgsStable}/nixos/modules/installer/sd-card/sd-image.nix"
-    # "${inputs.nixpkgsStable}/nixos/modules/installer/cd-dvd/sd-image.nix"
+    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+    # "${inputs.nixpkgs}/nixos/modules/profiles/base.nix"
+    # "${inputs.nixpkgs}/nixos/modules/profiles/installation-device.nix"
+    # "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image.nix"
+    # "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/sd-image.nix"
   ];
 
   # boot.loader.grub.enable = false;

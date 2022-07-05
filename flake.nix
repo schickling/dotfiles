@@ -1,13 +1,22 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
-    nixpkgsStable.url = "github:NixOS/nixpkgs/release-22.05";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ { self, flake-utils, nixpkgs, nixpkgsStable, home-manager }:
+  outputs = inputs @ { self, flake-utils, darwin, deploy-rs, nixpkgs, home-manager }:
 
 
     flake-utils.lib.eachDefaultSystem
@@ -19,7 +28,6 @@
 
           devShell = with pkgs; pkgs.mkShell {
             buildInputs = [
-              # pkgs.home-manager # this might not be needed?
               packer
               # NOTE currently disabled as it's broken on darwin
               # awscli # needed for some packer workflows
@@ -29,120 +37,127 @@
         })
     // # <- concatenates Nix attribute sets
     {
+      # TODO re-enable cachix across hosts
 
       homeConfigurations = {
         mbp2021 = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgsStable.legacyPackages.aarch64-darwin;
-          modules = [
-            ./nixpkgs/home-manager/modules/home-manager.nix
-            ./nixpkgs/home-manager/modules/fish.nix
-            ./nixpkgs/home-manager/modules/common.nix
-            ./nixpkgs/home-manager/modules/git.nix
-            ./nixpkgs/home-manager/mac.nix
-            {
-              home = {
-                homeDirectory = "/home/schickling";
-                username = "schickling";
-              };
-            }
-          ];
+          pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [ ./nixpkgs/home-manager/mac.nix ];
         };
 
         dev2 = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgsStable.legacyPackages.x86_64-linux;
-          modules = [
-            ./nixpkgs/home-manager/modules/home-manager.nix
-            ./nixpkgs/home-manager/modules/fish.nix
-            ./nixpkgs/home-manager/modules/common.nix
-            ./nixpkgs/home-manager/modules/git.nix
-            ./nixpkgs/home-manager/dev2.nix
-            {
-              home = {
-                homeDirectory = "/home/schickling";
-                username = "schickling";
-              };
-            }
-          ];
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./nixpkgs/home-manager/dev2.nix ];
         };
 
         homepi = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgsStable.legacyPackages.aarch64-linux;
-          modules = [
-            ./nixpkgs/home-manager/modules/home-manager.nix
-            ./nixpkgs/home-manager/modules/fish.nix
-            ./nixpkgs/home-manager/modules/common.nix
-            ./nixpkgs/home-manager/modules/git.nix
-            ./nixpkgs/home-manager/homepi.nix
-            {
-              home = {
-                homeDirectory = "/home/schickling";
-                username = "schickling";
-              };
-            }
-          ];
+          pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
+          modules = [ ./nixpkgs/home-manager/homepi.nix ];
         };
 
         gitpod = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgsStable.legacyPackages.x86_64-linux;
-          modules = [
-            ./nixpkgs/home-manager/modules/home-manager.nix
-            ./nixpkgs/home-manager/modules/fish.nix
-            ./nixpkgs/home-manager/modules/common.nix
-            ./nixpkgs/home-manager/modules/git.nix
-            ./nixpkgs/home-manager/gitpod.nix
-            {
-              home = {
-                homeDirectory = "/home/gitpod";
-                username = "gitpod";
-              };
-            }
-          ];
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./nixpkgs/home-manager/gitpod.nix ];
         };
 
+      };
+
+      darwinConfigurations = {
+        # nix build .#darwinConfigurations.mbp2021.system
+        # ./result/sw/bin/darwin-rebuild switch --flake .
+        mbp2021 = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [ ./nixpkgs/darwin/mbp2021/configuration.nix ];
+          inputs = { inherit darwin nixpkgs; };
+        };
       };
 
       nixosConfigurations = {
 
         # sudo nixos-rebuild switch --flake .#dev2
-        dev2 = inputs.nixpkgsStable.lib.nixosSystem {
+        dev2 = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { common = self.common; inherit inputs; };
-          # TODO load home-manager dotfiles also for root user
-          modules = [ ./nixpkgs/nixos/dev2/configuration.nix ];
+          modules = [
+            ./nixpkgs/nixos/dev2/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              # TODO load home-manager dotfiles also for root user
+              home-manager.users.schickling = import ./nixpkgs/home-manager/dev2.nix;
+            }
+          ];
+        };
+
+        build-server = inputs.nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = { common = self.common; inherit inputs; };
+          modules = [
+            ./nixpkgs/nixos/build-server/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              home-manager.users.root = import ./nixpkgs/home-manager/nix-builder.nix;
+            }
+          ];
         };
 
         # sudo nixos-rebuild switch --flake .#homepi
-        homepi = inputs.nixpkgsStable.lib.nixosSystem {
+        homepi = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = { common = self.common; inherit inputs; };
-          # TODO load home-manager dotfiles also for root user
           modules = [
             ./nixpkgs/nixos/homepi/configuration.nix
-            # home-manager.nixosModules.home-manager
-            # {
-            #   home-manager.useGlobalPkgs = true;
-            #   home-manager.useUserPackages = true;
-            #   home-manager.users.jdoe = import ./home.nix;
-
-            #   # Optionally, use home-manager.extraSpecialArgs to pass
-            #   # arguments to home.nix
-            # }
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              # TODO load home-manager dotfiles also for root user
+              home-manager.users.schickling = import ./nixpkgs/home-manager/homepi.nix;
+            }
           ];
 
-        };
-
-        homepiImage = inputs.nixpkgsStable.lib.nixosSystem {
-          system = "aarch64-linux";
-          specialArgs = { common = self.common; inherit inputs; };
-          modules = [ ./nixpkgs/nixos/homepi/sd-image.nix ];
         };
 
       };
 
       images = {
         # nix build .#images.homepi
-        homepi = self.nixosConfigurations.homepiImage.config.system.build.sdImage;
+        homepi = self.nixosConfigurations.homepi.config.system.build.sdImage;
       };
+
+      deploy.nodes = {
+        homepi = {
+          hostname = "192.168.1.8";
+          profiles.system = {
+            sshUser = "root";
+            path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.homepi;
+          };
+        };
+
+        dev2 = {
+          hostname = "dev2";
+          profiles.system = {
+            sshUser = "root";
+            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.dev2;
+          };
+        };
+
+        build-server = {
+          hostname = "oracle-nix-builder";
+          profiles.system = {
+            sshUser = "root";
+            path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.build-server;
+          };
+        };
+      };
+
+      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
       common = {
         sshKeys = [
