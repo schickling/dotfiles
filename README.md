@@ -1,6 +1,6 @@
 # dotfiles
 
-NOTE: These dotfiles a heavily work in progress. Most things are being moved to Nix right now.
+Almost everything is set up using Nix.
 
 ## Includes
 
