@@ -6,6 +6,7 @@
     ./modules/fish.nix
     ./modules/common.nix
     ./modules/git.nix
+    ./modules/neovim.nix
   ];
 
   home.homeDirectory = "/home/schickling";

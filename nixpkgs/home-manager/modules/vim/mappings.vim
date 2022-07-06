@@ -17,8 +17,6 @@ vnoremap <leader>a :call NERDComment('x', 'Toggle')<CR>
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-map \|\| :so $HOME/.vimrc<CR>:e<CR>
-
 " Window switching
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>

@@ -11,7 +11,6 @@ NOTE: These dotfiles a heavily work in progress. Most things are being moved to 
 
 ## TODO move to Nix
 
-- Vim/Nvim (unify)
 - Tmux
 
 ## Gitpod workflows

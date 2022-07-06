@@ -6,8 +6,9 @@ configstore
 
 yarn/global/node_modules
 
-nvim/init.vim
-vim/plugged
+nvim
+
+# TODO flip gitignore file to allow-listing instead of deny-listing
 
 # nix
 environment.d
@@ -49,3 +50,5 @@ result
 .envrc.*
 .direnv
 *.pem
+
+tmp*

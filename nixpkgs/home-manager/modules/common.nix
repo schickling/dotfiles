@@ -34,7 +34,6 @@
     speedtest-cli
 
     yarn
-    neovim
     python38
     jq
     go
