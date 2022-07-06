@@ -15,6 +15,9 @@
     keep-derivations = true
     auto-optimise-store = true
 
+    # assuming the builder has a faster internet connection
+    builders-use-substitutes = true
+
     experimental-features = nix-command flakes
   '';
 
@@ -30,7 +33,7 @@
         supportedFeatures = [ "nixos-test" "benchmark" "kvm" "big-parallel" ];
       }
     ];
-    distributedBuilds = true;
+    distributedBuilds = config.nix.buildMachines != [ ];
   };
 
 

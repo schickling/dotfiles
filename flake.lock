@@ -111,13 +111,30 @@
         "type": "github"
       }
     },
+    "nixpkgsUnstable": {
+      "locked": {
+        "lastModified": 1657135642,
+        "narHash": "sha256-IILpYx1XWk7mqrLJ7/BVJRoRvBJjZeBPdfwOjr6X4Hk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dcae925ccb731bd89929fa20981332173f2ab2b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nixpkgsUnstable": "nixpkgsUnstable"
       }
     },
     "utils": {

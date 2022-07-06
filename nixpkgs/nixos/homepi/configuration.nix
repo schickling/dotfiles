@@ -46,22 +46,21 @@
 
   networking = {
     hostName = "homepi";
-    networkmanager.enable = true;
+    nameservers = [ "8.8.8.8" ];
+
+    firewall = {
+      enable = true;
+      # always allow traffic from your Tailscale network
+      trustedInterfaces = [ "tailscale0" ];
+      # allow the Tailscale UDP port through the firewall
+      allowedUDPPorts = [ config.services.tailscale.port ];
+      # allow you to SSH in over the public internet
+      allowedTCPPorts = [ 22 ];
+      # Needed by Tailscale to allow for exit nodes and subnet routing
+      checkReversePath = "loose";
+    };
   };
 
-  networking.nameservers = [ "8.8.8.8" ];
-
-  # networking.firewall = {
-  #   enable = true;
-  #   # always allow traffic from your Tailscale network
-  #   trustedInterfaces = [ "tailscale0" ];
-  #   # allow the Tailscale UDP port through the firewall
-  #   allowedUDPPorts = [ config.services.tailscale.port ];
-  #   # allow you to SSH in over the public internet
-  #   allowedTCPPorts = [ 22 ];
-  #   # Needed by Tailscale to allow for exit nodes and subnet routing
-  #   checkReversePath = "loose";
-  # };
 
   nix = {
     autoOptimiseStore = true;
@@ -84,7 +83,6 @@
     home = "/home/schickling";
     extraGroups = [
       "wheel"
-      "networkmanager"
       "docker"
       # "podman"
     ];

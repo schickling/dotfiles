@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
+    nixpkgsUnstable.url = "github:NixOS/nixpkgs/master";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,7 +17,7 @@
     };
   };
 
-  outputs = inputs @ { self, flake-utils, darwin, deploy-rs, nixpkgs, home-manager }:
+  outputs = inputs @ { self, flake-utils, darwin, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager }:
 
 
     flake-utils.lib.eachDefaultSystem
@@ -43,21 +44,25 @@
         mbp2021 = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
           modules = [ ./nixpkgs/home-manager/mac.nix ];
+          extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin; };
         };
 
         dev2 = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./nixpkgs/home-manager/dev2.nix ];
+          extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; };
         };
 
         homepi = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
           modules = [ ./nixpkgs/home-manager/homepi.nix ];
+          extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-linux; };
         };
 
         gitpod = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./nixpkgs/home-manager/gitpod.nix ];
+          extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; };
         };
 
       };
@@ -85,6 +90,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; };
               # TODO load home-manager dotfiles also for root user
               home-manager.users.schickling = import ./nixpkgs/home-manager/dev2.nix;
             }
@@ -101,6 +107,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-linux; };
               home-manager.users.root = import ./nixpkgs/home-manager/nix-builder.nix;
             }
           ];
@@ -117,6 +124,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-linux; };
               # TODO load home-manager dotfiles also for root user
               home-manager.users.schickling = import ./nixpkgs/home-manager/homepi.nix;
             }

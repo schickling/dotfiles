@@ -1,4 +1,4 @@
-{ config, pkgs, libs, ... }:
+{ config, pkgs, pkgsUnstable, libs, ... }:
 {
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -30,7 +30,7 @@
     # https://github.com/sindresorhus/fkill
     nodePackages.fkill-cli
 
-    youtube-dl
+    pkgsUnstable.youtube-dl
     speedtest-cli
 
     yarn
