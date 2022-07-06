@@ -29,9 +29,7 @@
 
           devShell = with pkgs; pkgs.mkShell {
             buildInputs = [
-              packer
-              # NOTE currently disabled as it's broken on darwin
-              # awscli # needed for some packer workflows
+              # Just in case :)
             ];
           };
 
