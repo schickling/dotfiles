@@ -13,6 +13,7 @@
     bottom
     fzf
     neofetch # fancy system + hardware info
+    tealdeer # fast tldr
 
     # Requires a patched font
     # https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md#patched-fonts
