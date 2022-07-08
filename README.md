@@ -31,6 +31,7 @@ Almost everything is set up using Nix.
 
 ## TODO
 
+- Rename to `nixconfig` and re-clone on machines as `~/.nixconfig` instead of `~/.config`
 - Move to Nix: Tmux
 - Auto-link VSC settings (e.g. via nix-darwin)
 - Improved macOS settings via nix-darwin
