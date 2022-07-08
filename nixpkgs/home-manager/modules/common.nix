@@ -12,6 +12,7 @@
     bat
     bottom
     fzf
+    rename
     neofetch # fancy system + hardware info
     tealdeer # fast tldr
 
