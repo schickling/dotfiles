@@ -139,7 +139,8 @@
 
       deploy.nodes = {
         homepi = {
-          hostname = "192.168.1.8";
+          # hostname = "192.168.1.8"; # local ip
+          hostname = "homepi";
           profiles.system = {
             sshUser = "root";
             path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.homepi;

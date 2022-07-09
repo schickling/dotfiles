@@ -49,15 +49,25 @@
     nameservers = [ "8.8.8.8" ];
 
     firewall = {
+      # enable = false;
       enable = true;
       # always allow traffic from your Tailscale network
       trustedInterfaces = [ "tailscale0" ];
       # allow the Tailscale UDP port through the firewall
       allowedUDPPorts = [ config.services.tailscale.port ];
-      # allow you to SSH in over the public internet
-      allowedTCPPorts = [ 22 ];
+      allowedTCPPorts = [
+        22 # allow you to SSH in locally or over the public internet
+        38890 # scrypted homekit
+      ];
       # Needed by Tailscale to allow for exit nodes and subnet routing
       checkReversePath = "loose";
+
+      extraCommands = ''
+        iptables -N DOCKER-USER || true
+        iptables -F DOCKER-USER
+        iptables -A DOCKER-USER -i enp7s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+        iptables -A DOCKER-USER -i enp7s0 -j DROP
+      '';
     };
   };
 
@@ -92,7 +102,7 @@
   virtualisation.docker = {
     enable = true;
     # Needed since Docker by default surpases firewall https://github.com/NixOS/nixpkgs/issues/111852#issuecomment-1031051463
-    extraOptions = ''--iptables=false --ip6tables=false'';
+    # extraOptions = ''--iptables=false --ip6tables=false'';
   };
 
   # enable the tailscale daemon; this will do a variety of tasks:

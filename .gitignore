@@ -29,6 +29,7 @@ packer
 
 rclone
 gcloud
+op
 
 *.log
 /tmp

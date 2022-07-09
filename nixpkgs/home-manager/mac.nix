@@ -21,6 +21,9 @@
 
     # nix-darwin binaries
     set -x PATH $PATH "/run/current-system/sw/bin/"
+
+    # `/usr/local/bin` is needed for biometric-support in `op` 1Password CLI
+    set -x PATH $PATH /usr/local/bin 
   '';
 
   # http://czyzykowski.com/posts/gnupg-nix-osx.html
@@ -39,4 +42,8 @@
   # automate `defaults write com.google.chrome ApplePressAndHoldEnabled -bool false`
 
   programs.git.signing.signByDefault = true;
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "1password-cli"
+  ];
 }
