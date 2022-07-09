@@ -49,19 +49,21 @@
     nameservers = [ "8.8.8.8" ];
 
     firewall = {
-      # enable = false;
       enable = true;
       # always allow traffic from your Tailscale network
       trustedInterfaces = [ "tailscale0" ];
-      # allow the Tailscale UDP port through the firewall
-      allowedUDPPorts = [ config.services.tailscale.port ];
+      allowedUDPPorts = [
+        config.services.tailscale.port # allow the Tailscale UDP port through the firewall
+        5353 # Needed for Homekit Secure Video - (Bonjour Multicast DNS - https://support.apple.com/en-us/HT202944)
+      ];
       allowedTCPPorts = [
         22 # allow you to SSH in locally or over the public internet
-        38890 # scrypted homekit
       ];
-      # Needed by Tailscale to allow for exit nodes and subnet routing
-      checkReversePath = "loose";
 
+      checkReversePath = "loose"; # Needed by Tailscale to allow for exit nodes and subnet routing
+
+      # Needed to stop Docker from exposing ports despite the firewall
+      # See https://github.com/NixOS/nixpkgs/issues/111852
       extraCommands = ''
         iptables -N DOCKER-USER || true
         iptables -F DOCKER-USER

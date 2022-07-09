@@ -51,12 +51,7 @@
     # (Hopefully this requirement will be lifted by 1Password at some point)
     # NOTE we don't install `op` via nix but simply copy the binary
     cp ${pkgs._1password}/bin/op /usr/local/bin/op
-
-    # echo "auth sufficient pam_tid.so" > /etc/pam.d/sudo_touchid
   '';
-
-  # system.activationScripts.extraActivation.text = ''
-  # '';
 
   security.pam.enableSudoTouchIdAuth = true;
 
