@@ -59,10 +59,8 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "remote.SSH.remotePlatform": {
     "dev": "linux",
-    "rpi-eggisried": "linux",
-    "rpi2": "linux",
     "hetzner": "linux",
-    "chocolate-jaguar-wd9mg2iq": "linux"
+    "homepi": "linux"
   },
   // No longer needed due to https://github.com/microsoft/vscode-remote-release/issues/3190
   // "remote.SSH.defaultForwardedPorts": [

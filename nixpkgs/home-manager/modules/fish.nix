@@ -73,15 +73,26 @@
 
       '';
     };
-    plugins = [{
-      name = "bobthefish";
-      src = pkgs.fetchFromGitHub {
-        owner = "oh-my-fish";
-        repo = "theme-bobthefish";
-        rev = "e69150081b0e576ebb382487c1ff2cb35e78bb35";
-        sha256 = "sha256-/x1NlbhxRZjrsk4C0mkSQi4zzpOaxL1O1vvzDHhGQk0=";
-      };
-    }];
+    plugins = [
+      {
+        name = "bobthefish";
+        src = pkgs.fetchFromGitHub {
+          owner = "oh-my-fish";
+          repo = "theme-bobthefish";
+          rev = "e69150081b0e576ebb382487c1ff2cb35e78bb35";
+          sha256 = "sha256-/x1NlbhxRZjrsk4C0mkSQi4zzpOaxL1O1vvzDHhGQk0=";
+        };
+      }
+      {
+        name = "fish-docker";
+        src = pkgs.fetchFromGitHub {
+          owner = "halostatue";
+          repo = "fish-docker";
+          rev = "e925cd39231398b3842db1106af7acb4ec68dc79";
+          sha256 = "sha256-vFWSa4TlygBylWSqFFH195KZM3dE2G3RZjOMTkEhKW8=";
+        };
+      }
+    ];
     shellAliases = {
       v = "nvim";
       l = "lsd";

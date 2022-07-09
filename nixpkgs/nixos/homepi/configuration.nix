@@ -50,6 +50,8 @@
 
     firewall = {
       enable = true;
+      # enable = false; # I've found it's easiest to disable the firewall during Homekit pairing
+
       # always allow traffic from your Tailscale network
       trustedInterfaces = [ "tailscale0" ];
       allowedUDPPorts = [
@@ -58,6 +60,9 @@
       ];
       allowedTCPPorts = [
         22 # allow you to SSH in locally or over the public internet
+        1400 # Sonos https://www.home-assistant.io/integrations/sonos/#network-requirements
+        21063 # Homekit Bridge HA https://www.home-assistant.io/integrations/homekit/#port
+        38890 # Homekit Bridge Scrypted
       ];
 
       checkReversePath = "loose"; # Needed by Tailscale to allow for exit nodes and subnet routing
@@ -111,9 +116,6 @@
   # 1. create the TUN network device
   # 2. setup some IP routes to route through the TUN
   services.tailscale.enable = true;
-
-  # only allow access via tailscale
-  # services.openssh.openFirewall = false;
 
   system.stateVersion = "21.11";
 }
