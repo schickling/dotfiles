@@ -19,6 +19,8 @@
     nodejs-16_x
 
     fishPlugins.foreign-env
+
+    restic
   ];
 
   services.gpg-agent = {

@@ -11,6 +11,7 @@
   boot = {
     # TODO re-enable when fixed https://github.com/NixOS/nixpkgs/issues/154163
     # kernelPackages = pkgs.linuxPackages_rpi4;
+
     tmpOnTmpfs = true;
     initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
     # ttyAMA0 is the serial console broken out to the GPIO
@@ -21,10 +22,12 @@
       # A lot GUI programs need this, nearly all wayland applications
       "cma=128M"
     ];
-    # loader = {
-    #   raspberryPi = { enable = true; version = 4; };
-    #   grub.enable = false;
-    # };
+
+    # Enable IP forwarding (required for Tailscale subnet feature https://tailscale.com/kb/1019/subnets/?tab=linux#step-1-install-the-tailscale-client)
+    kernel.sysctl = {
+      "net.ipv4.ip_forward" = true;
+      "net.ipv6.conf.all.forwarding" = true;
+    };
   };
 
   # Required for the Wireless firmware
@@ -62,6 +65,8 @@
         22 # allow you to SSH in locally or over the public internet
         1400 # Sonos https://www.home-assistant.io/integrations/sonos/#network-requirements
         21063 # Homekit Bridge HA https://www.home-assistant.io/integrations/homekit/#port
+      ];
+      allowedTCPPortRanges = [
         { from = 30000; to = 50000; } # Random port range of Scrypted https://github.com/koush/scrypted/blob/a511130c2934b0a51b16bd1297df972248cc1619/plugins/homekit/src/hap-utils.ts#L100
       ];
 
