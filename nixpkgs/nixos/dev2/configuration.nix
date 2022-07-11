@@ -70,6 +70,15 @@
     allowedTCPPorts = [ 22 ];
     # Needed by Tailscale to allow for exit nodes and subnet routing
     checkReversePath = "loose";
+
+    # Needed to stop Docker from exposing ports despite the firewall
+    # See https://github.com/NixOS/nixpkgs/issues/111852
+    extraCommands = ''
+      iptables -N DOCKER-USER || true
+      iptables -F DOCKER-USER
+      iptables -A DOCKER-USER -i enp7s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+      iptables -A DOCKER-USER -i enp7s0 -j DROP
+    '';
   };
 
 
@@ -90,8 +99,6 @@
 
   virtualisation.docker = {
     enable = true;
-    # Needed since Docker by default surpases firewall https://github.com/NixOS/nixpkgs/issues/111852#issuecomment-1031051463
-    extraOptions = ''--iptables=false --ip6tables=false'';
   };
 
   # virtualisation.podman = {

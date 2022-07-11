@@ -22,7 +22,7 @@
     tree
     # better du alternative
     du-dust
-    # awscli
+    ripgrep
     graphviz
     git-crypt
 
