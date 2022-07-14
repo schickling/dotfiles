@@ -20,6 +20,8 @@
       init.defaultBranch = "main";
       github.user = "schickling";
 
+      push.autoSetupRemote = true;
+
       core.editor = "nvim";
       core.fileMode = false;
       core.ignorecase = false;
