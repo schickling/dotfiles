@@ -12,6 +12,7 @@
       # Tools
       nerdtree
       nerdcommenter
+      telescope-nvim # https://github.com/nvim-telescope/telescope.nvim
 
       # Languages
       vim-nix
@@ -29,6 +30,7 @@
       (builtins.readFile ./vim/plugin.go.vim)
       (builtins.readFile ./vim/plugin.nerdtree.vim)
       (builtins.readFile ./vim/plugin.tmuxline.vim)
+      (builtins.readFile ./vim/plugin.telescope.vim)
     ]);
   };
 }
