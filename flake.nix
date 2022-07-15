@@ -77,8 +77,9 @@
       };
 
       darwinConfigurations = {
-        # nix build .#darwinConfigurations.mbp2021.system
-        # ./result/sw/bin/darwin-rebuild switch --flake .
+        # TODO: replace mbp2021 with your hostname
+        # Command: nix build ."#darwinConfigurations.hostname.system"
+        # Command: ./result/sw/bin/darwin-rebuild switch --flake ."#darwinConfigurations.hostname.system"
         mbp2021 = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [
