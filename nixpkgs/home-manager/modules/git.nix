@@ -26,5 +26,10 @@
       core.fileMode = false;
       core.ignorecase = false;
     };
+    ignores = [
+      ".dir-locals.el"
+      ".envrc"
+      ".DS_Store"
+    ];
   };
 }
