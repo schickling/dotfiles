@@ -24,6 +24,11 @@
       if command -v direnv &>/dev/null
           eval (direnv hook fish)
       end
+
+      # Enable zoxice `z` (https://github.com/ajeetdsouza/zoxide)
+      if command -v zoxide &>/dev/null
+        zoxide init fish | source
+      end
     '';
     functions = {
 
@@ -48,6 +53,14 @@
         echo 'test' | gpg --clearsign
         ssh $argv 'ls /run/user/1000/gnupg/'
         ssh $argv 'echo 'test' | gpg --clearsign'
+      '';
+
+      fixssh = ''
+        ssh $argv 'rm "~/.ssh/sockets/*"'
+        rm ~/.ssh/sockets/*
+        killall ssh-agent
+        ssh $argv 'echo SSH_AUTH_SOCK: $SSH_AUTH_SOCK'
+        ssh -tt $argv 'ssh git@github.com'
       '';
 
       # This is a workaround needed to "fix" VSC on NixOS which is self-updating
