@@ -15,6 +15,7 @@
     rename
     neofetch # fancy system + hardware info
     tealdeer # fast tldr
+    zoxide # habitual `cd`
 
     # Requires a patched font
     # https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md#patched-fonts
@@ -63,6 +64,7 @@
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils # provides `dd` with --status=progress
+    wifi-password
   ] ++ lib.optionals stdenv.isLinux [
     iputils # provides `ping`, `ifconfig`, ...
 

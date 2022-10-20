@@ -42,6 +42,8 @@
   # automate `defaults write com.google.chrome ApplePressAndHoldEnabled -bool false`
 
   programs.git.signing.signByDefault = true;
+  programs.git.signing.key = "key::ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPkfRqtIP8Lc7qBlJO1CsBeb+OEZN87X+ZGGTfNFf8V588Dh/lgv7WEZ4O67hfHjHCNV8ZafsgYNxffi8bih+1Q= MBP2021@secretive.mbp2021.local";
+  programs.git.extraConfig.gpg.format = "ssh";
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"

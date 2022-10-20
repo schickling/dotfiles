@@ -84,5 +84,9 @@
   {
     "key": "shift+cmd+b",
     "command": "workbench.action.toggleAuxiliaryBar"
+  },
+  {
+    "key": "shift+cmd+9",
+    "command": "workbench.action.tasks.runTask"
   }
 ]

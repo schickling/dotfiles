@@ -5,8 +5,6 @@
     userName = "Johannes Schickling";
     userEmail = "schickling.j@gmail.com";
 
-    signing.key = "8E9046ABA7CA018432E4A4897D614C236B9A75E6";
-
     delta = {
       enable = true;
       options = {

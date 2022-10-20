@@ -7,8 +7,6 @@
   #   ];
 
   imports = [
-    # TODO remove when merged https://github.com/LnL7/nix-darwin/pull/228
-    ./pam.nix
   ];
 
   # Auto upgrade nix package and the daemon service.
