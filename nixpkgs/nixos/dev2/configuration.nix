@@ -118,13 +118,19 @@
   #   pinentryFlavor = "tty";
   # };
 
-  # needed for nix-direnv
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
+  nix = {
+    # Currently disabled `nix.settings.auto-optimise-store` as it seems to fail with remote builders
+    # TODO renable when fixed https://github.com/NixOS/nix/issues/7273
+    settings.auto-optimise-store = false;
 
-    experimental-features = nix-command flakes
-  '';
+    # needed for nix-direnv
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+
+      experimental-features = nix-command flakes
+    '';
+  };
 
   # enable the tailscale daemon; this will do a variety of tasks:
   # 1. create the TUN network device

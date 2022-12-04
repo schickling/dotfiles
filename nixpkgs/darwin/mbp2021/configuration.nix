@@ -11,20 +11,25 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
-
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-    auto-optimise-store = true
-
-    # assuming the builder has a faster internet connection
-    builders-use-substitutes = true
-
-    experimental-features = nix-command flakes
-  '';
 
   nix = {
+    package = pkgs.nix;
+
+    # Currently disabled `nix.settings.auto-optimise-store` as it seems to fail with remote builders
+    # TODO renable when fixed https://github.com/NixOS/nix/issues/7273
+    settings.auto-optimise-store = false;
+
+    extraOptions = ''
+      # needed for nix-direnv
+      keep-outputs = true
+      keep-derivations = true
+
+      # assuming the builder has a faster internet connection
+      builders-use-substitutes = true
+
+      experimental-features = nix-command flakes
+    '';
+
     buildMachines = lib.filter (x: x.hostName != config.networking.hostName) [
       {
         systems = [ "aarch64-linux" "x86_64-linux" ];

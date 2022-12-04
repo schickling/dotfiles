@@ -85,14 +85,18 @@
 
 
   nix = {
-    autoOptimiseStore = true;
+    # Currently disabled `nix.settings.auto-optimise-store` as it seems to fail with remote builders
+    # TODO renable when fixed https://github.com/NixOS/nix/issues/7273
+    settings.auto-optimise-store = false;
+
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
-    # needed for nix-direnv
+
     extraOptions = ''
+      # needed for nix-direnv
       keep-outputs = true
       keep-derivations = true
 

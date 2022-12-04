@@ -1,9 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/master";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils";
@@ -42,7 +42,12 @@
         mbp2021 = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
           modules = [ ./nixpkgs/home-manager/mac.nix ];
+          # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
           extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin; };
+          # system = "aarch64-darwin";
+          # configuration = { };
+          # homeDirectory = "/home/schickling";
+          # username = "schickling";
         };
 
         dev2 = inputs.home-manager.lib.homeManagerConfiguration {
@@ -77,11 +82,13 @@
 
       nixosConfigurations = {
 
-        # sudo nixos-rebuild switch --flake .#dev2
+        # On actual machine: sudo nixos-rebuild switch --flake .#dev2
+        # On other machine: nix run github:serokell/deploy-rs .#dev2
         dev2 = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { common = self.common; inherit inputs; };
           modules = [
+            ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
             ./nixpkgs/nixos/dev2/configuration.nix
             home-manager.nixosModules.home-manager
             {
@@ -99,6 +106,7 @@
           system = "aarch64-linux";
           specialArgs = { common = self.common; inherit inputs; };
           modules = [
+            ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
             ./nixpkgs/nixos/build-server/configuration.nix
             home-manager.nixosModules.home-manager
             {
@@ -116,6 +124,7 @@
           system = "aarch64-linux";
           specialArgs = { common = self.common; inherit inputs; };
           modules = [
+            ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
             ./nixpkgs/nixos/homepi/configuration.nix
             home-manager.nixosModules.home-manager
             {

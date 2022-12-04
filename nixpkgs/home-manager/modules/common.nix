@@ -30,13 +30,17 @@
     httpstat
     curlie
 
-    # https://github.com/sindresorhus/fkill
-    nodePackages.fkill-cli
 
     pkgsUnstable.youtube-dl
     speedtest-cli
 
-    yarn
+    # https://github.com/sindresorhus/fkill
+    nodePackages.fkill-cli
+    nodePackages.pnpm
+    nodejs-18_x
+    (yarn.override { nodejs = nodejs-18_x; })
+
+
     python38
     jq
     go
