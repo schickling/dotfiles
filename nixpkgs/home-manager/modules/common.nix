@@ -37,7 +37,7 @@
     # https://github.com/sindresorhus/fkill
     nodePackages.fkill-cli
     nodePackages.pnpm
-    nodejs-18_x
+    nodejs # Node 18
     (yarn.override { nodejs = nodejs-18_x; })
 
 
