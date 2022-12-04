@@ -23,6 +23,12 @@
     "fs.inotify.max_queued_events" = 32768; # default: 16384
   };
 
+  boot.kernel.sysctl = {
+    # Enable IP forwarding (required for Tailscale exit node feature https://tailscale.com/kb/1019/subnets/?tab=linux#step-1-install-the-tailscale-client)
+    "net.ipv4.ip_forward" = true;
+    "net.ipv6.conf.all.forwarding" = true;
+  };
+
   # The mdadm RAID1s were created with 'mdadm --create ... --homehost=hetzner',
   # but the hostname for each machine may be different, and mdadm's HOMEHOST
   # setting defaults to '<system>' (using the system hostname).
