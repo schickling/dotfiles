@@ -37,8 +37,11 @@
     # https://github.com/sindresorhus/fkill
     nodePackages.fkill-cli
     nodePackages.pnpm
-    nodejs # Node 18
-    (yarn.override { nodejs = nodejs-18_x; })
+
+    # NOTE `nodejs` is installed on various machines separately, as a specific version is needed for remote VSC
+    # TODO figure out how to install a specific version of nodejs only for VSC
+    # nodejs # Node 18
+    # (yarn.override { nodejs = nodejs-18_x; })
 
 
     python38

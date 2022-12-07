@@ -31,7 +31,8 @@
   home.packages = with pkgs; [
     pinentry_mac
 
-    nodejs
+    nodejs # Node 18
+    (yarn.override { nodejs = nodejs-18_x; })
 
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerdfonts/default.nix
     # nerdfonts

@@ -15,7 +15,8 @@
   home.homeDirectory = "/home/gitpod";
 
   home.packages = with pkgs; [
-    nodejs
+    nodejs # Node 18
+    (yarn.override { nodejs = nodejs-18_x; })
 
     fishPlugins.foreign-env
   ];
