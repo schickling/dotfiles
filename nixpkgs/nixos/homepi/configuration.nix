@@ -65,6 +65,7 @@
         22 # allow you to SSH in locally or over the public internet
         1400 # Sonos https://www.home-assistant.io/integrations/sonos/#network-requirements
         21063 # Homekit Bridge HA https://www.home-assistant.io/integrations/homekit/#port
+        8123 # Home Assistant
       ];
       allowedTCPPortRanges = [
         { from = 30000; to = 50000; } # Random port range of Scrypted https://github.com/koush/scrypted/blob/a511130c2934b0a51b16bd1297df972248cc1619/plugins/homekit/src/hap-utils.ts#L100
