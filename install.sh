@@ -46,13 +46,12 @@ main() {
   date
 
   $NIX_RESULT_PATH/activate
-
-  # link VSC settings
-
+  
   # use VSC settings.json from dotfiles
-  mkdir -p $HOME/.config/Code/User
-  mv $HOME/.config/Code/User/settings.json $HOME/.config/Code/User/settings.json-backup
-  ln -s $HOME/.dotfiles/VSCode/settings.json $HOME/.config/Code/User/settings.json
+  mkdir -p /workspace/.vscode-remote/data/Machine
+  
+  mv /workspace/.vscode-remote/data/Machine/settings.json /workspace/.vscode-remote/data/Machine/settings.json-backup
+  ln -s $HOME/.dotfiles/VSCode/settings.json /workspace/.vscode-remote/data/Machine/settings.json
 
   date
 }
