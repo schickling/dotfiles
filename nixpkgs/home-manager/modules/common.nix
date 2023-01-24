@@ -49,7 +49,7 @@
     go
     cloc
     docker
-    tailscale
+    pkgsUnstable.tailscale
 
     ran # quick local webserver (`-r [folder]`)
 

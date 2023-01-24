@@ -1,4 +1,4 @@
-{ config, lib, pkgs, common, ... }:
+{ config, lib, pkgs, pkgsUnstable, common, ... }:
 
 {
   time.timeZone = "CET";
@@ -27,7 +27,7 @@
     jq
     bottom
     bat
-    tailscale
+    pkgsUnstable.tailscale
     git
     gnumake
     killall

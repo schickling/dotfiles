@@ -86,7 +86,7 @@
         # On other machine: nix run github:serokell/deploy-rs .#dev2
         dev2 = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { common = self.common; inherit inputs; };
+          specialArgs = { common = self.common; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; inherit inputs; };
           modules = [
             ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
             ./nixpkgs/nixos/dev2/configuration.nix
