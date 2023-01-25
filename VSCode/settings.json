@@ -110,7 +110,8 @@
     "json": true,
     "jsonc": true,
     "mdx": false,
-    "nix": true
+    "nix": true,
+    "postcss": true
   },
   // Default launch setup if no `.vscode/launch.json` file is available in project
   "launch": {
