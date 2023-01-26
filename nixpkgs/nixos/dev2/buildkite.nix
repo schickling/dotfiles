@@ -30,6 +30,10 @@
       extraConfig = ''
         spawn=5
       '';
+
+      hooks.environment = ''
+        export NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+      '';
     };
   };
 
