@@ -30,6 +30,9 @@ packer
 rclone
 gcloud
 op
+htop
+caddy
+fontconfig
 
 *.log
 /tmp
