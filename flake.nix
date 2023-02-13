@@ -11,13 +11,14 @@
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vscode-server.url = "github:msteen/nixos-vscode-server";
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs @ { self, flake-utils, darwin, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager }:
+  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager }:
 
 
     flake-utils.lib.eachDefaultSystem
@@ -89,6 +90,7 @@
           specialArgs = { common = self.common; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; inherit inputs; };
           modules = [
             ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
+            vscode-server.nixosModule
             ./nixpkgs/nixos/dev2/configuration.nix
             home-manager.nixosModules.home-manager
             {
@@ -125,6 +127,7 @@
           specialArgs = { common = self.common; inherit inputs; };
           modules = [
             ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
+            vscode-server.nixosModule
             ./nixpkgs/nixos/homepi/configuration.nix
             home-manager.nixosModules.home-manager
             {

@@ -127,5 +127,9 @@
   # 2. setup some IP routes to route through the TUN
   services.tailscale.enable = true;
 
+  # https://github.com/msteen/nixos-vscode-server
+  # Needs manual starting via `systemctl --user start auto-fix-vscode-server.service`
+  services.vscode-server.enable = true;
+
   system.stateVersion = "21.11";
 }

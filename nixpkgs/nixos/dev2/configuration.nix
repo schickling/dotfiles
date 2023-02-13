@@ -1,4 +1,4 @@
-{ config, lib, pkgs, common, ... }:
+{ config, lib, pkgs, vscode-server, common, ... }:
 
 {
   imports = [
@@ -137,6 +137,10 @@
   # 1. create the TUN network device
   # 2. setup some IP routes to route through the TUN
   services.tailscale.enable = true;
+
+  # https://github.com/msteen/nixos-vscode-server
+  # Needs manual starting via `systemctl --user start auto-fix-vscode-server.service`
+  services.vscode-server.enable = true;
 
   # FIXME
   # This value determines the NixOS release with which your system is to be
