@@ -28,10 +28,14 @@
         in
         {
 
-          devShell = with pkgs; pkgs.mkShell {
-            buildInputs = [
-              # Just in case :)
-            ];
+          # nix develop
+          # home-manager switch --flake .#mbp2020
+          devShells = {
+            default = with pkgs; mkShell {
+              buildInputs = [
+                pkgs.home-manager
+              ];
+            };
           };
 
         })
@@ -45,6 +49,17 @@
           modules = [ ./nixpkgs/home-manager/mac.nix ];
           # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
           extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin; };
+          # system = "aarch64-darwin";
+          # configuration = { };
+          # homeDirectory = "/home/schickling";
+          # username = "schickling";
+        };
+
+        mbp2020 = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-darwin;
+          modules = [ ./nixpkgs/home-manager/mbp2020.nix ];
+          # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
+          extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-darwin; };
           # system = "aarch64-darwin";
           # configuration = { };
           # homeDirectory = "/home/schickling";
@@ -80,11 +95,20 @@
           inputs = { inherit darwin nixpkgs; };
         };
 
-        # nix build .#darwinConfigurations.mbp2021.system
+        # nix build .#darwinConfigurations.mbp2020.system
         # ./result/sw/bin/darwin-rebuild switch --flake .
         mbp2020 = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
-          modules = [ ./nixpkgs/darwin/mbp2020/configuration.nix ];
+          modules = [
+            ./nixpkgs/darwin/mbp2020/configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.schickling = import ./nixpkgs/home-manager/mbp2020.nix;
+              home-manager.extraSpecialArgs = { inherit nixpkgs; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-darwin; };
+            }
+          ];
           inputs = { inherit darwin nixpkgs; };
         };
       };
