@@ -9,7 +9,7 @@
     ./modules/neovim.nix
   ];
 
-  home.homeDirectory = "/home/schickling";
+  home.homeDirectory = "/Users/schickling";
   home.username = "schickling";
 
   home.stateVersion = "20.09";

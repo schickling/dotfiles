@@ -185,4 +185,9 @@
   "xml.server.binary.trustedHashes": [
     "349101d07525b2eace14ac059ab2cfeadd859227b02dcaf107378667440561a6"
   ],
+  "playwright.reuseBrowser": true,
+  "workbench.colorTheme": "Default Dark+ Experimental",
+  "[python]": {
+    "editor.formatOnType": true
+  },
 }

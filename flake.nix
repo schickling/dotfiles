@@ -79,6 +79,14 @@
           modules = [ ./nixpkgs/darwin/mbp2021/configuration.nix ];
           inputs = { inherit darwin nixpkgs; };
         };
+
+        # nix build .#darwinConfigurations.mbp2021.system
+        # ./result/sw/bin/darwin-rebuild switch --flake .
+        mbp2020 = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
+          modules = [ ./nixpkgs/darwin/mbp2020/configuration.nix ];
+          inputs = { inherit darwin nixpkgs; };
+        };
       };
 
       nixosConfigurations = {
