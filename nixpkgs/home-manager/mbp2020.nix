@@ -43,9 +43,10 @@
   # https://aregsar.com/blog/2020/turn-on-key-repeat-for-macos-text-editors/
   # automate `defaults write com.google.chrome ApplePressAndHoldEnabled -bool false`
 
-  # programs.git.signing.signByDefault = true;
-  # programs.git.signing.key = "key::ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPkfRqtIP8Lc7qBlJO1CsBeb+OEZN87X+ZGGTfNFf8V588Dh/lgv7WEZ4O67hfHjHCNV8ZafsgYNxffi8bih+1Q= MBP2021@secretive.mbp2021.local";
-  # programs.git.extraConfig.gpg.format = "ssh";
+  programs.git.signing.signByDefault = true;
+  programs.git.signing.key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX";
+  programs.git.extraConfig.gpg.format = "ssh";
+  programs.git.extraConfig.gpg.ssh.program = "/usr/local/bin/op-ssh-sign";
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"
