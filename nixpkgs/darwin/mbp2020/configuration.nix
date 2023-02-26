@@ -60,6 +60,9 @@
 
     # https://developer.1password.com/docs/ssh/get-started#step-4-configure-your-ssh-or-git-client
     mkdir -p ~/.1password && ln -sfv ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
+
+    ln -sfv ~/.config/VSCode/settings.json ~/Library/Application\ Support/Code/User/settings.json
+    ln -sfv ~/.config/VSCode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
   '';
 
   security.pam.enableSudoTouchIdAuth = true;

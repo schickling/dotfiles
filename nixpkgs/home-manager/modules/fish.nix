@@ -46,6 +46,10 @@
         popd
       '';
 
+      whatsmyip = ''
+        curl ifconfig.me
+      '';
+
       fixgpg = ''
         ssh $argv 'killall gpg-agent'
         rm ~/.ssh/sockets/*

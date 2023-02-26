@@ -66,6 +66,8 @@
     "dev": "linux",
     "hetzner": "linux",
     "homepi": "linux",
+    "effect-dev": "linux",
+    "dev2": "linux"
   },
   "git.enableSmartCommit": true,
   "debug.onTaskErrors": "debugAnyway",
@@ -103,7 +105,6 @@
   "terminal.integrated.scrollback": 10000,
   "git.postCommitCommand": "sync",
   "editor.inlineSuggest.enabled": true,
-  "git.enableCommitSigning": true,
   "github.copilot.enable": {
     "*": false,
     "yaml": false,
@@ -197,4 +198,7 @@
   "[python]": {
     "editor.formatOnType": true
   },
+  "settingsSync.ignoredSettings": [
+    "git.enableCommitSigning"
+  ],
 }
