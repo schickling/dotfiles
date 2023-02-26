@@ -15,7 +15,8 @@
   home.stateVersion = "20.09";
 
   programs.fish.interactiveShellInit = ''
-    set -x SSH_AUTH_SOCK "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+    # set -x SSH_AUTH_SOCK "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+    set -x SSH_AUTH_SOCK "$HOME/.1password/agent.sock"
 
     set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
@@ -49,4 +50,6 @@
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"
   ];
+
+  programs.home-manager.enable = true;
 }

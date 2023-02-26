@@ -2,7 +2,13 @@
   "workbench.activityBar.visible": true,
   "editor.tabSize": 2,
   "editor.tabCompletion": "on",
-  "terminal.integrated.defaultProfile.osx": "fish",
+  "terminal.integrated.defaultProfile.osx": "nixFish",
+  "terminal.integrated.profiles.osx.nixFish": {
+    "path": "/etc/profiles/per-user/schickling/bin/fish",
+    "args": [
+      "-l"
+    ]
+  },
   "terminal.integrated.defaultProfile.linux": "fish",
   // "vim.leader": "<space>",
   "vim.useSystemClipboard": true,
@@ -49,11 +55,11 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false,
+    "**/.DS_Store": false
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "remote.SSH.remotePlatform": {
@@ -129,10 +135,11 @@
   },
   "git.alwaysShowStagedChangesResourceGroup": true,
   "remote.SSH.useLocalServer": false,
-  "nix.serverPath": "/Users/schickling/.nix-profile/bin/rnix-lsp",
+  "nix.serverPath": "/etc/profiles/per-user/schickling/bin/rnix-lsp",
   "[javascriptreact]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "direnv.path.executable": "/etc/profiles/per-user/schickling/bin/direnv",
   "redhat.telemetry.enabled": false,
   "editor.bracketPairColorization.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "literals",
@@ -141,7 +148,7 @@
   "editor.guides.bracketPairs": "active",
   "typescript.tsserver.log": "off",
   "typescript.referencesCodeLens.enabled": true,
-  "nix.formatterPath": "/Users/schickling/.nix-profile/bin/nixpkgs-fmt",
+  "nix.formatterPath": "/etc/profiles/per-user/schickling/bin/nixpkgs-fmt",
   "nix.enableLanguageServer": true,
   // disable since otherwise VSC can hog CPU
   // See https://github.com/microsoft/vscode-remote-release/issues/3857#issuecomment-750982375

@@ -46,7 +46,7 @@
       homeConfigurations = {
         mbp2021 = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
-          modules = [ ./nixpkgs/home-manager/mac.nix ];
+          modules = [ ./nixpkgs/home-manager/mbp2021.nix ];
           # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
           extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin; };
           # system = "aarch64-darwin";
@@ -89,14 +89,25 @@
       darwinConfigurations = {
         # nix build .#darwinConfigurations.mbp2021.system
         # ./result/sw/bin/darwin-rebuild switch --flake .
+        # also requires running `chsh -s /run/current-system/sw/bin/fish` once
         mbp2021 = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          modules = [ ./nixpkgs/darwin/mbp2021/configuration.nix ];
+          modules = [
+            ./nixpkgs/darwin/mbp2021/configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.schickling = import ./nixpkgs/home-manager/mbp2021.nix;
+              home-manager.extraSpecialArgs = { inherit nixpkgs; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin; };
+            }
+          ];
           inputs = { inherit darwin nixpkgs; };
         };
 
         # nix build .#darwinConfigurations.mbp2020.system
         # ./result/sw/bin/darwin-rebuild switch --flake .
+        # also requires running `chsh -s /run/current-system/sw/bin/fish` once
         mbp2020 = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
           modules = [
@@ -215,6 +226,7 @@
           "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLXMVzwr9BKB67NmxYDxedZC64/qWU6IvfTTh4HDdLaJe18NgmXh7mofkWjBtIy+2KJMMlB4uBRH4fwKviLXsSM= MBP2020@secretive.MacBook-Pro-Johannes.local"
           "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM7UIxnOjfmhXMzEDA1Z6WxjUllTYpxUyZvNFpS83uwKj+eSNuih6IAsN4QAIs9h4qOHuMKeTJqanXEanFmFjG0= MM2021@secretive.Johannes’s-Mac-mini.local"
           "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPkfRqtIP8Lc7qBlJO1CsBeb+OEZN87X+ZGGTfNFf8V588Dh/lgv7WEZ4O67hfHjHCNV8ZafsgYNxffi8bih+1Q= MBP2021@secretive.Johannes’s-MacBook-Pro.local"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX"
         ];
       };
     };

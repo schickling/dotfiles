@@ -55,6 +55,9 @@
     # NOTE we don't install `op` via nix but simply copy the binary
     mkdir -p /usr/local/bin
     cp ${pkgs._1password}/bin/op /usr/local/bin/op
+
+    # https://developer.1password.com/docs/ssh/get-started#step-4-configure-your-ssh-or-git-client
+    mkdir -p ~/.1password && ln -sfv ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
   '';
 
   security.pam.enableSudoTouchIdAuth = true;
@@ -74,11 +77,14 @@
     shell = "${pkgs.fish}/bin/fish";
   };
 
+  # can be read via `defaults read NSGlobalDomain`
   system.defaults.NSGlobalDomain = {
     InitialKeyRepeat = 15; # unit is 15ms, so 500ms
     KeyRepeat = 2; # unit is 15ms, so 30ms
     NSDocumentSaveNewDocumentsToCloud = false;
     ApplePressAndHoldEnabled = false;
+    AppleShowScrollBars = "WhenScrolling";
+    AppleShowAllExtensions = true;
   };
   system.defaults.dock.autohide = true;
 
@@ -88,18 +94,13 @@
   fonts = {
     fontDir.enable = true;
     fonts = [
+      pkgs.inter
       (pkgs.nerdfonts.override {
         fonts = [
-          "CascadiaCode"
-          "FantasqueSansMono"
           "FiraCode"
           "FiraMono"
-          "Hack" # no ligatures
-          "Hasklig"
-          "Inconsolata"
-          "Iosevka"
           "JetBrainsMono"
-          "VictorMono"
+          "SourceCodePro"
         ];
       })
     ];
