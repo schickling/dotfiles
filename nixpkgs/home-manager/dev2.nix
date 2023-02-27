@@ -27,7 +27,8 @@
     defaultCacheTtl = 1800;
   };
 
+  # TODO enable ssh-based signing via forwarded 1password ssh agent
   programs.git.signing.signByDefault = false;
-  # programs.git.signing.key = "key::ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPkfRqtIP8Lc7qBlJO1CsBeb+OEZN87X+ZGGTfNFf8V588Dh/lgv7WEZ4O67hfHjHCNV8ZafsgYNxffi8bih+1Q= MBP2021@secretive.mbp2021.local";
-  # programs.git.extraConfig.gpg.format = "ssh";
+  programs.git.signing.key = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX";
+  programs.git.extraConfig.gpg.format = "ssh";
 }
