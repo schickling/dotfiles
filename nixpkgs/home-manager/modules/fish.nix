@@ -67,6 +67,15 @@
         ssh -tt $argv 'ssh git@github.com'
       '';
 
+      mvbackup = ''
+        mv $argv[1] $argv[1].bk-$(date +%Y%m%d-%H%M%S)
+      '';
+
+      mvrestore = ''
+        original_file_name = echo $argv[1] | sed 's/\.bk(-.*)?//'
+        mv $argv[1] 
+      '';
+
       # This is a workaround needed to "fix" VSC on NixOS which is self-updating
       fixremotevsc = ''
         ssh $argv 'for DIR in ~/.vscode-server/bin/*; rm $DIR/node; ln -s (which node) $DIR/node; end'

@@ -7,6 +7,7 @@
     ./modules/common.nix
     ./modules/git.nix
     ./modules/neovim.nix
+    ./modules/ssh.nix
   ];
 
   home.stateVersion = "20.09";

@@ -5,7 +5,7 @@
 gh/hosts.yml filter=git-crypt diff=git-crypt
 
 # ssh
-ssh/config filter=git-crypt diff=git-crypt
+nixpkgs/home-manager/modules/ssh.nix filter=git-crypt diff=git-crypt
 
 # netrc (https://everything.curl.dev/usingcurl/netrc)
 home/.netrc filter=git-crypt diff=git-crypt
