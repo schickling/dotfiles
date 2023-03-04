@@ -31,6 +31,9 @@
     # nix-darwin binaries
     set -x PATH $PATH "/run/current-system/sw/bin/"
 
+    # dotfiles bins
+    set -x PATH $PATH "$HOME/.config/bin"
+
     # `/usr/local/bin` is needed for biometric-support in `op` 1Password CLI
     set -x PATH $PATH /usr/local/bin 
   '';
