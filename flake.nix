@@ -34,6 +34,7 @@
             default = with pkgs; mkShell {
               buildInputs = [
                 pkgs.home-manager
+                pkgs.nixos-rebuild # needed for remote deploys on macOS
               ];
             };
           };
@@ -147,12 +148,12 @@
           ];
         };
 
-        build-server = inputs.nixpkgs.lib.nixosSystem {
+        nix-builder = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = { common = self.common; inherit inputs; };
           modules = [
             ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
-            ./nixpkgs/nixos/build-server/configuration.nix
+            ./nixpkgs/nixos/nix-builder/configuration.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -164,7 +165,10 @@
           ];
         };
 
+        # On machine:
         # sudo nixos-rebuild switch --flake .#homepi
+        # From remote machine:
+        # nixos-rebuild switch --flake ".#homepi" --target-host "homepi" --use-remote-sudo --show-trace
         homepi = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = { common = self.common; inherit inputs; };
@@ -210,11 +214,11 @@
           };
         };
 
-        build-server = {
-          hostname = "oracle-nix-builder";
+        nix-builder = {
+          hostname = "nix-builder";
           profiles.system = {
             sshUser = "root";
-            path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.build-server;
+            path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.nix-builder;
           };
         };
       };
@@ -226,7 +230,7 @@
           "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLXMVzwr9BKB67NmxYDxedZC64/qWU6IvfTTh4HDdLaJe18NgmXh7mofkWjBtIy+2KJMMlB4uBRH4fwKviLXsSM= MBP2020@secretive.MacBook-Pro-Johannes.local"
           "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM7UIxnOjfmhXMzEDA1Z6WxjUllTYpxUyZvNFpS83uwKj+eSNuih6IAsN4QAIs9h4qOHuMKeTJqanXEanFmFjG0= MM2021@secretive.Johannes’s-Mac-mini.local"
           "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPkfRqtIP8Lc7qBlJO1CsBeb+OEZN87X+ZGGTfNFf8V588Dh/lgv7WEZ4O67hfHjHCNV8ZafsgYNxffi8bih+1Q= MBP2021@secretive.Johannes’s-MacBook-Pro.local"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX 1Password SSH"
         ];
       };
     };
