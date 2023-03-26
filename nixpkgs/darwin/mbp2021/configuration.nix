@@ -37,7 +37,7 @@
         maxJobs = 4;
         # relies on `/var/root/.ssh/nix-builder` key to be there
         # TODO set this up via nix
-        hostName = "oracle-nix-builder";
+        hostName = "nix-builder";
         supportedFeatures = [ "nixos-test" "benchmark" "kvm" "big-parallel" ];
       }
     ];
