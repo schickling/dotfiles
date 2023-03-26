@@ -16,6 +16,8 @@
     devices = [ "/dev/nvme0n1" "/dev/nvme1n1" ];
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # Increase the amount of inotify watchers
   # Note that inotify watches consume 1kB on 64-bit machines.
   boot.kernel.sysctl = {
@@ -131,6 +133,18 @@
 
       experimental-features = nix-command flakes
     '';
+
+    # buildMachines = lib.filter (x: x.hostName != config.networking.hostName) [
+    #   {
+    #     systems = [ "aarch64-linux" ];
+    #     sshUser = "root";
+    #     maxJobs = 4;
+    #     # relies on `/var/root/.ssh/nix-builder` key to be there
+    #     # TODO set this up via nix
+    #     hostName = "nix-builder";
+    #     supportedFeatures = [ "nixos-test" "benchmark" "kvm" "big-parallel" ];
+    #   }
+    # ];
   };
 
   # enable the tailscale daemon; this will do a variety of tasks:

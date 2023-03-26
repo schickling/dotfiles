@@ -150,7 +150,7 @@
 
         nix-builder = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          specialArgs = { common = self.common; inherit inputs; };
+          specialArgs = { common = self.common; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-linux; inherit inputs; };
           modules = [
             ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
             ./nixpkgs/nixos/nix-builder/configuration.nix
@@ -171,7 +171,7 @@
         # nixos-rebuild switch --flake ".#homepi" --target-host "homepi" --use-remote-sudo --show-trace
         homepi = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          specialArgs = { common = self.common; inherit inputs; };
+          specialArgs = { common = self.common; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-linux; inherit inputs; };
           modules = [
             ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
             vscode-server.nixosModule
