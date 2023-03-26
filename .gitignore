@@ -13,6 +13,9 @@ nvim
 # nix
 environment.d
 
+sops
+.decrypted~*
+
 # set up by nix HM
 git/config
 
