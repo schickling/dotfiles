@@ -28,6 +28,8 @@
 
     set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
+    set -x SOPS_AGE_KEY_FILE "$XDG_CONFIG_HOME/sops/age/keys.txt"
+
     # nix-darwin binaries
     set -x PATH $PATH "/run/current-system/sw/bin/"
 
