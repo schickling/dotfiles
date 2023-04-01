@@ -52,7 +52,7 @@
     docker
     pkgsUnstable.tailscale
 
-    ran # quick local webserver (`-r [folder]`)
+    caddy # quick local webserver
 
     # compression
     zip
