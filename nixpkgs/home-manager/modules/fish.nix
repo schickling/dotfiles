@@ -29,6 +29,13 @@
       if command -v zoxide &>/dev/null
         zoxide init fish | source
       end
+
+      # `just` completions
+      if command -v just &>/dev/null
+        if test -f justfile
+          complete -c just -a (just --summary)
+        end
+      end
     '';
     functions = {
 

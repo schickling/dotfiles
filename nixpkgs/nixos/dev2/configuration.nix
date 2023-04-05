@@ -1,5 +1,8 @@
 { config, lib, pkgs, vscode-server, common, ... }:
 
+let
+  self-signed-ca = pkgs.callPackage ./self-signed-ca.nix { };
+in
 {
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
@@ -90,6 +93,12 @@
     '';
   };
 
+
+  security.pki.certificateFiles = [ "${self-signed-ca}/rootCA.pem" ];
+
+  environment.sessionVariables = rec {
+    CAROOT = "${self-signed-ca}";
+  };
 
   # only allow access via tailscale
   services.openssh.openFirewall = false;
