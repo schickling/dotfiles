@@ -59,9 +59,8 @@
     pigz # parallel gzip
     lz4
 
-    # docker-compose
     # Nix VSC
-    rnix-lsp
+    nil
     nixpkgs-fmt
     # needed for headless chrome
     # chromium

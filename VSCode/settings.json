@@ -136,7 +136,8 @@
   },
   "git.alwaysShowStagedChangesResourceGroup": true,
   "remote.SSH.useLocalServer": false,
-  "nix.serverPath": "/etc/profiles/per-user/schickling/bin/rnix-lsp",
+  // TODO find more platform-agnostic way to do this
+  "nix.serverPath": "/etc/profiles/per-user/schickling/bin/nil",
   "[javascriptreact]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
