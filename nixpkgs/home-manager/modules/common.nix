@@ -75,6 +75,7 @@
     wifi-password
   ] ++ lib.optionals stdenv.isLinux [
     iputils # provides `ping`, `ifconfig`, ...
+    file
 
     libuuid # `uuidgen` (already pre-installed on mac)
   ];
