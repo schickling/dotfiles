@@ -33,7 +33,7 @@
       # `just` completions
       if command -v just &>/dev/null
         # TODO make this case insensitive
-        if test -f justfile
+        if test -f Justfile
           complete -c just -a (just --summary)
         end
       end
