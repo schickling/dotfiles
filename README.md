@@ -28,6 +28,7 @@ Almost everything is set up using Nix.
 - https://github.dev/Mic92/dotfiles/blob/master/nixos/eve/modules/home-assistant/weather.nix
 - https://github.com/PaulGrandperrin/nix-systems
 - https://github.com/fufexan/dotfiles (deploy-rs, distributed builds)
+- https://github.com/viperML/neoinfra
 
 ## TODO
 
