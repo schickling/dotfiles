@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, self-signed-ca, ... }:
 {
   services = {
     buildkite-agents.agent = {
@@ -20,7 +20,6 @@
         gzip
         ncurses
         nix
-        xz
         # TODO also set up direnv shell hook (if possible)
         direnv
       ];
@@ -33,6 +32,8 @@
 
       hooks.environment = ''
         export NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+
+        export CAROOT="${self-signed-ca}"
 
         if test -f /secrets/buildkite.sh; then
           source /secrets/buildkite.sh

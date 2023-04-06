@@ -6,7 +6,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
-    ./buildkite.nix
+    (import ./buildkite.nix { self-signed-ca = self-signed-ca; inherit pkgs; })
     ../configuration-common.nix
   ];
 

@@ -75,6 +75,7 @@
   ] ++ lib.optionals stdenv.isLinux [
     iputils # provides `ping`, `ifconfig`, ...
     file
+    lsof
 
     libuuid # `uuidgen` (already pre-installed on mac)
   ];
