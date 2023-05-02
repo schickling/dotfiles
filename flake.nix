@@ -95,6 +95,7 @@
           system = "aarch64-darwin";
           modules = [
             ./nixpkgs/darwin/mbp2021/configuration.nix
+            ./nixpkgs/darwin/remote-builder.nix
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -113,6 +114,7 @@
           system = "x86_64-darwin";
           modules = [
             ./nixpkgs/darwin/mbp2020/configuration.nix
+            ./nixpkgs/darwin/remote-builder.nix
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -214,6 +216,7 @@
           };
         };
 
+        # NOTE this machine is currently dead
         nix-builder = {
           hostname = "nix-builder";
           profiles.system = {
