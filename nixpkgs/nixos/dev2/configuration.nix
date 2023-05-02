@@ -93,10 +93,14 @@ in
     '';
   };
 
+  users.users.root.openssh.authorizedKeys.keys = [
+    # extra key for remote builder which can't live in 1Password due to lack of interactivity (see https://github.com/NixOS/nix/issues/1879#issuecomment-370875103)
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDRllH+H0YP5wnsYIRGoOmRiNChvWFsjKoX62AoTUl0AUkFNwiqrdBoFrEAd7dK8gbyPkzFqeERYiKeOawAOJjLagtyGv/7qq0ikhbbB77G4yd8F3UxfLvdGQ2Tia7qXmOMjNbQNSvfBD/AXhUmia7K+Z5wmEndvwQUoVT22Zje0Mr6Nla7poyf8EZIXotnA7VkdfmOtazLrBP6o10rzuR2ZHXmDYaj/PsrAuYQgVIQ5gBaiVsPL7HCwKMyD3JuJGxSPNV9hSn2H16SD3CHon7w9uiW61Q7sEGCn0NhFqu9TtT09CYnN+SLwlHWP5Wb4ZYQy8qrN95lJ2oAYlPM8ec4lBAfhLxW4Q120bxB9UBZ7IsnJu8mdHjhdTF+Wzb2Xau7vXGCAfGzoukq+TJ4pUY0kQoj0V2J91dzRgi746YOXDb7IZuCEzydJaFZSYoWkhdyYA7bu7YWTVd70otJ+fZbySnK3S/xkDtXJtlHt6R7Tf5woxPKVuyZmD8KW+Qbxbc= schickling@mbp2021.local"
+  ];
 
   security.pki.certificateFiles = [ "${self-signed-ca}/rootCA.pem" ];
 
-  environment.sessionVariables = rec {
+  environment.sessionVariables = {
     CAROOT = "${self-signed-ca}";
   };
 
