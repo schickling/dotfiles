@@ -107,10 +107,10 @@
   "editor.inlineSuggest.enabled": true,
   "github.copilot.enable": {
     "*": true,
-    "yaml": false,
     "plaintext": false,
-    "markdown": false,
+    "markdown": true,
     "scminput": false,
+    "yaml": false,
     "typescript": true,
     "typescriptreact": true,
     "javascript": true,

@@ -32,7 +32,7 @@
     curlie
 
 
-    pkgsUnstable.youtube-dl
+    pkgsUnstable.yt-dlp
     speedtest-cli
 
     # https://github.com/sindresorhus/fkill
