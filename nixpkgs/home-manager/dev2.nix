@@ -15,6 +15,9 @@
   programs.fish.interactiveShellInit = ''
     # `/usr/local/bin` is needed for biometric-support in `op` 1Password CLI
     set -x PATH $PATH /usr/local/bin 
+
+    # needed as workaround for VSC https://github.com/microsoft/vscode-remote-release/issues/6345#issuecomment-1570909663
+    set -x SSH_TTY /dev/pts/0
   '';
 
 
