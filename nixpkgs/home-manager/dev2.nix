@@ -12,6 +12,12 @@
 
   home.stateVersion = "20.09";
 
+  programs.fish.interactiveShellInit = ''
+    # `/usr/local/bin` is needed for biometric-support in `op` 1Password CLI
+    set -x PATH $PATH /usr/local/bin 
+  '';
+
+
   home.username = "schickling";
   home.homeDirectory = "/home/schickling";
 
@@ -27,8 +33,8 @@
     defaultCacheTtl = 1800;
   };
 
-  # TODO enable ssh-based signing via forwarded 1password ssh agent
-  programs.git.signing.signByDefault = false;
-  programs.git.signing.key = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX";
+  programs.git.signing.signByDefault = true;
+  programs.git.signing.key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX";
   programs.git.extraConfig.gpg.format = "ssh";
+  programs.git.extraConfig.gpg.ssh.program = "/usr/local/bin/op-ssh-sign";
 }

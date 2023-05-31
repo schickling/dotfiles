@@ -133,7 +133,14 @@
         # On other machine: nix run github:serokell/deploy-rs .#dev2
         dev2 = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { common = self.common; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; inherit inputs; };
+          specialArgs = {
+            common = self.common;
+            pkgsUnstable = import inputs.nixpkgsUnstable {
+              system = "x86_64-linux";
+              config.allowUnfreePredicate = pkg: builtins.elem (inputs.nixpkgs.lib.getName pkg) [ "1password" "1password-cli" ];
+            };
+            inherit inputs;
+          };
           modules = [
             ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
             vscode-server.nixosModule
