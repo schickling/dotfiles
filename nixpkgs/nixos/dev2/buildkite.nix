@@ -9,8 +9,16 @@
       };
       # token copied from Buildkite UI to `/run/keys/buildkite-agent-token` and `sudo chown root:keys /run/keys/buildkite-agent-token`
       tokenPath = "/run/keys/buildkite-agent-token";
-      # manually set up via `ssh-keygen -t rsa -b 4096` and `sudo chown -R root:keys /run/keys/overtone-ci-ssh-key` and `sudo chmod g+r /run/keys/overtone-ci-ssh-key/id_rsa`
+      # manually set up via 
+      # ```
+      # sudo su
+      # mkdir -p /run/keys/overtone-ci-ssh-key
+      # ssh-keygen -t rsa -b 4096 -f /run/keys/overtone-ci-ssh-key/id_rsa -N ""
+      # chown -R root:keys /run/keys/overtone-ci-ssh-key
+      # chmod g+r /run/keys/overtone-ci-ssh-key/id_rsa
+      # ```
       # needs to be added to GitHub (either as a deploy key or personal key)
+      # `journalctl -u buildkite-agent-agent.service` to see logs
       privateSshKeyPath = "/run/keys/overtone-ci-ssh-key/id_rsa";
       runtimePackages = with pkgs; [
         bash
