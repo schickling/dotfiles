@@ -119,6 +119,8 @@ in
   # only allow access via tailscale
   services.openssh.openFirewall = false;
 
+  programs.fish.enable = true;
+
   users.users.schickling = {
     isNormalUser = true;
     home = "/home/schickling";
