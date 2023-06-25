@@ -37,6 +37,32 @@
           complete -c just -a (just --summary)
         end
       end
+
+      # TODO remove once implemented https://github.com/pnpm/pnpm/issues/4520
+      # NOTE the below seems rather slow compared to the Yarn autocompletions
+      # Possibly give this a try instead: https://github.com/g-plane/pnpm-shell-completion/blob/main/pnpm-shell-completion.fish
+      ###-begin-pnpm-completion-###
+      function _pnpm_completion
+        set cmd (commandline -o)
+        set cursor (commandline -C)
+        set words (count $cmd)
+
+        set completions (eval env DEBUG=\"" \"" COMP_CWORD=\""$words\"" COMP_LINE=\""$cmd \"" COMP_POINT=\""$cursor\"" pnpm completion -- $cmd)
+
+        if [ "$completions" = "__tabtab_complete_files__" ]
+          set -l matches (commandline -ct)*
+          if [ -n "$matches" ]
+            __fish_complete_path (commandline -ct)
+          end
+        else
+          for completion in $completions
+            echo -e $completion
+          end
+        end
+      end
+
+      complete -f -d 'pnpm' -c pnpm -a "(_pnpm_completion)"
+      ###-end-pnpm-completion-###
     '';
     functions = {
 
