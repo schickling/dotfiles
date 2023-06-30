@@ -95,10 +95,10 @@ endfunction
 
 let g:go_snippet_engine = "neosnippet"
 
-if &term =~ '^xterm'
-  " tmux knows the extended mouse mode
-  set ttymouse=xterm2
-endif
+" if &term =~ '^xterm'
+"   " tmux knows the extended mouse mode
+"   set ttymouse=xterm2
+" endif
 
 " TODO remove: https://github.com/neovim/neovim/issues/2294
 nmap <BS> <C-W>h
