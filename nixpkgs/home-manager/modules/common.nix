@@ -12,6 +12,7 @@
     wget
     bat
     bottom
+    glances # alternative to `bottom` but written in Python (so it's slower)
     fzf
     rename
     neofetch # fancy system + hardware info

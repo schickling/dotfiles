@@ -110,7 +110,7 @@
     "plaintext": false,
     "markdown": true,
     "scminput": false,
-    "yaml": false,
+    "yaml": true,
     "typescript": true,
     "typescriptreact": true,
     "javascript": true,
