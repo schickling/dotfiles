@@ -95,6 +95,7 @@
           system = "aarch64-darwin";
           modules = [
             ./nixpkgs/darwin/mbp2021/configuration.nix
+            # ./nixpkgs/darwin/mbp2021/sdcard-autosave.nix
             ./nixpkgs/darwin/remote-builder.nix
             home-manager.darwinModules.home-manager
             {
