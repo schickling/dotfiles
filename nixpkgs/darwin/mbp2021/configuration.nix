@@ -50,10 +50,10 @@
     ln -sfv /Applications/GitX.app/Contents/Resources/gitx /usr/local/bin/gitx
 
     # https://developer.1password.com/docs/ssh/get-started#step-4-configure-your-ssh-or-git-client
-    mkdir -p ~/.1password && ln -sfv ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
+    mkdir -p /Users/schickling/.1password && ln -sfv /Users/schickling/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock /Users/schickling/.1password/agent.sock
 
-    ln -sfv ~/.config/VSCode/settings.json ~/Library/Application\ Support/Code/User/settings.json
-    ln -sfv ~/.config/VSCode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
+    ln -sfv /Users/schickling/.config/VSCode/settings.json /Users/schickling/Library/Application\ Support/Code/User/settings.json
+    ln -sfv /Users/schickling/.config/VSCode/keybindings.json /Users/schickling/Library/Application\ Support/Code/User/keybindings.json
   '';
 
   security.pam.enableSudoTouchIdAuth = true;

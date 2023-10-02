@@ -30,6 +30,7 @@ spotifyd
 ncspot
 packer
 netlify
+spek
 
 rclone
 gcloud
@@ -37,6 +38,7 @@ op
 htop
 caddy
 fontconfig
+
 
 *.log
 /tmp

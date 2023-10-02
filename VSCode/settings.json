@@ -145,7 +145,9 @@
   "direnv.path.executable": "/etc/profiles/per-user/schickling/bin/direnv",
   "redhat.telemetry.enabled": false,
   "editor.bracketPairColorization.enabled": true,
+  "editor.inlayHints.enabled": "on",
   "typescript.inlayHints.parameterNames.enabled": "literals",
+  "javascript.inlayHints.parameterNames.enabled": "literals",
   "iridium.npm.packageManager": "yarn",
   "editor.largeFileOptimizations": false,
   "editor.guides.bracketPairs": "active",
@@ -159,7 +161,6 @@
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
-  "mergeEditor.diffAlgorithm": "experimental",
 
   // don't autofetch since it's annoying in combination with Secretive / Touch ID
   "git.autofetch": false,
@@ -171,6 +172,7 @@
   "todo-tree.general.tags": ["BUG", "HACK", "FIXME", "TODO", "XXX"],
   "gitlens.codeLens.enabled": false,
   "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.typegen.ts, ${capture}.test.ts",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts, ${capture}.d.ts.map",
     "*.jsx": "${capture}.js",
     "*.tsx": "${capture}.ts",
@@ -179,8 +181,7 @@
     "README.md": "LICENSE, CONTRIBUTING.md",
     "prettier.config.js": ".prettierignore",
     ".envrc": ".envrc.*",
-    "package.json": "package-lock.json, yarn.lock, .yarnrc.yml",
-    "*.ts": "${capture}.typegen.ts"
+    "package.json": "package-lock.json, yarn.lock, .yarnrc.yml, pnpm-lock.yaml, pnpm-workspace.yaml",
   },
   "explorer.fileNesting.enabled": true,
   "thunder-client.htmlView": "Preview",
@@ -204,4 +205,6 @@
   ],
   "intellicodeApiExamples.typescript.enabled": false,
   "intellicodeApiExamples.python.enabled": false,
+  "window.confirmBeforeClose": "keyboardOnly",
+  "githubPullRequests.terminalLinksHandler": "github",
 }
