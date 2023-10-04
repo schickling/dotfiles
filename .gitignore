@@ -53,6 +53,7 @@ nextjs-nodejs
 yarn
 gatsby
 stackbit-*
+.wrangler
 
 result.closure.lz4
 result

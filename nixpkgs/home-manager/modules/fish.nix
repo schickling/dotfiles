@@ -155,6 +155,7 @@
     ];
     shellAliases = {
       v = "nvim";
+      p = "pnpm";
       l = "lsd";
       gf = "_git_fast";
       fz = "fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'";
