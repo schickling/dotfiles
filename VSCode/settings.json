@@ -1,5 +1,4 @@
 {
-  "workbench.activityBar.visible": true,
   "editor.tabSize": 2,
   "editor.tabCompletion": "on",
   "terminal.integrated.defaultProfile.osx": "nixFish",
@@ -33,10 +32,10 @@
   },
   "editor.suggestSelection": "first",
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
@@ -46,10 +45,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -95,12 +94,10 @@
   "taskExplorer.exclude": ["*", "!.vscode/tasks.json"],
   "taskExplorer.enableAnt": false,
   "taskExplorer.enableGradle": false,
-  // other
-  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": false,
-    "source.fixAll": true,
-    "source.addMissingImports": true
+    "source.organizeImports": "never",
+    "source.fixAll": "explicit",
+    "source.addMissingImports": "explicit"
   },
   "terminal.integrated.scrollback": 10000,
   "git.postCommitCommand": "sync",
@@ -207,4 +204,5 @@
   "intellicodeApiExamples.python.enabled": false,
   "window.confirmBeforeClose": "keyboardOnly",
   "githubPullRequests.terminalLinksHandler": "github",
+  "editor.accessibilitySupport": "off",
 }
