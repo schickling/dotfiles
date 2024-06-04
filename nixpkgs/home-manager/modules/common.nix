@@ -46,7 +46,7 @@
     # (yarn.override { nodejs = nodejs-18_x; })
 
 
-    python38
+    python39
     jq
     go
     cloc

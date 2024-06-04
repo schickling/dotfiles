@@ -4,9 +4,7 @@
   "terminal.integrated.defaultProfile.osx": "nixFish",
   "terminal.integrated.profiles.osx.nixFish": {
     "path": "/etc/profiles/per-user/schickling/bin/fish",
-    "args": [
-      "-l"
-    ]
+    "args": ["-l"]
   },
   "terminal.integrated.defaultProfile.linux": "fish",
   // "vim.leader": "<space>",
@@ -38,7 +36,7 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "breadcrumbs.enabled": true,
   "[markdown]": {
@@ -169,7 +167,7 @@
   "todo-tree.general.tags": ["BUG", "HACK", "FIXME", "TODO", "XXX"],
   "gitlens.codeLens.enabled": false,
   "explorer.fileNesting.patterns": {
-    "*.ts": "${capture}.typegen.ts, ${capture}.test.ts",
+    "*.ts": "${capture}.typegen.ts, ${capture}.test.ts, ${capture}.test.tsx",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts, ${capture}.d.ts.map",
     "*.jsx": "${capture}.js",
     "*.tsx": "${capture}.ts",
@@ -178,31 +176,30 @@
     "README.md": "LICENSE, CONTRIBUTING.md",
     "prettier.config.js": ".prettierignore",
     ".envrc": ".envrc.*",
-    "package.json": "package-lock.json, yarn.lock, .yarnrc.yml, pnpm-lock.yaml, pnpm-workspace.yaml",
+    "package.json": "package-lock.json, yarn.lock, .yarnrc.yml, pnpm-lock.yaml, pnpm-workspace.yaml"
   },
   "explorer.fileNesting.enabled": true,
   "thunder-client.htmlView": "Preview",
   "testing.automaticallyOpenPeekView": "never",
   "git.mergeEditor": true,
   "task.reconnection": true,
-  "remote.SSH.defaultExtensions": [
-    "gitpod.gitpod-remote-ssh"
-  ],
+  "remote.SSH.defaultExtensions": ["gitpod.gitpod-remote-ssh"],
   "gitpod.remote.useLocalApp": false,
   "editor.stickyScroll.enabled": true,
-  "xml.server.binary.trustedHashes": [
-    "349101d07525b2eace14ac059ab2cfeadd859227b02dcaf107378667440561a6"
-  ],
+  "xml.server.binary.trustedHashes": ["349101d07525b2eace14ac059ab2cfeadd859227b02dcaf107378667440561a6"],
   "playwright.reuseBrowser": true,
   "[python]": {
     "editor.formatOnType": true
   },
-  "settingsSync.ignoredSettings": [
-    "git.enableCommitSigning"
-  ],
+  "settingsSync.ignoredSettings": ["git.enableCommitSigning"],
   "intellicodeApiExamples.typescript.enabled": false,
   "intellicodeApiExamples.python.enabled": false,
   "window.confirmBeforeClose": "keyboardOnly",
   "githubPullRequests.terminalLinksHandler": "github",
   "editor.accessibilitySupport": "off",
+  "notebook.stickyScroll.enabled": true,
+  "terminal.integrated.stickyScroll.enabled": true,
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "prisma.showPrismaDataPlatformNotification": false,
+  "github.copilot.editor.enableAutoCompletions": true
 }

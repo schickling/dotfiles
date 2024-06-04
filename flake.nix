@@ -1,9 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils";
@@ -121,6 +121,25 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.schickling = import ./nixpkgs/home-manager/mbp2020.nix;
+              home-manager.extraSpecialArgs = { inherit nixpkgs; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-darwin; };
+            }
+          ];
+          inputs = { inherit darwin nixpkgs; };
+        };
+
+        # nix build .#darwinConfigurations.mbp2020.system
+        # ./result/sw/bin/darwin-rebuild switch --flake .
+        # also requires running `chsh -s /run/current-system/sw/bin/fish` once
+        mini2020 = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
+          modules = [
+            ./nixpkgs/darwin/mini2020/configuration.nix
+            ./nixpkgs/darwin/remote-builder.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.schickling = import ./nixpkgs/home-manager/mini2020.nix;
               home-manager.extraSpecialArgs = { inherit nixpkgs; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-darwin; };
             }
           ];
