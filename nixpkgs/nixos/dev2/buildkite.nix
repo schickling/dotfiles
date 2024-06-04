@@ -44,6 +44,8 @@
         export CAROOT="${self-signed-ca}"
 
         if test -f /secrets/buildkite.sh; then
+          # Disable check for `/secrets/buildkite.sh` existing
+          # shellcheck disable=SC1091
           source /secrets/buildkite.sh
         fi
       '';

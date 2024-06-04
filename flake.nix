@@ -127,11 +127,11 @@
           inputs = { inherit darwin nixpkgs; };
         };
 
-        # nix build .#darwinConfigurations.mbp2020.system
+        # nix build .#darwinConfigurations.mini2020.system
         # ./result/sw/bin/darwin-rebuild switch --flake .
         # also requires running `chsh -s /run/current-system/sw/bin/fish` once
         mini2020 = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
+          system = "aarch64-darwin";
           modules = [
             ./nixpkgs/darwin/mini2020/configuration.nix
             ./nixpkgs/darwin/remote-builder.nix
