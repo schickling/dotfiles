@@ -67,6 +67,17 @@
           # username = "schickling";
         };
 
+        mini2020 = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [ ./nixpkgs/home-manager/mini2020.nix ];
+          # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
+          extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin; };
+          # system = "aarch64-darwin";
+          # configuration = { };
+          # homeDirectory = "/home/schickling";
+          # username = "schickling";
+        };
+
         dev2 = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./nixpkgs/home-manager/dev2.nix ];
