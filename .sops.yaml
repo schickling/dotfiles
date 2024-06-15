@@ -1,0 +1,13 @@
+keys:
+  # Personal SSH from 1Password
+  - &personal_schickling_1pw age19v8zkzv2ut8t3yz6zcvu5u93lf7h0gwn0w9a0srhk2gnm936s94q9qfsqh
+  # TODO other keys
+creation_rules:
+  - path_regex: .*\/secrets\.yaml$
+    key_groups:
+      - age:
+          - *personal_schickling_1pw
+  # - path_regex: .*\/ssh\.nix$
+  #   key_groups:
+  #     - age:
+  #         - *personal_schickling_1pw
