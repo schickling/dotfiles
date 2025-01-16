@@ -6,7 +6,9 @@
       set PATH /nix/var/nix/profiles/default/bin ~/.cargo/bin ~/.deno/bin $GOPATH/bin ~/.npm-global-packages/bin $PATH
 
       # Setup terminal, and turn on colors
-      set -x TERM xterm-256color
+      if test -z "$TERM"
+        set -x TERM xterm-256color
+      end
 
       # Enable color in grep
       set -x GREP_OPTIONS '--color=auto'
@@ -23,6 +25,11 @@
       # Enable direnv
       if command -v direnv &>/dev/null
           eval (direnv hook fish)
+      end
+
+      # Call the function when a new terminal session starts
+      if [ "$TERM" = "xterm-ghostty" ]
+        zellij attach || zellij
       end
 
       # Enable zoxice `z` (https://github.com/ajeetdsouza/zoxide)

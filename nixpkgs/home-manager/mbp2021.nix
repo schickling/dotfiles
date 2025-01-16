@@ -8,6 +8,7 @@
     ./modules/git.nix
     ./modules/neovim.nix
     ./modules/ssh.nix
+    ./modules/zellij.nix
   ];
 
   programs.ssh.extraConfig =

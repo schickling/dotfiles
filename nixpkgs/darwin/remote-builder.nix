@@ -27,10 +27,10 @@ in
   };
 
   # Root SSH config (setup needed for Nix remote builders)
-  system.activationScripts.extraActivation.text = ''
-    mkdir -m 0700 -p /var/root/.ssh
-    cp ${rootSSHConfig} /var/root/.ssh/config
-    chmod 0600 /var/root/.ssh/config
-    chown -R 0:0 /var/root/.ssh
-  '';
+  # system.activationScripts.extraActivation.text = ''
+  #   mkdir -m 0700 -p /var/root/.ssh
+  #   cp ${rootSSHConfig} /var/root/.ssh/config
+  #   chmod 0600 /var/root/.ssh/config
+  #   chown -R 0:0 /var/root/.ssh
+  # '';
 }

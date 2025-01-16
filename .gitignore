@@ -32,6 +32,8 @@ packer
 netlify
 spek
 
+zellij/config.kdl
+
 rclone
 gcloud
 op

@@ -101,7 +101,7 @@ in
 
   system.activationScripts.extraActivation.text = ''
     mkdir -p /usr/local/bin
-    cp ${pkgsUnstable._1password}/bin/op /usr/local/bin/op
+    cp ${pkgsUnstable._1password-cli}/bin/op /usr/local/bin/op
     cp ${pkgsUnstable._1password-gui}/share/1password/op-ssh-sign /usr/local/bin/op-ssh-sign
   '';
 

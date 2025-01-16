@@ -14,6 +14,7 @@
     bottom
     glances # alternative to `bottom` but written in Python (so it's slower)
     fzf
+    zellij
     rename
     neofetch # fancy system + hardware info
     tealdeer # fast tldr
@@ -38,7 +39,7 @@
 
     # https://github.com/sindresorhus/fkill
     nodePackages.fkill-cli
-    nodePackages.pnpm
+    # nodePackages.pnpm
 
     # NOTE `nodejs` is installed on various machines separately, as a specific version is needed for remote VSC
     # TODO figure out how to install a specific version of nodejs only for VSC
@@ -47,6 +48,7 @@
 
 
     python39
+    xh # httpie alternative / https://github.com/ducaale/xh
     jq
     go
     cloc

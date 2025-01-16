@@ -8,6 +8,7 @@
     ./modules/git.nix
     ./modules/neovim.nix
     ./modules/ssh.nix
+    ./modules/zellij.nix
   ];
 
   home.stateVersion = "20.09";
