@@ -41,6 +41,8 @@
     nodePackages.fkill-cli
     # nodePackages.pnpm
 
+    pkgsUnstable.bun
+
     # NOTE `nodejs` is installed on various machines separately, as a specific version is needed for remote VSC
     # TODO figure out how to install a specific version of nodejs only for VSC
     # nodejs # Node 18

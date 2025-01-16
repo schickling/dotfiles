@@ -183,6 +183,13 @@ in
   # Needs manual starting via `systemctl --user start auto-fix-vscode-server.service`
   services.vscode-server.enable = true;
 
+  # Needed to get VSC server running (see https://nix.dev/guides/faq#how-to-run-non-nix-executables)
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+  ];
+
   # FIXME
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
