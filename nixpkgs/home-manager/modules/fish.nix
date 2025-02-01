@@ -28,7 +28,7 @@
       end
 
       # Call the function when a new terminal session starts
-      if [ "$TERM" = "xterm-ghostty" ]
+      if test "$TERM" = "xterm-ghostty"; and not set -q ZELLIJ
         zellij attach || zellij
       end
 

@@ -65,3 +65,4 @@ result
 *.pem
 
 tmp*
+karabiner/automatic_backups

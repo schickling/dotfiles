@@ -88,5 +88,14 @@
   {
     "key": "shift+cmd+9",
     "command": "workbench.action.tasks.runTask"
+  },
+  {
+    "key": "cmd+;",
+    "command": "editor.action.goToDeclaration"
+  },
+  {
+    "key": "shift+cmd+;",
+    "command": "workbench.action.navigateBack",
+    "when": "canNavigateBack"
   }
 ]

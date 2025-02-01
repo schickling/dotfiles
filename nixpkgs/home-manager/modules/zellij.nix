@@ -28,7 +28,6 @@
         bind "Super 7" { GoToTab 7; }
         bind "Super 8" { GoToTab 8; }
         bind "Super 9" { GoToTab 9; }
-        bind "Super k" { Clear; }
       }
     }
   '';
