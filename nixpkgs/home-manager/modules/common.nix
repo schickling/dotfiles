@@ -15,6 +15,8 @@
     glances # alternative to `bottom` but written in Python (so it's slower)
     fzf
     zellij
+    lazydocker
+    lazygit
     rename
     neofetch # fancy system + hardware info
     tealdeer # fast tldr
