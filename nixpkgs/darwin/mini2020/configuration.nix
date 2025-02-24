@@ -88,7 +88,6 @@
   system.keyboard.remapCapsLockToEscape = true;
 
   fonts = {
-    fontDir.enable = true;
     packages = [
       pkgs.inter
       (pkgs.nerdfonts.override {
