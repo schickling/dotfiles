@@ -27,7 +27,7 @@
 
   home.packages = with pkgs; [
     # VSC currently requires `NODE_MODULE_VERSION=108` which maps to Node 16 (see https://nodejs.org/en/download/releases/)
-    nodejs-18_x
+    nodejs_22
 
     fishPlugins.foreign-env
   ];
