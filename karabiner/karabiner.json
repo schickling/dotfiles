@@ -12,5 +12,27 @@
             "selected": true,
             "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
+    ],
+    "rules": [
+        {
+            "description": "Map Intech EN16 to F8",
+            "manipulators": [
+                {
+                    "from": { "key_code": "some_detected_key" },
+                    "to": [{ "key_code": "f8" }],
+                    "type": "basic"
+                },
+                {
+                    "from": { "key_code": "some_detected_key_shift" },
+                    "to": [
+                        {
+                            "key_code": "f8",
+                            "modifiers": ["shift"]
+                        }
+                    ],
+                    "type": "basic"
+                }
+            ]
+        }
     ]
 }

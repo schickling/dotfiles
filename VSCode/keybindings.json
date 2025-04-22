@@ -97,5 +97,23 @@
     "key": "shift+cmd+;",
     "command": "workbench.action.navigateBack",
     "when": "canNavigateBack"
+  },
+  // Mapping for Intech Grid controller
+  {
+    "key": "shift+cmd+alt+-",
+    "command": "git.revertSelectedRanges",
+  },
+  // Mapping for Intech Grid controller
+  {
+    "key": "shift+cmd+alt+=",
+    "command": "git.stageSelectedRanges",
+  },
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
+  },
+  {
+    "key": "cmd+l",
+    "command": "composerMode.chat"
   }
 ]
