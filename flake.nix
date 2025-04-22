@@ -110,6 +110,26 @@
       };
 
       darwinConfigurations = {
+        # nix build .#darwinConfigurations.mbp2025.system
+        # ./result/sw/bin/darwin-rebuild switch --flake .
+        # also requires running `chsh -s /run/current-system/sw/bin/fish` once
+        mbp2025 = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./nixpkgs/darwin/mbp2025/configuration.nix
+            # ./nixpkgs/darwin/mbp2021/sdcard-autosave.nix
+            ./nixpkgs/darwin/remote-builder.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.schickling = import ./nixpkgs/home-manager/mbp2025.nix;
+              home-manager.extraSpecialArgs = { inherit nixpkgs; pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin; };
+            }
+          ];
+          inputs = { inherit darwin nixpkgs; };
+        };
+
         # nix build .#darwinConfigurations.mbp2021.system
         # ./result/sw/bin/darwin-rebuild switch --flake .
         # also requires running `chsh -s /run/current-system/sw/bin/fish` once
