@@ -6,6 +6,10 @@
                 {
                     "from": { "key_code": "f3" },
                     "to": [{ "key_code": "f20" }]
+                },
+                {
+                    "from": { "key_code": "f5" },
+                    "to": [{ "key_code": "f19" }]
                 }
             ],
             "name": "Default profile",

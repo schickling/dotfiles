@@ -12,7 +12,7 @@
 
       # Enable color in grep
       set -x GREP_OPTIONS '--color=auto'
-      set -x GREP_COLOR '3;33'
+      set -x GREP_COLOR 'mt=3;33'
 
       # language settings
       set -x LANG en_US.UTF-8

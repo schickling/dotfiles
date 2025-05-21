@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgsUnstable, ... }:
 
 {
   imports = [
@@ -45,6 +45,14 @@
     pinentry_mac
 
     nodejs_23
+
+    pkgsUnstable.uv
+
+    ollama
+    # TODO enable llm cli + plugins like here https://www.danielcorin.com/til/nix/installing-llm-with-plugins/
+    # llm.withPlugins([]) # Simon Willison's LLM CLI
+    # python3.withPackages(ps: [ ps.llm ])
+    # python311Packages.llm
 
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerdfonts/default.nix
     # nerdfonts

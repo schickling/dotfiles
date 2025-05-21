@@ -18,7 +18,8 @@ unfocused-split-opacity = 0.97
 background-opacity = 1.0
 
 # Cursor style
-cursor-style-blink = true
+# cursor-style-blink = true
+cursor-style = bar
 
 # Clipboard settings
 clipboard-read = allow
