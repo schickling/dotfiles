@@ -44,6 +44,7 @@
         export CAROOT="${self-signed-ca}"
 
         # Keep normal branches/tags; drop PRs
+        # This helps in submodule scenarios (e.g. Overtone <> LiveStore) where certain submodule branches were deleted
         export BUILDKITE_GIT_FETCH_FLAGS="-v --prune"
 
         if test -f /secrets/buildkite.sh; then
