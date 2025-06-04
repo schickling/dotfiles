@@ -35,6 +35,7 @@
   # Setup 1Password CLI `op`
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"
+    "claude-code"
   ];
 
   system.activationScripts.extraActivation.text = ''
@@ -52,8 +53,10 @@
     # https://developer.1password.com/docs/ssh/get-started#step-4-configure-your-ssh-or-git-client
     mkdir -p /Users/schickling/.1password && ln -sfv /Users/schickling/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock /Users/schickling/.1password/agent.sock
 
-    ln -sfv /Users/schickling/.config/VSCode/settings.json /Users/schickling/Library/Application\ Support/Code/User/settings.json
-    ln -sfv /Users/schickling/.config/VSCode/keybindings.json /Users/schickling/Library/Application\ Support/Code/User/keybindings.json
+    if [ -d "/Users/schickling/Library/Application Support/Code/User" ]; then
+      ln -sfv /Users/schickling/.config/VSCode/settings.json "/Users/schickling/Library/Application Support/Code/User/settings.json"
+      ln -sfv /Users/schickling/.config/VSCode/keybindings.json "/Users/schickling/Library/Application Support/Code/User/keybindings.json"
+    fi
   '';
 
   security.pam.enableSudoTouchIdAuth = true;

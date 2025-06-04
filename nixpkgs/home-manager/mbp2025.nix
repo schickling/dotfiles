@@ -44,7 +44,7 @@
   home.packages = with pkgs; [
     pinentry_mac
 
-    nodejs_23
+    nodejs_24
 
     pkgsUnstable.uv
 
@@ -69,6 +69,7 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"
+    "claude-code"
   ];
 
   programs.home-manager.enable = true;

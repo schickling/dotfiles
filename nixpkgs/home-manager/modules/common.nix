@@ -32,6 +32,8 @@
     graphviz
     git-crypt
 
+    claude-code
+
     httpstat
     curlie
 
@@ -50,7 +52,7 @@
     # nodejs # Node 18
 
 
-    python39
+    python314
     xh # httpie alternative / https://github.com/ducaale/xh
     jq
     go
