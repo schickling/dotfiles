@@ -43,6 +43,9 @@
 
         export CAROOT="${self-signed-ca}"
 
+        # Keep normal branches/tags; drop PRs
+        export BUILDKITE_GIT_FETCH_FLAGS="-v --prune"
+
         if test -f /secrets/buildkite.sh; then
           # Disable check for `/secrets/buildkite.sh` existing
           # shellcheck disable=SC1091
