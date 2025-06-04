@@ -94,10 +94,11 @@ in
   };
 
   # Setup 1Password CLI `op`
-  # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-  #   "1password"
-  #   "1password-cli"
-  # ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    # "1password"
+    # "1password-cli"
+    "claude-code"
+  ];
 
   system.activationScripts.extraActivation.text = ''
     mkdir -p /usr/local/bin

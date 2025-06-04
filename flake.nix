@@ -199,7 +199,7 @@
             common = self.common;
             pkgsUnstable = import inputs.nixpkgsUnstable {
               system = "x86_64-linux";
-              config.allowUnfreePredicate = pkg: builtins.elem (inputs.nixpkgs.lib.getName pkg) [ "1password" "1password-cli" ];
+              config.allowUnfreePredicate = pkg: builtins.elem (inputs.nixpkgs.lib.getName pkg) [ "1password" "1password-cli" "claude-code" ];
             };
             inherit inputs;
           };
