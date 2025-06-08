@@ -35,6 +35,8 @@
               buildInputs = [
                 pkgs.home-manager
                 pkgs.nixos-rebuild # needed for remote deploys on macOS
+                pkgs.sops
+                pkgs.ssh-to-age
               ];
             };
           };

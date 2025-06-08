@@ -51,6 +51,8 @@
     # TODO figure out how to install a specific version of nodejs only for VSC
     # nodejs # Node 18
 
+    # https://github.com/mozilla/sops
+    sops # secrets management
 
     python314
     xh # httpie alternative / https://github.com/ducaale/xh
@@ -95,6 +97,15 @@
 
   programs.dircolors = {
     enable = true;
+  };
+
+  # https://wiki.archlinux.org/title/XDG_Base_Directory
+  xdg = {
+    enable = true;
+    configHome = "${config.home.homeDirectory}/.config";
+    cacheHome = "${config.home.homeDirectory}/.cache";
+    dataHome = "${config.home.homeDirectory}/.local/share";
+    stateHome = "${config.home.homeDirectory}/.local/state";
   };
 
 }
