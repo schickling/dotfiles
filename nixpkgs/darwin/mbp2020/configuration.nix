@@ -9,25 +9,7 @@
   imports = [
   ];
 
-  nix = {
-    package = pkgs.nix;
-
-    # Currently disabled `nix.settings.auto-optimise-store` as it seems to fail with remote builders
-    # TODO renable when fixed https://github.com/NixOS/nix/issues/7273
-    settings.auto-optimise-store = false;
-
-    extraOptions = ''
-      # needed for nix-direnv
-      keep-outputs = true
-      keep-derivations = true
-
-      # assuming the builder has a faster internet connection
-      builders-use-substitutes = true
-
-      experimental-features = nix-command flakes
-    '';
-
-  };
+  nix.enable = false; # Disable nix-darwin's Nix management (using Determinate Systems installer)
 
   # Setup 1Password CLI `op`
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [

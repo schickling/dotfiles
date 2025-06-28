@@ -67,10 +67,5 @@
   programs.git.extraConfig.gpg.format = "ssh";
   programs.git.extraConfig.gpg.ssh.program = "/usr/local/bin/op-ssh-sign";
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "1password-cli"
-    "claude-code"
-  ];
-
   programs.home-manager.enable = true;
 }
