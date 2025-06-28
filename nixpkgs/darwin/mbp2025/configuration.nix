@@ -9,9 +9,6 @@
   imports = [
   ];
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   nix = {
     package = pkgs.nix;
 
@@ -59,13 +56,16 @@
     fi
   '';
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   programs = {
     fish.enable = true;
   };
 
   environment.shells = [ pkgs.fish ];
+
+  # Set primary user for system defaults
+  system.primaryUser = "schickling";
 
   users.users.schickling = {
     home = "/Users/schickling";
@@ -93,14 +93,10 @@
   fonts = {
     packages = [
       pkgs.inter
-      (pkgs.nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "FiraMono"
-          "JetBrainsMono"
-          "SourceCodePro"
-        ];
-      })
+      pkgs.nerd-fonts.fira-code
+      pkgs.nerd-fonts.fira-mono
+      pkgs.nerd-fonts.jetbrains-mono
+      pkgs.nerd-fonts.sauce-code-pro
     ];
   };
 
