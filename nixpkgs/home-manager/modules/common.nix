@@ -32,7 +32,7 @@
     graphviz
     git-crypt
 
-    claude-code
+    pkgsUnstable.claude-code
 
     httpstat
     curlie

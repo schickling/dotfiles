@@ -35,6 +35,7 @@
   # Setup 1Password CLI `op`
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"
+    "claude-code"
   ];
 
   system.activationScripts.extraActivation.text = ''
