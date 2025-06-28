@@ -8,6 +8,7 @@ in
     ./hardware-configuration.nix # Include the results of the hardware scan.
     (import ./buildkite.nix { self-signed-ca = self-signed-ca; inherit pkgs; })
     ../configuration-common.nix
+    ../server-common.nix
   ];
 
   # Use GRUB2 as the boot loader.
@@ -29,11 +30,6 @@ in
     "fs.inotify.max_queued_events" = 32768; # default: 16384
   };
 
-  boot.kernel.sysctl = {
-    # Enable IP forwarding (required for Tailscale exit node feature https://tailscale.com/kb/1019/subnets/?tab=linux#step-1-install-the-tailscale-client)
-    "net.ipv4.ip_forward" = true;
-    "net.ipv6.conf.all.forwarding" = true;
-  };
 
   # The mdadm RAID1s were created with 'mdadm --create ... --homehost=hetzner',
   # but the hostname for each machine may be different, and mdadm's HOMEHOST
@@ -72,25 +68,9 @@ in
   networking.defaultGateway = "195.201.193.129";
   networking.defaultGateway6 = { address = "fe80::1"; interface = "enp7s0"; };
   networking.nameservers = [ "8.8.8.8" ];
+  # Machine-specific firewall settings (extends common firewall from configuration-common.nix)
   networking.firewall = {
-    enable = true;
-    # always allow traffic from your Tailscale network
-    trustedInterfaces = [ "tailscale0" ];
-    # allow the Tailscale UDP port through the firewall
-    allowedUDPPorts = [ config.services.tailscale.port ];
-    # allow you to SSH in over the public internet
-    allowedTCPPorts = [ 22 ];
-    # Needed by Tailscale to allow for exit nodes and subnet routing
-    checkReversePath = "loose";
-
-    # Needed to stop Docker from exposing ports despite the firewall
-    # See https://github.com/NixOS/nixpkgs/issues/111852
-    extraCommands = ''
-      iptables -N DOCKER-USER || true
-      iptables -F DOCKER-USER
-      iptables -A DOCKER-USER -i enp7s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-      iptables -A DOCKER-USER -i enp7s0 -j DROP
-    '';
+    # Inherit common settings, no additional ports needed for dev2
   };
 
   # Setup 1Password CLI `op`
@@ -120,23 +100,13 @@ in
   # only allow access via tailscale
   services.openssh.openFirewall = false;
 
-  programs.fish.enable = true;
-
-  users.users.schickling = {
-    isNormalUser = true;
-    home = "/home/schickling";
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-      # "podman"
-    ];
-    openssh.authorizedKeys.keys = common.sshKeys;
-  };
-
-  virtualisation.docker = {
-    enable = true;
-  };
+  # Machine-specific user groups (extends common user from server-common.nix)
+  users.users.schickling.extraGroups = [
+    "wheel"
+    "networkmanager"
+    "docker"
+    # "podman"
+  ];
 
   # virtualisation.podman = {
   #   enable = true;
@@ -149,47 +119,19 @@ in
   #   pinentryFlavor = "tty";
   # };
 
-  nix = {
-    # Currently disabled `nix.settings.auto-optimise-store` as it seems to fail with remote builders
-    # TODO renable when fixed https://github.com/NixOS/nix/issues/7273
-    settings.auto-optimise-store = false;
+  # Machine-specific nix configuration (extends common nix from configuration-common.nix)
+  # nix.buildMachines = lib.filter (x: x.hostName != config.networking.hostName) [
+  #   {
+  #     systems = [ "aarch64-linux" ];
+  #     sshUser = "root";
+  #     maxJobs = 4;
+  #     # relies on `/var/root/.ssh/nix-builder` key to be there
+  #     # TODO set this up via nix
+  #     hostName = "nix-builder";
+  #     supportedFeatures = [ "nixos-test" "benchmark" "kvm" "big-parallel" ];
+  #   }
+  # ];
 
-    # needed for nix-direnv
-    extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-
-      experimental-features = nix-command flakes
-    '';
-
-    # buildMachines = lib.filter (x: x.hostName != config.networking.hostName) [
-    #   {
-    #     systems = [ "aarch64-linux" ];
-    #     sshUser = "root";
-    #     maxJobs = 4;
-    #     # relies on `/var/root/.ssh/nix-builder` key to be there
-    #     # TODO set this up via nix
-    #     hostName = "nix-builder";
-    #     supportedFeatures = [ "nixos-test" "benchmark" "kvm" "big-parallel" ];
-    #   }
-    # ];
-  };
-
-  # enable the tailscale daemon; this will do a variety of tasks:
-  # 1. create the TUN network device
-  # 2. setup some IP routes to route through the TUN
-  services.tailscale.enable = true;
-
-  # https://github.com/msteen/nixos-vscode-server
-  # Needs manual starting via `systemctl --user start auto-fix-vscode-server.service`
-  services.vscode-server.enable = true;
-
-  # Needed to get VSC server running (see https://nix.dev/guides/faq#how-to-run-non-nix-executables)
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
-  ];
 
   # FIXME
   # This value determines the NixOS release with which your system is to be

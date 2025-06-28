@@ -5,6 +5,7 @@
     ./hardware-configuration.nix # Include the results of the hardware scan.
     # ./tailscale.nix
     ../configuration-common.nix
+    ../server-common.nix
     "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
   ];
 
@@ -23,11 +24,6 @@
       "cma=128M"
     ];
 
-    # Enable IP forwarding (required for Tailscale subnet feature https://tailscale.com/kb/1019/subnets/?tab=linux#step-1-install-the-tailscale-client)
-    kernel.sysctl = {
-      "net.ipv4.ip_forward" = true;
-      "net.ipv6.conf.all.forwarding" = true;
-    };
   };
 
   # Required for the Wireless firmware
@@ -51,18 +47,14 @@
     hostName = "homepi";
     nameservers = [ "8.8.8.8" ];
 
+    # Machine-specific firewall settings (extends common firewall from configuration-common.nix)
     firewall = {
-      enable = true;
       # enable = false; # I've found it's easiest to disable the firewall during Homekit pairing
 
-      # always allow traffic from your Tailscale network
-      trustedInterfaces = [ "tailscale0" ];
       allowedUDPPorts = [
-        config.services.tailscale.port # allow the Tailscale UDP port through the firewall
         5353 # Needed for Homekit Secure Video - (Bonjour Multicast DNS - https://support.apple.com/en-us/HT202944)
       ];
       allowedTCPPorts = [
-        22 # allow you to SSH in locally or over the public internet
         1400 # Sonos https://www.home-assistant.io/integrations/sonos/#network-requirements
         21063 # Homekit Bridge HA https://www.home-assistant.io/integrations/homekit/#port
         8123 # Home Assistant
@@ -70,66 +62,26 @@
       allowedTCPPortRanges = [
         { from = 30000; to = 50000; } # Random port range of Scrypted https://github.com/koush/scrypted/blob/a511130c2934b0a51b16bd1297df972248cc1619/plugins/homekit/src/hap-utils.ts#L100
       ];
-
-      checkReversePath = "loose"; # Needed by Tailscale to allow for exit nodes and subnet routing
-
-      # Needed to stop Docker from exposing ports despite the firewall
-      # See https://github.com/NixOS/nixpkgs/issues/111852
-      extraCommands = ''
-        iptables -N DOCKER-USER || true
-        iptables -F DOCKER-USER
-        iptables -A DOCKER-USER -i enp7s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-        iptables -A DOCKER-USER -i enp7s0 -j DROP
-      '';
     };
   };
 
 
-  nix = {
-    # Currently disabled `nix.settings.auto-optimise-store` as it seems to fail with remote builders
-    # TODO renable when fixed https://github.com/NixOS/nix/issues/7273
-    settings.auto-optimise-store = false;
-
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-    };
-
-    extraOptions = ''
-      # needed for nix-direnv
-      keep-outputs = true
-      keep-derivations = true
-
-      experimental-features = nix-command flakes
-    '';
+  # Machine-specific nix configuration (extends common nix from configuration-common.nix)
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
   };
 
-  users.users.schickling = {
-    isNormalUser = true;
-    home = "/home/schickling";
-    extraGroups = [
-      "wheel"
-      "docker"
-      # "podman"
-    ];
-    openssh.authorizedKeys.keys = common.sshKeys;
-  };
+  # Machine-specific user groups (extends common user from server-common.nix)
+  users.users.schickling.extraGroups = [
+    "wheel"
+    "docker"
+    # "podman"
+  ];
 
-  virtualisation.docker = {
-    enable = true;
-    # Needed since Docker by default surpases firewall https://github.com/NixOS/nixpkgs/issues/111852#issuecomment-1031051463
-    # extraOptions = ''--iptables=false --ip6tables=false'';
-  };
-
-  # enable the tailscale daemon; this will do a variety of tasks:
-  # 1. create the TUN network device
-  # 2. setup some IP routes to route through the TUN
-  services.tailscale.enable = true;
-
-  # https://github.com/msteen/nixos-vscode-server
-  # Needs manual starting via `systemctl --user start auto-fix-vscode-server.service`
-  services.vscode-server.enable = true;
+  # Machine-specific Docker configuration (extends common Docker from server-common.nix)
+  # virtualisation.docker.extraOptions = ''--iptables=false --ip6tables=false'';
 
   system.stateVersion = "21.11";
 }
