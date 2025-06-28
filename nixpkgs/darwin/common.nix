@@ -24,7 +24,7 @@
     mkdir -p ~/.1password && ln -sfv ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
 
     # VSCode settings symlinks - with conditional check for directory existence
-    if [ -d "~/Library/Application Support/Code/User" ]; then
+    if [ -d "$HOME/Library/Application Support/Code/User" ]; then
       ln -sfv ~/.config/VSCode/settings.json ~/Library/Application\ Support/Code/User/settings.json
       ln -sfv ~/.config/VSCode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
     fi
