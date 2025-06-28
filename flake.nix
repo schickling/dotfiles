@@ -25,6 +25,60 @@
         inherit system;
         config.allowUnfreePredicate = pkg: builtins.elem (inputs.nixpkgs.lib.getName pkg) [ "1password" "1password-cli" "claude-code" ];
       };
+
+      # Helper function for home-manager configurations
+      mkHomeManagerConfig = { system, modules }: inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
+        inherit modules;
+        extraSpecialArgs = { 
+          pkgsUnstable = mkPkgsUnstable system;
+        };
+      };
+
+      # Helper function for Darwin system configurations
+      mkDarwinConfig = { system, configPath, homeManagerPath }: darwin.lib.darwinSystem {
+        inherit system;
+        modules = [
+          configPath
+          ./nixpkgs/darwin/remote-builder.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.schickling = import homeManagerPath;
+            home-manager.extraSpecialArgs = { 
+              inherit nixpkgs; 
+              pkgsUnstable = mkPkgsUnstable system;
+            };
+          }
+        ];
+        inputs = { inherit darwin nixpkgs; };
+      };
+
+      # Helper function for NixOS configurations
+      mkNixosConfig = { system, configPath, homeManagerPath ? null, userName ? "schickling", extraModules ? [] }: inputs.nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          common = self.common;
+          pkgsUnstable = mkPkgsUnstable system;
+          inherit inputs;
+        };
+        modules = [
+          ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; })
+          configPath
+        ] ++ extraModules ++ (if homeManagerPath != null then [
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { 
+              pkgsUnstable = mkPkgsUnstable system;
+            };
+            home-manager.users.${userName} = import homeManagerPath;
+          }
+        ] else []);
+      };
     in
 
     flake-utils.lib.eachDefaultSystem
@@ -51,258 +105,90 @@
       # TODO re-enable cachix across hosts
 
       homeConfigurations = {
-        mbp2025 = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
+        mbp2025 = mkHomeManagerConfig {
+          system = "aarch64-darwin";
           modules = [ ./nixpkgs/home-manager/mbp2025.nix ];
-          # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
-          extraSpecialArgs = { 
-            pkgsUnstable = mkPkgsUnstable "aarch64-darwin";
-          };
-          # system = "aarch64-darwin";
-          # configuration = { };
-          # homeDirectory = "/home/schickling";
-          # username = "schickling";
         };
 
-        mbp2021 = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
+        mbp2021 = mkHomeManagerConfig {
+          system = "aarch64-darwin";
           modules = [ ./nixpkgs/home-manager/mbp2021.nix ];
-          # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
-          extraSpecialArgs = { 
-            pkgsUnstable = mkPkgsUnstable "aarch64-darwin";
-          };
-          # system = "aarch64-darwin";
-          # configuration = { };
-          # homeDirectory = "/home/schickling";
-          # username = "schickling";
         };
 
-        mbp2020 = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.x86_64-darwin;
+        mbp2020 = mkHomeManagerConfig {
+          system = "x86_64-darwin";
           modules = [ ./nixpkgs/home-manager/mbp2020.nix ];
-          # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
-          extraSpecialArgs = { 
-            pkgsUnstable = mkPkgsUnstable "x86_64-darwin";
-          };
-          # system = "aarch64-darwin";
-          # configuration = { };
-          # homeDirectory = "/home/schickling";
-          # username = "schickling";
         };
 
-        mini2020 = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
+        mini2020 = mkHomeManagerConfig {
+          system = "aarch64-darwin";
           modules = [ ./nixpkgs/home-manager/mini2020.nix ];
-          # extraModules = [ ./nixpkgs/home-manager/mac.nix ];
-          extraSpecialArgs = { 
-            pkgsUnstable = mkPkgsUnstable "aarch64-darwin";
-          };
-          # system = "aarch64-darwin";
-          # configuration = { };
-          # homeDirectory = "/home/schickling";
-          # username = "schickling";
         };
 
-        dev2 = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+        dev2 = mkHomeManagerConfig {
+          system = "x86_64-linux";
           modules = [ ./nixpkgs/home-manager/dev2.nix ];
-          extraSpecialArgs = { 
-            pkgsUnstable = mkPkgsUnstable "x86_64-linux";
-          };
         };
 
-        homepi = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
+        homepi = mkHomeManagerConfig {
+          system = "aarch64-linux";
           modules = [ ./nixpkgs/home-manager/homepi.nix ];
-          extraSpecialArgs = { 
-            pkgsUnstable = mkPkgsUnstable "aarch64-linux";
-          };
         };
 
-        gitpod = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+        gitpod = mkHomeManagerConfig {
+          system = "x86_64-linux";
           modules = [ ./nixpkgs/home-manager/gitpod.nix ];
-          extraSpecialArgs = { 
-            pkgsUnstable = mkPkgsUnstable "x86_64-linux";
-          };
         };
-
       };
 
+      # Apply by running `nix build .#darwinConfigurations.mbp2025.system; ./result/sw/bin/darwin-rebuild switch --flake .;`
       darwinConfigurations = {
-        # nix build .#darwinConfigurations.mbp2025.system
-        # ./result/sw/bin/darwin-rebuild switch --flake .
-        # also requires running `chsh -s /run/current-system/sw/bin/fish` once
-        mbp2025 = darwin.lib.darwinSystem {
+        mbp2025 = mkDarwinConfig {
           system = "aarch64-darwin";
-          modules = [
-            ./nixpkgs/darwin/mbp2025/configuration.nix
-            # ./nixpkgs/darwin/mbp2021/sdcard-autosave.nix
-            ./nixpkgs/darwin/remote-builder.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.schickling = import ./nixpkgs/home-manager/mbp2025.nix;
-              home-manager.extraSpecialArgs = { 
-                inherit nixpkgs; 
-                pkgsUnstable = mkPkgsUnstable "aarch64-darwin";
-              };
-            }
-          ];
-          inputs = { inherit darwin nixpkgs; };
+          configPath = ./nixpkgs/darwin/mbp2025/configuration.nix;
+          homeManagerPath = ./nixpkgs/home-manager/mbp2025.nix;
         };
 
-        # nix build .#darwinConfigurations.mbp2021.system
-        # ./result/sw/bin/darwin-rebuild switch --flake .
-        # also requires running `chsh -s /run/current-system/sw/bin/fish` once
-        mbp2021 = darwin.lib.darwinSystem {
+        mbp2021 = mkDarwinConfig {
           system = "aarch64-darwin";
-          modules = [
-            ./nixpkgs/darwin/mbp2021/configuration.nix
-            # ./nixpkgs/darwin/mbp2021/sdcard-autosave.nix
-            ./nixpkgs/darwin/remote-builder.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.schickling = import ./nixpkgs/home-manager/mbp2021.nix;
-              home-manager.extraSpecialArgs = { 
-                inherit nixpkgs; 
-                pkgsUnstable = mkPkgsUnstable "aarch64-darwin";
-              };
-            }
-          ];
-          inputs = { inherit darwin nixpkgs; };
+          configPath = ./nixpkgs/darwin/mbp2021/configuration.nix;
+          homeManagerPath = ./nixpkgs/home-manager/mbp2021.nix;
         };
 
-        # nix build .#darwinConfigurations.mbp2020.system
-        # ./result/sw/bin/darwin-rebuild switch --flake .
-        # also requires running `chsh -s /run/current-system/sw/bin/fish` once
-        mbp2020 = darwin.lib.darwinSystem {
+        mbp2020 = mkDarwinConfig {
           system = "x86_64-darwin";
-          modules = [
-            ./nixpkgs/darwin/mbp2020/configuration.nix
-            ./nixpkgs/darwin/remote-builder.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.schickling = import ./nixpkgs/home-manager/mbp2020.nix;
-              home-manager.extraSpecialArgs = { 
-                inherit nixpkgs; 
-                pkgsUnstable = mkPkgsUnstable "x86_64-darwin";
-              };
-            }
-          ];
-          inputs = { inherit darwin nixpkgs; };
+          configPath = ./nixpkgs/darwin/mbp2020/configuration.nix;
+          homeManagerPath = ./nixpkgs/home-manager/mbp2020.nix;
         };
 
-        # nix build .#darwinConfigurations.mini2020.system
-        # ./result/sw/bin/darwin-rebuild switch --flake .
-        # also requires running `chsh -s /run/current-system/sw/bin/fish` once
-        mini2020 = darwin.lib.darwinSystem {
+        mini2020 = mkDarwinConfig {
           system = "aarch64-darwin";
-          modules = [
-            ./nixpkgs/darwin/mini2020/configuration.nix
-            ./nixpkgs/darwin/remote-builder.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.schickling = import ./nixpkgs/home-manager/mini2020.nix;
-              home-manager.extraSpecialArgs = { 
-                inherit nixpkgs; 
-                pkgsUnstable = mkPkgsUnstable "aarch64-darwin";
-              };
-            }
-          ];
-          inputs = { inherit darwin nixpkgs; };
+          configPath = ./nixpkgs/darwin/mini2020/configuration.nix;
+          homeManagerPath = ./nixpkgs/home-manager/mini2020.nix;
         };
       };
 
       nixosConfigurations = {
-
-        # On actual machine: sudo nixos-rebuild switch --flake .#dev2
-        # On other machine: nix run github:serokell/deploy-rs .#dev2
-        dev2 = inputs.nixpkgs.lib.nixosSystem {
+        dev2 = mkNixosConfig {
           system = "x86_64-linux";
-          specialArgs = {
-            common = self.common;
-            pkgsUnstable = mkPkgsUnstable "x86_64-linux";
-            inherit inputs;
-          };
-          modules = [
-            ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
-            vscode-server.nixosModule
-            ./nixpkgs/nixos/dev2/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.extraSpecialArgs = { 
-                pkgsUnstable = mkPkgsUnstable "x86_64-linux";
-              };
-              # TODO load home-manager dotfiles also for root user
-              home-manager.users.schickling = import ./nixpkgs/home-manager/dev2.nix;
-            }
-          ];
+          configPath = ./nixpkgs/nixos/dev2/configuration.nix;
+          homeManagerPath = ./nixpkgs/home-manager/dev2.nix;
+          extraModules = [ vscode-server.nixosModule ];
         };
 
-        nix-builder = inputs.nixpkgs.lib.nixosSystem {
+        nix-builder = mkNixosConfig {
           system = "aarch64-linux";
-          specialArgs = { 
-            common = self.common; 
-            pkgsUnstable = mkPkgsUnstable "aarch64-linux";
-            inherit inputs; 
-          };
-          modules = [
-            ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
-            ./nixpkgs/nixos/nix-builder/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.extraSpecialArgs = { 
-                pkgsUnstable = mkPkgsUnstable "aarch64-linux";
-              };
-              home-manager.users.root = import ./nixpkgs/home-manager/nix-builder.nix;
-            }
-          ];
+          configPath = ./nixpkgs/nixos/nix-builder/configuration.nix;
+          homeManagerPath = ./nixpkgs/home-manager/nix-builder.nix;
+          userName = "root";
         };
 
-        # On machine:
-        # sudo nixos-rebuild switch --flake .#homepi
-        # From remote machine:
-        # nixos-rebuild switch --flake ".#homepi" --target-host "homepi" --use-remote-sudo --show-trace
-        homepi = inputs.nixpkgs.lib.nixosSystem {
+        homepi = mkNixosConfig {
           system = "aarch64-linux";
-          specialArgs = { 
-            common = self.common; 
-            pkgsUnstable = mkPkgsUnstable "aarch64-linux";
-            inherit inputs; 
-          };
-          modules = [
-            ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; }) # Avoids nixpkgs checkout when running `nix run nixpkgs#hello`
-            vscode-server.nixosModule
-            ./nixpkgs/nixos/homepi/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.extraSpecialArgs = { 
-                pkgsUnstable = mkPkgsUnstable "aarch64-linux";
-              };
-              # TODO load home-manager dotfiles also for root user
-              home-manager.users.schickling = import ./nixpkgs/home-manager/homepi.nix;
-            }
-          ];
-
+          configPath = ./nixpkgs/nixos/homepi/configuration.nix;
+          homeManagerPath = ./nixpkgs/home-manager/homepi.nix;
+          extraModules = [ vscode-server.nixosModule ];
         };
-
       };
 
       images = {
