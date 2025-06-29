@@ -2,33 +2,13 @@
 
 {
   imports = [
-    ./modules/home-manager.nix
-    ./modules/fish.nix
-    ./modules/common.nix
-    ./modules/git.nix
-    ./modules/neovim.nix
-    ./modules/ssh.nix
+    ./modules/linux-common.nix
   ];
 
-  home.stateVersion = "20.09";
+  # Gitpod-specific overrides
+  home.username = lib.mkForce "gitpod";
+  home.homeDirectory = lib.mkForce "/home/gitpod";
 
-  home.username = "gitpod";
-  home.homeDirectory = "/home/gitpod";
-
-  home.packages = with pkgs; [
-    nodejs # Node 18
-    (yarn.override { nodejs = nodejs-18_x; })
-
-    fishPlugins.foreign-env
-  ];
-
-  # services.gpg-agent = {
-  #   enable = false;
-  #   defaultCacheTtl = 1800;
-  # };
-
-
-  # disable gpg signing on Gitpod since there's no easy way to forward my gpg-agent
-  programs.git.signing.signByDefault = false;
-
+  # Disable git signing on Gitpod since there's no easy way to forward 1Password
+  programs.git.signing.signByDefault = lib.mkForce false;
 }

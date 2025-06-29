@@ -2,33 +2,14 @@
 
 {
   imports = [
-    ./modules/home-manager.nix
-    ./modules/fish.nix
-    ./modules/common.nix
-    ./modules/git.nix
-    ./modules/neovim.nix
-    ./modules/ssh.nix
-    ./modules/zellij.nix
+    ./modules/linux-common.nix
   ];
 
-  home.stateVersion = "20.09";
-
-  home.username = "schickling";
-  home.homeDirectory = "/home/schickling";
-
+  # Machine-specific packages
   home.packages = with pkgs; [
-    # NOTE node needed for remote vsc server
-    nodejs
-
-    fishPlugins.foreign-env
-
-    restic
+    restic  # for backups
   ];
 
-  services.gpg-agent = {
-    enable = false;
-    defaultCacheTtl = 1800;
-  };
-
-  # programs.git.signing.signByDefault = true;
+  # Disable git signing for homepi (no 1Password setup)
+  programs.git.signing.signByDefault = lib.mkForce false;
 }
