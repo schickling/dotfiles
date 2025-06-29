@@ -9,6 +9,7 @@ in
     (import ./buildkite.nix { self-signed-ca = self-signed-ca; inherit pkgs; })
     ../configuration-common.nix
     ../server-common.nix
+    ../../modules/onepassword.nix
   ];
 
   # Use GRUB2 as the boot loader.
@@ -74,12 +75,6 @@ in
   };
 
   # Unfree packages are configured centrally in flake.nix
-
-  system.activationScripts.extraActivation.text = ''
-    mkdir -p /usr/local/bin
-    cp ${pkgsUnstable._1password-cli}/bin/op /usr/local/bin/op
-    cp ${pkgsUnstable._1password-gui}/share/1password/op-ssh-sign /usr/local/bin/op-ssh-sign
-  '';
 
   users.users.root.openssh.authorizedKeys.keys = [
     # extra key for remote builder which can't live in 1Password due to lack of interactivity (see https://github.com/NixOS/nix/issues/1879#issuecomment-370875103)

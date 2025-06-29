@@ -28,13 +28,15 @@ in
     inherit modules;
     extraSpecialArgs = { 
       pkgsUnstable = mkPkgsUnstable system;
-      inherit allowedUnfreePackages;
     };
   };
 
   # Helper function for Darwin system configurations
   mkDarwinConfig = { system, configPath, homeManagerPath }: inputs.darwin.lib.darwinSystem {
     inherit system;
+    specialArgs = {
+      pkgsUnstable = mkPkgsUnstable system;
+    };
     modules = [
       configPath
       ../nixpkgs/darwin/remote-builder.nix
@@ -58,8 +60,7 @@ in
     specialArgs = {
       common = commonConfig;
       pkgsUnstable = mkPkgsUnstable system;
-      inherit inputs allowedUnfreePackages;
-      mkUnfreePredicate = mkUnfreePredicate inputs.nixpkgs.lib;
+      inherit inputs;
     };
     modules = [
       ({ config = { nix.registry.nixpkgs.flake = inputs.nixpkgs; }; })

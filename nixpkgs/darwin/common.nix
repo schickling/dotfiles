@@ -1,23 +1,16 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, pkgsUnstable, ... }:
 {
+  imports = [
+    ../modules/onepassword.nix
+  ];
+
   nix.enable = false; # Disable nix-darwin's Nix management (using Determinate Systems installer)
 
   # Unfree packages are configured centrally in flake.nix
 
   system.activationScripts.extraActivation.text = ''
-    # For TouchID to work in `op` 1Password CLI, it needs to be at `/usr/local/bin`
-    # (Hopefully this requirement will be lifted by 1Password at some point)
-    # NOTE we don't install `op` via nix but simply copy the binary
-    mkdir -p /usr/local/bin
-    cp ${pkgs._1password-cli}/bin/op /usr/local/bin/op
-    # cp ${pkgs._1password-cli}/bin/op-ssh-sign /usr/local/bin/op-ssh-sign
-    cp /Applications/1Password.app/Contents/MacOS/op-ssh-sign /usr/local/bin/op-ssh-sign
-
     # Make `gitx` available in the terminal
     ln -sfv /Applications/GitX.app/Contents/Resources/gitx /usr/local/bin/gitx
-
-    # https://developer.1password.com/docs/ssh/get-started#step-4-configure-your-ssh-or-git-client
-    mkdir -p ~/.1password && ln -sfv ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
 
     # VSCode settings symlinks - with conditional check for directory existence
     if [ -d "$HOME/Library/Application Support/Code/User" ]; then
