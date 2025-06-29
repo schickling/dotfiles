@@ -109,18 +109,7 @@ in
   #   pinentryFlavor = "tty";
   # };
 
-  # Machine-specific nix configuration (extends common nix from configuration-common.nix)
-  # nix.buildMachines = lib.filter (x: x.hostName != config.networking.hostName) [
-  #   {
-  #     systems = [ "aarch64-linux" ];
-  #     sshUser = "root";
-  #     maxJobs = 4;
-  #     # relies on `/var/root/.ssh/nix-builder` key to be there
-  #     # TODO set this up via nix
-  #     hostName = "nix-builder";
-  #     supportedFeatures = [ "nixos-test" "benchmark" "kvm" "big-parallel" ];
-  #   }
-  # ];
+
 
 
   # FIXME

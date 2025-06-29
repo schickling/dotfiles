@@ -39,16 +39,7 @@
       };
     };
     
-    nix-builder = {
-      system = "aarch64-linux";
-      configPath = ./nixpkgs/nixos/nix-builder/configuration.nix;
-      homeManagerPath = ./nixpkgs/home-manager/nix-builder.nix;
-      userName = "root";
-      deploy = {
-        hostname = "nix-builder";
-        sshUser = "root";
-      };
-    };
+
     
     homepi = {
       system = "aarch64-linux";

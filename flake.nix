@@ -99,14 +99,7 @@
           };
         };
 
-        # NOTE this machine is currently dead
-        nix-builder = {
-          hostname = "nix-builder";
-          profiles.system = {
-            sshUser = "root";
-            path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.nix-builder;
-          };
-        };
+
       };
 
       # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
