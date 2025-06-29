@@ -2,11 +2,7 @@
 {
   nix.enable = false; # Disable nix-darwin's Nix management (using Determinate Systems installer)
 
-  # Setup 1Password CLI `op`
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "1password-cli"
-    "claude-code"
-  ];
+  # Unfree packages are configured centrally in flake.nix
 
   system.activationScripts.extraActivation.text = ''
     # For TouchID to work in `op` 1Password CLI, it needs to be at `/usr/local/bin`

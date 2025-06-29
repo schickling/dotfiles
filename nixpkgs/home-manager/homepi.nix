@@ -17,8 +17,8 @@
   home.homeDirectory = "/home/schickling";
 
   home.packages = with pkgs; [
-    # NOTE node 16 needed for remote vsc server
-    nodejs-16_x
+    # NOTE node needed for remote vsc server
+    nodejs
 
     fishPlugins.foreign-env
 
