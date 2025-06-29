@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, libs, ... }:
+{ config, pkgs, pkgsUnstable, lib, ... }:
 {
 
   # https://github.com/nix-community/nix-direnv#via-home-manager

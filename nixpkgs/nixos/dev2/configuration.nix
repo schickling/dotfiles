@@ -73,12 +73,7 @@ in
     # Inherit common settings, no additional ports needed for dev2
   };
 
-  # Setup 1Password CLI `op`
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    # "1password"
-    # "1password-cli"
-    "claude-code"
-  ];
+  # Unfree packages are configured centrally in flake.nix
 
   system.activationScripts.extraActivation.text = ''
     mkdir -p /usr/local/bin
