@@ -1,5 +1,10 @@
 { pkgs, config, lib, ... }:
 /*
+
+Experimental auto-export functionality for DJI mic voice recordings. 
+Attempted to automatically backup recordings to hard drive and free up SD card space, 
+but failed due to code issues and first-gen DJI mic hardware problems.
+
   Example launchd agent to run a script when a volume is mounted:
 
   ```xml

@@ -3,25 +3,25 @@
   darwin = {
     mbp2025 = {
       system = "aarch64-darwin";
-      configPath = ./nixpkgs/darwin/mbp2025/configuration.nix;
+      configPath = ./nixpkgs/darwin/darwin-shared.nix;
       homeManagerPath = ./nixpkgs/home-manager/mbp2025.nix;
     };
     
     mbp2021 = {
       system = "aarch64-darwin";
-      configPath = ./nixpkgs/darwin/mbp2021/configuration.nix;
+      configPath = ./nixpkgs/darwin/darwin-shared.nix;
       homeManagerPath = ./nixpkgs/home-manager/mbp2021.nix;
     };
     
     mbp2020 = {
       system = "x86_64-darwin";
-      configPath = ./nixpkgs/darwin/mbp2020/configuration.nix;
+      configPath = ./nixpkgs/darwin/darwin-shared.nix;
       homeManagerPath = ./nixpkgs/home-manager/mbp2020.nix;
     };
     
     mini2020 = {
       system = "aarch64-darwin";
-      configPath = ./nixpkgs/darwin/mini2020/configuration.nix;
+      configPath = ./nixpkgs/darwin/darwin-shared.nix;
       homeManagerPath = ./nixpkgs/home-manager/mini2020.nix;
     };
   };

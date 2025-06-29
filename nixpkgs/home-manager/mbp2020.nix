@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgsUnstable, ... }:
 
 {
   imports = [
@@ -7,7 +7,8 @@
 
   # Host-specific packages
   home.packages = with pkgs; [
-    nodejs
-    yarn
+    nodejs_24
+    pkgsUnstable.uv
+    ollama
   ];
 }
