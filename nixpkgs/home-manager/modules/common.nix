@@ -32,6 +32,8 @@
     graphviz
     git-crypt
 
+    ollama
+
     pkgsUnstable.claude-code
 
     httpstat
@@ -46,18 +48,20 @@
     # nodePackages.pnpm
 
     pkgsUnstable.bun
+    nodejs_24
 
     # NOTE `nodejs` is installed on various machines separately, as a specific version is needed for remote VSC
     # TODO figure out how to install a specific version of nodejs only for VSC
     # nodejs # Node 18
 
-
     python314
+    pkgsUnstable.uv
     xh # httpie alternative / https://github.com/ducaale/xh
     jq
     go
     cloc
     docker
+
     pkgsUnstable.tailscale
 
     caddy # quick local webserver
@@ -80,6 +84,8 @@
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils # provides `dd` with --status=progress
     wifi-password
+
+    pinentry_mac # needed for GPG (get rid of this soon)
   ] ++ lib.optionals stdenv.isLinux [
     iputils # provides `ping`, `ifconfig`, ...
     file
