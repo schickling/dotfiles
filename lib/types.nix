@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, ... }:
 
 with lib;
 
@@ -11,20 +11,15 @@ with lib;
         description = "System architecture";
       };
       
-      hostType = mkOption {
-        type = types.enum [ "darwin" "nixos" "home-manager" ];
-        description = "Type of host configuration";
-      };
-      
       configPath = mkOption {
         type = types.path;
-        description = "Path to system configuration file";
+        description = "Path to system configuration";
       };
       
       homeManagerPath = mkOption {
         type = types.nullOr types.path;
         default = null;
-        description = "Path to home-manager configuration file";
+        description = "Path to home-manager configuration";
       };
       
       userName = mkOption {
@@ -34,14 +29,14 @@ with lib;
       };
       
       extraModules = mkOption {
-        type = types.listOf types.unspecified;
+        type = types.listOf types.str;
         default = [];
-        description = "Additional NixOS modules";
+        description = "Additional modules to include";
       };
     };
   };
-
-  # Deployment configuration type
+  
+  # Deploy configuration type
   deployConfig = types.submodule {
     options = {
       hostname = mkOption {
