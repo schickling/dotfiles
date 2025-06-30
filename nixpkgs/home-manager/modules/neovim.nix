@@ -13,6 +13,10 @@
       nerdtree
       nerdcommenter
       telescope-nvim # https://github.com/nvim-telescope/telescope.nvim
+      
+      # Git
+      gitsigns-nvim
+      vim-fugitive
 
       # Languages
       vim-nix
@@ -31,6 +35,10 @@
       (builtins.readFile ./vim/plugin.nerdtree.vim)
       (builtins.readFile ./vim/plugin.tmuxline.vim)
       (builtins.readFile ./vim/plugin.telescope.vim)
-    ]);
+    ]) + "\n" + ''
+      lua << EOF
+      ${builtins.readFile ./vim/plugin.gitsigns.lua}
+      EOF
+    '';
   };
 }
