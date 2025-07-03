@@ -1,0 +1,11 @@
+[package]
+name = "zellij-auto-tabname"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "auto-tabname"
+path = "src/main.rs"
+
+[dependencies]
+zellij-tile = "0.42"

@@ -70,6 +70,47 @@
 
       complete -f -d 'pnpm' -c pnpm -a "(_pnpm_completion)"
       ###-end-pnpm-completion-###
+
+      # Fish hooks for dynamic tab naming in Zellij
+      if set -q ZELLIJ
+          # OSC sequences for plugin (primary method)
+          function set_terminal_title
+              printf "\033]0;%s\007" $argv[1]
+          end
+          
+          # Direct tab rename as fallback
+          function zellij_rename_tab_direct
+              if test (count $argv) -gt 0
+                  nohup zellij action rename-tab "$argv[1]" >/dev/null 2>&1 &
+              end
+          end
+
+          function fish_preexec --on-event fish_preexec
+              # Get command name
+              set cmd (string split " " -- $argv | head -1)
+              # Primary: Set OSC title for plugin
+              set_terminal_title "$cmd"
+              # Fallback: Direct rename (in case plugin fails)
+              zellij_rename_tab_direct "> $cmd"
+          end
+
+          function fish_postexec --on-event fish_postexec
+              # Return to directory name
+              set current_dir $PWD
+              if test $current_dir = $HOME
+                  set current_dir "~"
+              else
+                  set current_dir (basename $current_dir)
+              end
+              # Primary: Set OSC title for plugin
+              set_terminal_title "$current_dir"
+              # Fallback: Direct rename
+              zellij_rename_tab_direct "> $current_dir"
+          end
+          
+          # Set initial title
+          fish_postexec
+      end
     '';
     functions = {
 
