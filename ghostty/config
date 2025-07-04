@@ -36,18 +36,18 @@ window-padding-x = 5
 window-padding-y = 5
 
 # Unbind CMD+... keys so they will be forwarded to Zellij
-keybind = cmd+t=unbind
-keybind = cmd+n=unbind
-keybind = cmd+c=unbind
-keybind = cmd+w=unbind
-keybind = cmd+opt+left=unbind
-keybind = cmd+opt+right=unbind
-keybind = cmd+1=unbind
-keybind = cmd+2=unbind
-keybind = cmd+3=unbind
-keybind = cmd+4=unbind
-keybind = cmd+5=unbind
-keybind = cmd+6=unbind
-keybind = cmd+7=unbind
-keybind = cmd+8=unbind
-keybind = cmd+9=unbind
+# keybind = cmd+t=unbind
+# keybind = cmd+n=unbind
+# keybind = cmd+c=unbind
+# keybind = cmd+w=unbind
+# keybind = cmd+opt+left=unbind
+# keybind = cmd+opt+right=unbind
+# keybind = cmd+1=unbind
+# keybind = cmd+2=unbind
+# keybind = cmd+3=unbind
+# keybind = cmd+4=unbind
+# keybind = cmd+5=unbind
+# keybind = cmd+6=unbind
+# keybind = cmd+7=unbind
+# keybind = cmd+8=unbind
+# keybind = cmd+9=unbind

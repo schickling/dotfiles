@@ -28,9 +28,9 @@
       end
 
       # Call the function when a new terminal session starts
-      if test "$TERM" = "xterm-ghostty"; and not set -q ZELLIJ
-        zellij attach || zellij
-      end
+      # if test "$TERM" = "xterm-ghostty"; and not set -q ZELLIJ
+      #   zellij attach || zellij
+      # end
 
       # Enable zoxice `z` (https://github.com/ajeetdsouza/zoxide)
       if command -v zoxide &>/dev/null
