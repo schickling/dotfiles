@@ -61,6 +61,7 @@
     go
     cloc
     docker
+    process-compose
 
     pkgsUnstable.tailscale
 

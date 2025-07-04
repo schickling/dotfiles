@@ -45,6 +45,9 @@
         end
       end
 
+      # `process-compose` completion wrapper for `pc` alias
+      complete -c pc -w process-compose
+
       # TODO remove once implemented https://github.com/pnpm/pnpm/issues/4520
       # NOTE the below seems rather slow compared to the Yarn autocompletions
       # Possibly give this a try instead: https://github.com/g-plane/pnpm-shell-completion/blob/main/pnpm-shell-completion.fish
@@ -163,6 +166,7 @@
     shellAliases = {
       v = "nvim";
       p = "pnpm";
+      pc = "process-compose";
       l = "lsd";
       gf = "_git_fast";
       fz = "fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'";
