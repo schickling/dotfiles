@@ -10,6 +10,8 @@
   xdg.configFile."zellij/config.kdl".text = ''
     theme "catppuccin-macchiato"
 
+    show_startup_tips false
+
     keybinds {
       // stop ⌥→ from spawning a floating pane
       unbind "Alt f"
