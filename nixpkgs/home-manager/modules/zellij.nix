@@ -11,6 +11,9 @@
     theme "catppuccin-macchiato"
 
     keybinds {
+      // stop ⌥→ from spawning a floating pane
+      unbind "Alt f"
+
       normal {
         bind "Super c" { Copy; }
         bind "Super Alt Left" { GoToPreviousTab; }
