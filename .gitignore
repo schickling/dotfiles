@@ -50,6 +50,7 @@ tmux/tmux.conf
 fish
 git
 lazygit
+pnpm
 
 # js tooling
 nextjs-nodejs
