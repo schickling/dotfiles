@@ -49,6 +49,7 @@ fontconfig
 tmux/tmux.conf
 fish
 git
+lazygit
 
 # js tooling
 nextjs-nodejs
