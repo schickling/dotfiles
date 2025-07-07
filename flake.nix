@@ -45,6 +45,17 @@
                 pkgs.home-manager
                 pkgs.nixos-rebuild # needed for remote deploys on macOS
               ];
+              
+              shellHook = ''
+                # Disable global npm installs to enforce Nix-managed dependencies
+                # This prevents accidental global installs that would bypass Nix's reproducible environment
+                npm config set global false
+                
+                # Require virtual environment for pip installs and disable user installs
+                # This prevents both system-wide and user-local Python packages, enforcing isolated environments
+                export PIP_REQUIRE_VIRTUALENV=true
+                export PIP_USER=false
+              '';
             };
           };
         })
