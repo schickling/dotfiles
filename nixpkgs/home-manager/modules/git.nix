@@ -23,6 +23,12 @@
       core.editor = "nvim";
       core.fileMode = false;
       core.ignorecase = false;
+
+      # Enable rerere (reuse recorded resolution) to automatically resolve
+      # merge conflicts using previously recorded resolutions
+      rerere.enabled = true;
+      # Automatically stage resolved conflicts when rerere applies a resolution
+      rerere.autoupdate = true;
     };
   };
 }
