@@ -6,6 +6,7 @@
     ./fish.nix
     ./common.nix
     ./git.nix
+    ./lazygit.nix
     ./neovim.nix
     ./ssh.nix
     ./zellij.nix
