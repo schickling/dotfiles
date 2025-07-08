@@ -142,6 +142,23 @@
         and git push origin $WIP_BRANCH
 
       '';
+
+      # Create and navigate to a playground project directory in ~/code/playground/YYYY/mmm/project-name
+      mkplay = ''
+        if test (count $argv) -eq 0
+          echo "Usage: mkplay <project-name>"
+          return 1
+        end
+
+        set project_name $argv[1]
+        set year (date +%Y)
+        set month (date +%b | tr '[:upper:]' '[:lower:]')
+        set play_dir ~/code/playground/$year/$month/$project_name
+
+        mkdir -p $play_dir
+        cd $play_dir
+        echo "Created and navigated to: $play_dir"
+      '';
     };
     plugins = [
       {
