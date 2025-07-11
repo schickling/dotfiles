@@ -144,6 +144,7 @@
       '';
 
       # Create and navigate to a playground project directory in ~/code/playground/YYYY/mmm/project-name
+      # TODO: Create dedicated playground CLI with: list (with sizes/dates), cleanup/prune commands
       mkplay = ''
         if test (count $argv) -eq 0
           echo "Usage: mkplay <project-name>"
