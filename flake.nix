@@ -38,7 +38,7 @@
         in
         {
           # nix develop
-          # home-manager switch --flake .#mbp2020
+          # home-manager switch --flake /Users/schickling/.config/.#mbp2025
           devShells = {
             default = with pkgs; mkShell {
               buildInputs = [
