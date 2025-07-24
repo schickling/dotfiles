@@ -8,7 +8,7 @@
     delta = {
       enable = true;
       options = {
-        syntax-theme = "solarized-dark";
+        syntax-theme = "Solarized (dark)";
         side-by-side = true;
       };
     };

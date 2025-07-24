@@ -9,6 +9,11 @@
       if test -z "$TERM"
         set -x TERM xterm-256color
       end
+      
+      # Handle Ghostty terminal
+      if test "$TERM" = "xterm-ghostty"
+        set -x TERM xterm-256color
+      end
 
       # Enable color in grep
       set -x GREP_OPTIONS '--color=auto'
