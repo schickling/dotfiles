@@ -11,6 +11,7 @@
     ./pnpm.nix
     ./ssh.nix
     ./zellij.nix
+    ./claude-direnv-workaround.nix
   ];
 
   home.stateVersion = "20.09";
