@@ -69,5 +69,10 @@
       system = "aarch64-linux";
       modules = [ ./nixpkgs/home-manager/homepi.nix ];
     };
+    
+    rpi-museum = {
+      system = "aarch64-linux";
+      modules = [ ./nixpkgs/home-manager/rpi-museum.nix ];
+    };
   };
 } 
