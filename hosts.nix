@@ -39,8 +39,6 @@
       };
     };
     
-
-    
     homepi = {
       system = "aarch64-linux";
       configPath = ./nixpkgs/nixos/homepi/configuration.nix;
