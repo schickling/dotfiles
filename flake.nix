@@ -16,9 +16,13 @@
       url = "github:LnL7/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vibetunnel = {
+      url = "path:./flakes/vibetunnel";
+      inputs.nixpkgs.follows = "nixpkgsUnstable";
+    };
   };
 
-  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager }:
+  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel }:
     let
       # Import builders and utilities
       builders = import ./lib/builders.nix { inherit inputs; };
