@@ -51,7 +51,9 @@
     # nodePackages.pnpm
 
     pkgsUnstable.bun
-    nodejs_24
+    # TODO: Revert to stable nodejs_24 once https://github.com/NixOS/nixpkgs/issues/423244 is fixed
+    # (nodejs_24 fails to build on Darwin with sandbox enabled)
+    pkgsUnstable.nodejs_24
 
     # NOTE `nodejs` is installed on various machines separately, as a specific version is needed for remote VSC
     # TODO figure out how to install a specific version of nodejs only for VSC

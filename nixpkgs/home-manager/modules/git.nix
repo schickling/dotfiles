@@ -30,5 +30,9 @@
       # Automatically stage resolved conflicts when rerere applies a resolution
       rerere.autoupdate = true;
     };
+
+    lfs = {
+      enable = true;
+    };
   };
 }
