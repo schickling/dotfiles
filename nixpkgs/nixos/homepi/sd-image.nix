@@ -45,9 +45,7 @@
   time.timeZone = "CET";
 
   nix = {
-    # Currently disabled `nix.settings.auto-optimise-store` as it seems to fail with remote builders
-    # TODO renable when fixed https://github.com/NixOS/nix/issues/7273
-    settings.auto-optimise-store = false;
+    settings.auto-optimise-store = true;
 
     extraOptions = ''
       # needed for nix-direnv

@@ -37,3 +37,7 @@ Almost everything is set up using Nix.
 - Auto-link VSC settings (e.g. via nix-darwin)
 - Improved macOS settings via nix-darwin
 - Gitpod: auto-generate `result.closure.lz` in CI [#18](https://github.com/schickling/dotfiles/issues/18)
+
+## Notes
+
+- Currently NixOS doesn't support RPI5

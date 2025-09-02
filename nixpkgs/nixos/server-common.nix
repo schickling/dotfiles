@@ -17,13 +17,12 @@
     enable = true;
   };
 
-  # Common firewall Docker workaround
-  networking.firewall.extraCommands = ''
-    iptables -N DOCKER-USER || true
-    iptables -F DOCKER-USER
-    iptables -A DOCKER-USER -i enp7s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-    iptables -A DOCKER-USER -i enp7s0 -j DROP
-  '';
+  # Enable Tailscale SSH for web console access on all servers
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both";
+    extraUpFlags = [ "--ssh" ];
+  };
 
   # VSCode server setup
   # https://github.com/msteen/nixos-vscode-server

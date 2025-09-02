@@ -45,6 +45,7 @@
 
   networking = {
     hostName = "homepi";
+    # Using Google's public IPv4 DNS server for reliable DNS resolution  
     nameservers = [ "8.8.8.8" ];
 
     # Machine-specific firewall settings (extends common firewall from configuration-common.nix)
@@ -62,6 +63,18 @@
       allowedTCPPortRanges = [
         { from = 30000; to = 50000; } # Random port range of Scrypted https://github.com/koush/scrypted/blob/a511130c2934b0a51b16bd1297df972248cc1619/plugins/homekit/src/hap-utils.ts#L100
       ];
+
+      # Machine-specific Docker workaround (homepi uses eth0 and potentially wlan0)
+      extraCommands = ''
+        iptables -N DOCKER-USER || true
+        iptables -F DOCKER-USER
+        # Block external access via ethernet
+        iptables -A DOCKER-USER -i eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+        iptables -A DOCKER-USER -i eth0 -j DROP
+        # Block external access via WiFi (if used)
+        iptables -A DOCKER-USER -i wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+        iptables -A DOCKER-USER -i wlan0 -j DROP
+      '';
     };
   };
 

@@ -39,6 +39,17 @@
       };
     };
     
+    dev3 = {
+      system = "x86_64-linux";
+      configPath = ./nixpkgs/nixos/dev3/configuration.nix;
+      homeManagerPath = ./nixpkgs/home-manager/dev3.nix;
+      extraModules = [ "vscode-server" ];
+      deploy = {
+        hostname = "dev3";
+        sshUser = "root";
+      };
+    };
+    
     homepi = {
       system = "aarch64-linux";
       configPath = ./nixpkgs/nixos/homepi/configuration.nix;
@@ -61,6 +72,11 @@
     dev2 = {
       system = "x86_64-linux";
       modules = [ ./nixpkgs/home-manager/dev2.nix ];
+    };
+    
+    dev3 = {
+      system = "x86_64-linux";
+      modules = [ ./nixpkgs/home-manager/dev3.nix ];
     };
     
     homepi = {
