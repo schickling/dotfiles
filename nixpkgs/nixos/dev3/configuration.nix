@@ -47,17 +47,24 @@ in
     HOMEHOST <ignore>
   '';
 
-  # Network (Hetzner uses static IP assignments, IPv6 only for dev3)
+  # Network (Hetzner uses static IP assignments, dual stack IPv4 + IPv6 for dev3)
   networking.useDHCP = false;
+  networking.interfaces."enp6s0".ipv4.addresses = [
+    {
+      address = "148.251.133.181";
+      prefixLength = 27;
+    }
+  ];
   networking.interfaces."enp6s0".ipv6.addresses = [
     {
       address = "2a01:4f8:210:32a1::1";
       prefixLength = 64;
     }
   ];
+  networking.defaultGateway = "148.251.133.161";
   networking.defaultGateway6 = { address = "fe80::1"; interface = "enp6s0"; };
-  # Using Google's public IPv6 DNS servers for reliable DNS resolution
-  networking.nameservers = [ "2001:4860:4860::8888" "2001:4860:4860::8844" ];
+  # Using Google's public DNS servers for reliable DNS resolution (both IPv4 and IPv6)
+  networking.nameservers = [ "8.8.8.8" "2001:4860:4860::8888" "2001:4860:4860::8844" ];
 
   # Machine-specific firewall settings (extends common firewall from configuration-common.nix)
   networking.firewall = {
