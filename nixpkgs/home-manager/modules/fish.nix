@@ -165,6 +165,105 @@
         cd $play_dir
         echo "Created and navigated to: $play_dir"
       '';
+
+      # Upload a file to GitBucket (GitHub-based asset storage)
+      # Usage: gitbucket-upload <file> [tags]
+      # Example: gitbucket-upload image.png "logo,brand"
+      # Returns: Full URL to the uploaded asset
+      # See: https://github.com/schickling/gitbucket
+      gitbucket-upload = ''
+        # Helper function to print grey text to stderr if colors are supported
+        function _print_grey
+          if isatty stderr
+            echo -e "\033[90m$argv\033[0m" >&2
+          else
+            echo $argv >&2
+          end
+        end
+
+        if test (count $argv) -eq 0
+          echo "Usage: gitbucket-upload <file> [tags]" >&2
+          return 1
+        end
+
+        set file $argv[1]
+        set tags $argv[2]
+        set gitbucket_url "https://gitbucket.schickling.dev"
+
+        # Check if file exists
+        if not test -f $file
+          echo "Error: File '$file' not found" >&2
+          return 1
+        end
+
+        # Get GitHub username
+        set username (git config github.user)
+        if test -z $username
+          echo "Error: GitHub username not configured. Run: git config --global github.user YOUR_USERNAME" >&2
+          return 1
+        end
+
+        _print_grey "Authenticating with GitHub SSH..."
+
+        # Request challenge
+        set challenge (curl -s -X POST $gitbucket_url/api/auth/ssh-challenge \
+          -H "Content-Type: application/json" \
+          -d "{\"username\":\"$username\"}" | jq -r '.challenge')
+
+        if test -z $challenge; or test $challenge = "null"
+          echo "Error: Failed to get authentication challenge" >&2
+          return 1
+        end
+
+        # Check if ssh-agent has any keys loaded
+        if not ssh-add -L >/dev/null 2>&1
+          echo "Error: No SSH keys loaded in ssh-agent. Run 'ssh-add' to load your key." >&2
+          return 1
+        end
+
+        # Sign challenge with SSH key from ssh-agent
+        set signature (echo -n $challenge | ssh-keygen -Y sign -n gitbucket -f (ssh-add -L | head -n1 | psub) - 2>/dev/null | base64)
+        if test $status -ne 0
+          echo "Error: Failed to sign challenge with SSH key from ssh-agent" >&2
+          return 1
+        end
+
+        # Get access token
+        set access_token (curl -s -X POST $gitbucket_url/api/auth/ssh-verify \
+          -H "Content-Type: application/json" \
+          -d "{\"username\":\"$username\",\"challenge\":\"$challenge\",\"signature\":\"$signature\"}" | jq -r '.access_token')
+
+        if test -z $access_token; or test $access_token = "null"
+          echo "Error: Failed to get access token" >&2
+          return 1
+        end
+
+        _print_grey "Uploading file..."
+
+        # Upload file
+        if test -n $tags
+          set upload_response (curl -s -X POST $gitbucket_url/api/upload \
+            -H "Authorization: Bearer $access_token" \
+            -F "file=@$file" \
+            -F "tags=$tags")
+        else
+          set upload_response (curl -s -X POST $gitbucket_url/api/upload \
+            -H "Authorization: Bearer $access_token" \
+            -F "file=@$file")
+        end
+
+        # Parse response and construct full URL
+        set url_path (echo $upload_response | jq -r '.url')
+        if test -z $url_path; or test $url_path = "null"
+          echo "Error: Upload failed" >&2
+          echo "Response: $upload_response" >&2
+          return 1
+        end
+
+        set full_url "$gitbucket_url$url_path"
+        _print_grey "Upload successful!"
+        echo $full_url
+      '';
     };
     plugins = [
       {
