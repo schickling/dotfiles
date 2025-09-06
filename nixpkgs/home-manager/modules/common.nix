@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, lib, ... }:
+{ config, pkgs, pkgsUnstable, lib, codex, ... }:
 {
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -38,6 +38,7 @@
     ollama
 
     pkgsUnstable.claude-code
+    codex.packages.${pkgs.system}.default
 
     httpstat
     curlie

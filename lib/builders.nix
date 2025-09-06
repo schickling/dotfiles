@@ -28,7 +28,7 @@ in
     inherit modules;
     extraSpecialArgs = { 
       pkgsUnstable = mkPkgsUnstable system;
-      inherit (inputs) vibetunnel;
+      inherit (inputs) vibetunnel codex;
     };
   };
 
@@ -47,7 +47,7 @@ in
         home-manager.useUserPackages = true;
         home-manager.users.schickling = import homeManagerPath;
         home-manager.extraSpecialArgs = { 
-          inherit (inputs) nixpkgs vibetunnel; 
+          inherit (inputs) nixpkgs vibetunnel codex; 
           pkgsUnstable = mkPkgsUnstable system;
         };
       }
@@ -74,7 +74,7 @@ in
         home-manager.backupFileExtension = "backup";
         home-manager.extraSpecialArgs = { 
           pkgsUnstable = mkPkgsUnstable system;
-          inherit (inputs) vibetunnel;
+          inherit (inputs) vibetunnel codex;
         };
         home-manager.users.${userName} = import homeManagerPath;
       }
