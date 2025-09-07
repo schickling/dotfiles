@@ -90,7 +90,7 @@
       '';
 
       hm = ''
-        pushd ~/.config
+        pushd ~/.dotfiles
         home-manager switch --flake .#$argv[1]
         popd
       '';

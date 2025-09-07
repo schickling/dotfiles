@@ -32,5 +32,6 @@
   programs.fish.interactiveShellInit = ''
     # `/usr/local/bin` is needed for biometric-support in `op` 1Password CLI
     set -x PATH $PATH /usr/local/bin 
+    set -x PATH $PATH "$HOME/.local/bin"
   '';
 } 

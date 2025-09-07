@@ -73,7 +73,10 @@
           # Add dynamic library dependencies for Linux
           postFixup = pkgs.lib.optionalString pkgs.stdenv.isLinux ''
             patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-              --set-rpath "${pkgs.lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ]}" \
+              --set-rpath "${pkgs.lib.makeLibraryPath [ 
+                pkgs.stdenv.cc.cc.lib 
+                pkgs.openssl
+              ]}" \
               $out/bin/codex
           '';
 
