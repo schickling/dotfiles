@@ -290,7 +290,8 @@
       p = "pnpm";
       pc = "process-compose";
       l = "lsd";
-      c = "claude --dangerously-skip-permissions";
+      cl = "claude --dangerously-skip-permissions";
+      co = "codex --ask-for-approval never --config model_reasoning_effort=high";
       gf = "_git_fast";
       fz = "fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'";
       cdg = "cd (git rev-parse --show-toplevel)";
