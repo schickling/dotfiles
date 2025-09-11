@@ -67,6 +67,11 @@
             cp ${platformInfo.binaryName} $out/bin/codex
             chmod +x $out/bin/codex
             
+            # Generate shell completions
+            installShellCompletion --cmd codex \
+              --fish <($out/bin/codex completion fish) \
+              --zsh <($out/bin/codex completion zsh)
+            
             runHook postInstall
           '';
 
