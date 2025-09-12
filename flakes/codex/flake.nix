@@ -49,6 +49,9 @@
             inherit (platformInfo) url sha256;
           };
 
+          # installShellFiles provides installShellCompletion. We'll tolerate
+          # completion generation failures during install on Linux and rely on
+          # postFixup to make the binary runnable.
           nativeBuildInputs = with pkgs; [ installShellFiles ];
 
           unpackPhase = ''
@@ -66,23 +69,27 @@
             # Install the binary with correct name
             cp ${platformInfo.binaryName} $out/bin/codex
             chmod +x $out/bin/codex
-            
-            # Generate shell completions
+
+            # Try to generate shell completions (best-effort). On Linux this may
+            # fail before patchelf fixes the binary; ignore failures and continue.
             installShellCompletion --cmd codex \
-              --fish <($out/bin/codex completion fish) \
-              --zsh <($out/bin/codex completion zsh)
+              --fish <($out/bin/codex completion fish) || true
+            installShellCompletion --cmd codex \
+              --zsh <($out/bin/codex completion zsh) || true
             
             runHook postInstall
           '';
 
           # Add dynamic library dependencies for Linux
           postFixup = pkgs.lib.optionalString pkgs.stdenv.isLinux ''
-            patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-              --set-rpath "${pkgs.lib.makeLibraryPath [ 
-                pkgs.stdenv.cc.cc.lib 
-                pkgs.openssl
-              ]}" \
+            ${pkgs.patchelf}/bin/patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
+              --set-rpath "${pkgs.lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib pkgs.openssl ]}" \
               $out/bin/codex
+
+            # After patching, try generating shell completions (best-effort)
+            mkdir -p $out/share/fish/vendor_completions.d $out/share/zsh/site-functions
+            $out/bin/codex completion fish > $out/share/fish/vendor_completions.d/codex.fish || true
+            $out/bin/codex completion zsh > $out/share/zsh/site-functions/_codex || true
           '';
 
           meta = with pkgs.lib; {

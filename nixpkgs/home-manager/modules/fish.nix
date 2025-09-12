@@ -291,7 +291,7 @@
       pc = "process-compose";
       l = "lsd";
       cl = "claude --dangerously-skip-permissions";
-      co = "codex --sandbox danger-full-access --config model_reasoning_effort=high";
+      co = "codex --sandbox danger-full-access --config model_reasoning_effort=high --ask-for-approval never";
       gf = "_git_fast";
       fz = "fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'";
       cdg = "cd (git rev-parse --show-toplevel)";
