@@ -5,6 +5,11 @@
     ./modules/linux-common.nix
   ];
 
+  # Browser dependencies for Playwright
+  home.packages = with pkgs; [
+    playwright-test
+  ];
+
   # Machine-specific overrides
   programs.fish.interactiveShellInit = lib.mkAfter ''
     # TODO: Check if this VSCode SSH workaround is still needed (see https://github.com/microsoft/vscode-remote-release/issues/6345#issuecomment-1570909663)
