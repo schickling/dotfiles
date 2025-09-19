@@ -52,6 +52,7 @@
     # nodePackages.pnpm
 
     pkgsUnstable.bun
+    pkgsUnstable.biome
     # TODO: Revert to stable nodejs_24 once https://github.com/NixOS/nixpkgs/issues/423244 is fixed
     # (nodejs_24 fails to build on Darwin with sandbox enabled)
     pkgsUnstable.nodejs_24
