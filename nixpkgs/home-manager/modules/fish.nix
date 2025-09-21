@@ -166,6 +166,9 @@
         echo "Created and navigated to: $play_dir"
       '';
 
+      # Manage git worktrees in ~/code/worktrees/<repo>
+      mkwt = builtins.readFile ./fish-functions/mkwt.fish;
+
       # Upload a file to GitBucket (GitHub-based asset storage)
       # Usage: gitbucket-upload <file> [tags]
       # Example: gitbucket-upload image.png "logo,brand"
