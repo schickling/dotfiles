@@ -1,5 +1,13 @@
 { config, pkgs, libs, ... }:
+let
+  mkwtCompletionText = builtins.readFile (builtins.path {
+    path = ./fish-functions/mkwt.completion.fish;
+    name = "mkwt-completions.fish";
+  });
+in
 {
+  home.file.".config/fish/completions/mkwt.fish".text = mkwtCompletionText;
+
   programs.fish = {
     enable = true;
     interactiveShellInit = ''

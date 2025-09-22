@@ -10,6 +10,11 @@
 #   mkwt branch livestore origin/codex/sync-bugfix
 #   mkwt archive livestore origin/codex/sync-bugfix
 
+# Share root path with completion helpers.
+if not set -q __mkwt_worktrees_root
+    set -g __mkwt_worktrees_root /home/schickling/code/worktrees
+end
+
 if functions -q __mkwt_sanitize_path
     functions -e __mkwt_sanitize_path
 end
@@ -66,7 +71,7 @@ if test (count $argv) -lt 1
     return 1
 end
 
-set -l worktrees_root /home/schickling/code/worktrees
+set -l worktrees_root $__mkwt_worktrees_root
 
 switch $argv[1]
     case init
