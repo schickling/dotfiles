@@ -4,13 +4,13 @@
 
 ## Usage
 
-| Subcommand   | Purpose                                                     |
-|--------------|-------------------------------------------------------------|
-| `setup-repo` | Bootstrap a repository into the `.main` worktree slot       |
-| `new`        | Create `<github-user>/YYYY-MM-DD-slug` off the default ref  |
-| `branch`     | Materialise a worktree for an existing remote branch        |
-| `archive`    | Move a worktree under `.archive` and prune related metadata |
-| `zellij`     | Attach to (or create) the canonical Zellij session for a worktree |
+| Subcommand   | Arguments                         | Purpose                                                     |
+|--------------|-----------------------------------|-------------------------------------------------------------|
+| `setup-repo` | `<repo> <git-url>`                | Bootstrap a repository into the `.main` worktree slot       |
+| `new`        | `<repo> [slug]`                   | Create `<github-user>/YYYY-MM-DD-slug` off the default ref  |
+| `branch`     | `<repo> <remote/branch>`          | Materialise a worktree for an existing remote branch        |
+| `archive`    | `<repo> <worktree|branch>` *(or run inside worktree)* | Move a worktree under `.archive` and prune related metadata |
+| `zellij`     | *(run inside worktree)*           | Attach to (or create) the canonical Zellij session for a worktree |
 
 Example session:
 
