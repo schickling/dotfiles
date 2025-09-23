@@ -91,10 +91,11 @@ end
 set -l usage_lines \
     "Usage:" \
     "  gwt setup-repo <repo> <git-url>" \
-    "  gwt new <repo> [slug]" \
+    "  gwt new <repo> [slug] [--carry-changes]" \
     "  gwt branch <repo> <remote/branch>" \
     "  gwt archive <repo> <worktree|branch>" \
     "  gwt zellij" \
+    "      --carry-changes  Carry current worktree changes into the new worktree (uses patches)" \
     "" \
     "Examples:" \
     "  gwt setup-repo livestore git@github.com:schickling/livestore.git" \
@@ -143,17 +144,32 @@ switch $argv[1]
         end
 
     case new
-        if test (count $argv) -lt 2
+        set -l new_args $argv[2..-1]
+        argparse 'carry-changes' -- $new_args
+        if test $status -ne 0
+            return 1
+        end
+
+        set -l carry_changes 0
+        if set -q _flag_carry_changes
+            set carry_changes 1
+        end
+
+        set -l positionals $_argv
+        set -e _argv
+        set -e _flag_carry_changes
+
+        if test (count $positionals) -lt 1
             for line in $usage_lines
                 echo $line >&2
             end
             return 1
         end
 
-        set -l repo_name $argv[2]
+        set -l repo_name $positionals[1]
         set -l raw_slug ""
-        if test (count $argv) -ge 3
-            set raw_slug $argv[3]
+        if test (count $positionals) -ge 2
+            set raw_slug $positionals[2]
         end
         set -l repo_root $worktrees_root/$repo_name
         set -l main_worktree $repo_root/.main
@@ -163,8 +179,58 @@ switch $argv[1]
             return 1
         end
 
+        set -l carry_git_root ""
+        set -l carry_staged_patch ""
+        set -l carry_unstaged_patch ""
+        set -l carry_untracked_files
+
+        if test $carry_changes -eq 1
+            set -l cwd (pwd)
+            if not string match -q -- "$repo_root/*" $cwd
+                echo "gwt: --carry-changes must be run from inside $repo_root" >&2
+                return 1
+            end
+
+            set carry_git_root (git -C $cwd rev-parse --show-toplevel 2>/dev/null)
+            if test $status -ne 0 -o -z "$carry_git_root"
+                echo "gwt: failed to locate git root in current directory" >&2
+                return 1
+            end
+
+            if not string match -q -- "$repo_root/*" $carry_git_root
+                echo "gwt: current directory does not belong to repo '$repo_name'" >&2
+                return 1
+            end
+
+            set carry_staged_patch (mktemp /tmp/gwt-staged-XXXXXX.patch)
+            set carry_unstaged_patch (mktemp /tmp/gwt-unstaged-XXXXXX.patch)
+            if test -z "$carry_staged_patch" -o -z "$carry_unstaged_patch"
+                echo "gwt: failed to create temporary patch files" >&2
+                return 1
+            end
+
+            git -C $carry_git_root diff --staged --binary >$carry_staged_patch
+            if test $status -ne 0
+                command rm -f $carry_staged_patch $carry_unstaged_patch
+                echo "gwt: failed to capture staged changes" >&2
+                return 1
+            end
+
+            git -C $carry_git_root diff --binary >$carry_unstaged_patch
+            if test $status -ne 0
+                command rm -f $carry_staged_patch $carry_unstaged_patch
+                echo "gwt: failed to capture unstaged changes" >&2
+                return 1
+            end
+
+            set carry_untracked_files (git -C $carry_git_root ls-files -z --others --exclude-standard | string split0)
+        end
+
         set -l remotes (git -C $main_worktree remote)
         if test $status -ne 0 -o (count $remotes) -eq 0
+            if test $carry_changes -eq 1
+                command rm -f $carry_staged_patch $carry_unstaged_patch
+            end
             echo "gwt: no git remotes configured in $main_worktree" >&2
             return 1
         end
@@ -193,6 +259,9 @@ switch $argv[1]
         end
 
         if test -z "$slug"
+            if test $carry_changes -eq 1
+                command rm -f $carry_staged_patch $carry_unstaged_patch
+            end
             echo "gwt: slug must include at least one letter or number" >&2
             return 1
         end
@@ -203,6 +272,9 @@ switch $argv[1]
         end
 
         if test -z "$github_username"
+            if test $carry_changes -eq 1
+                command rm -f $carry_staged_patch $carry_unstaged_patch
+            end
             echo "gwt: GitHub username not configured. Run: git config --global github.user YOUR_USERNAME" >&2
             return 1
         end
@@ -211,6 +283,9 @@ switch $argv[1]
         set -l branch_name "$github_username/$today-$slug"
         set -l branch_dir (__gwt_sanitize_path $branch_name)
         if test -z "$branch_dir"
+            if test $carry_changes -eq 1
+                command rm -f $carry_staged_patch $carry_unstaged_patch
+            end
             echo "gwt: failed to derive worktree directory name from branch $branch_name" >&2
             return 1
         end
@@ -242,6 +317,12 @@ switch $argv[1]
             set need_creation 0
         end
 
+        if test $carry_changes -eq 1 -a $need_creation -eq 0
+            command rm -f $carry_staged_patch $carry_unstaged_patch
+            echo "gwt: --carry-changes requires creating a new worktree" >&2
+            return 1
+        end
+
         if test $need_creation -eq 1
             set -l default_ref (git -C $main_worktree symbolic-ref --quiet refs/remotes/$primary_remote/HEAD 2>/dev/null)
             if test $status -eq 0
@@ -253,6 +334,9 @@ switch $argv[1]
             __gwt_pull_main_worktree $main_worktree
             set -l pull_status $status
             if test $pull_status -ne 0
+                if test $carry_changes -eq 1
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
+                end
                 return $pull_status
             end
 
@@ -266,6 +350,9 @@ switch $argv[1]
                 git -C $main_worktree fetch $primary_remote $default_branch >/dev/null 2>&1
                 set -l fetch_status $status
                 if test $fetch_status -ne 0
+                    if test $carry_changes -eq 1
+                        command rm -f $carry_staged_patch $carry_unstaged_patch
+                    end
                     echo "gwt: failed to fetch $primary_remote/$default_branch" >&2
                     return $fetch_status
                 end
@@ -275,6 +362,9 @@ switch $argv[1]
             end
 
             if test $add_status -ne 0
+                if test $carry_changes -eq 1
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
+                end
                 echo "gwt: failed to create worktree $branch_name" >&2
                 return $add_status
             end
@@ -284,7 +374,54 @@ switch $argv[1]
             if test -n "$existing_branch_path"; and test -d $existing_branch_path
                 set target $existing_branch_path
             else
+                if test $carry_changes -eq 1
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
+                end
                 echo "gwt: expected worktree directory $target missing" >&2
+                return 1
+            end
+        end
+
+        if test $carry_changes -eq 1
+            set -l apply_failed 0
+
+            if test -s $carry_staged_patch
+                git -C $target apply --whitespace=nowarn --binary --index $carry_staged_patch
+                if test $status -ne 0
+                    set apply_failed 1
+                end
+            end
+
+            if test $apply_failed -eq 0 -a -s $carry_unstaged_patch
+                git -C $target apply --whitespace=nowarn --binary $carry_unstaged_patch
+                if test $status -ne 0
+                    set apply_failed 1
+                end
+            end
+
+            if test $apply_failed -eq 0
+                for file in $carry_untracked_files
+                    if test -z "$file"
+                        continue
+                    end
+                    set -l src_path $carry_git_root/$file
+                    set -l dest_path $target/$file
+                    set -l dest_dir (dirname $dest_path)
+                    if test "$dest_dir" != "."
+                        mkdir -p -- "$dest_dir"
+                    end
+                    command cp -p -- "$src_path" "$dest_path"
+                end
+            end
+
+            if test -n "$carry_staged_patch" -o -n "$carry_unstaged_patch"
+                command rm -f $carry_staged_patch $carry_unstaged_patch
+            end
+
+            if test $apply_failed -ne 0
+                git -C $main_worktree worktree remove --force $target >/dev/null 2>&1
+                rm -rf $target
+                echo "gwt: failed to carry changes into new worktree" >&2
                 return 1
             end
         end

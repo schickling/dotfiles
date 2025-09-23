@@ -164,5 +164,6 @@ complete -c gwt -n '__fish_use_subcommand' -a archive -d 'Archive existing workt
 complete -c gwt -n '__fish_use_subcommand' -a zellij -d 'Attach canonical Zellij session for worktree'
 
 complete -c gwt -n "__fish_seen_subcommand_from new branch archive" -a '(__gwt_list_repos_for_completion)'
+complete -c gwt -n "__fish_seen_subcommand_from new" -l carry-changes -d 'Carry current worktree changes into new worktree (uses patches)'
 complete -c gwt -n "__fish_seen_subcommand_from archive" -a '(__gwt_list_worktree_entries)'
 complete -c gwt -n "__fish_seen_subcommand_from branch" -a '(__gwt_list_remote_branches)'
