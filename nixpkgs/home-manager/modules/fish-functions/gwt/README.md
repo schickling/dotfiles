@@ -33,7 +33,7 @@ gwt: attaching to zellij session 'livestore--schickling--2025-09-23-bright-curie
 ```
 
 The second `gwt new` example shows the random Docker-style slug that is generated when no slug is provided.
-The `gwt archive` command accepts either `gwt archive <repo> <worktree|branch>` or simply `gwt archive` when executed from inside a worktree directory.
+The `gwt archive` command accepts either `gwt archive <repo> <worktree|branch>` or simply `gwt archive` when executed from inside a worktree directory. Each archive appends metadata (timestamp, worktree slug, source branch/identifier) to `<repo>/.archive/README.md` for quick reference.
 Pass `--carry-changes` (from inside an existing worktree) to replicate staged, unstaged, and untracked changes in the new worktree via git patches.
 The `gwt zellij` subcommand must be run from inside a worktree directory and refuses to start if you are already inside another Zellij session.
 

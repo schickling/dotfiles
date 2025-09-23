@@ -718,6 +718,23 @@ switch $argv[1]
             return $status
         end
 
+        set -l archive_readme $archive_dir/README.md
+        if not test -f $archive_readme
+            printf "# Archived worktrees\n\n" >>$archive_readme
+        end
+
+        set -l timestamp (date -u "+%Y-%m-%dT%H:%M:%SZ")
+        set -l worktree_name (basename $archive_target)
+        set -l branch_note "unknown"
+        if test -n "$target_branch"
+            set branch_note $target_branch
+        else if test -n "$branch_lookup"
+            set branch_note $branch_lookup
+        end
+
+        set -l summary "## $timestamp\n- Repo: $repo_name\n- Worktree: $worktree_name\n- Branch: $branch_note\n- Source identifier: $identifier\n\n"
+        printf '%s' "$summary" >>$archive_readme
+
         git -C $main_worktree worktree prune >/dev/null 2>&1
 
         if test -n "$target_branch"
