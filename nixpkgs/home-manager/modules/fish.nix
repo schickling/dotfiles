@@ -1,12 +1,12 @@
 { config, pkgs, libs, ... }:
 let
-  mkwtCompletionText = builtins.readFile (builtins.path {
-    path = ./fish-functions/mkwt.completion.fish;
-    name = "mkwt-completions.fish";
+  gwtCompletionText = builtins.readFile (builtins.path {
+    path = ./fish-functions/gwt/completion.fish;
+    name = "gwt-completions.fish";
   });
 in
 {
-  home.file.".config/fish/completions/mkwt.fish".text = mkwtCompletionText;
+  home.file.".config/fish/completions/gwt.fish".text = gwtCompletionText;
 
   programs.fish = {
     enable = true;
@@ -175,7 +175,7 @@ in
       '';
 
       # Manage git worktrees in ~/code/worktrees/<repo>
-      mkwt = builtins.readFile ./fish-functions/mkwt.fish;
+      gwt = builtins.readFile ./fish-functions/gwt/cli.fish;
 
       # Upload a file to GitBucket (GitHub-based asset storage)
       # Usage: gitbucket-upload <file> [tags]

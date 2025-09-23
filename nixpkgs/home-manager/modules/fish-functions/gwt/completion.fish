@@ -1,13 +1,13 @@
-# Fish completions for mkwt
+# Fish completions for gwt
 
-if not set -q __mkwt_worktrees_root
-    set -g __mkwt_worktrees_root /home/schickling/code/worktrees
+if not set -q __gwt_worktrees_root
+    set -g __gwt_worktrees_root /home/schickling/code/worktrees
 end
 
-if functions -q __mkwt_list_repos_for_completion
-    functions -e __mkwt_list_repos_for_completion
+if functions -q __gwt_list_repos_for_completion
+    functions -e __gwt_list_repos_for_completion
 end
-function __mkwt_list_repos_for_completion --description 'List mkwt repositories for completions'
+function __gwt_list_repos_for_completion --description 'List gwt repositories for completions'
     set -l tokens (commandline -opc)
     set -l current (commandline -ct)
     if test (count $tokens) -ge 3
@@ -16,7 +16,7 @@ function __mkwt_list_repos_for_completion --description 'List mkwt repositories 
         end
     end
 
-    set -l root $__mkwt_worktrees_root
+    set -l root $__gwt_worktrees_root
     if test -z "$root"; or not test -d $root
         return
     end
@@ -30,10 +30,10 @@ function __mkwt_list_repos_for_completion --description 'List mkwt repositories 
     end
 end
 
-if functions -q __mkwt_list_worktree_entries
-    functions -e __mkwt_list_worktree_entries
+if functions -q __gwt_list_worktree_entries
+    functions -e __gwt_list_worktree_entries
 end
-function __mkwt_list_worktree_entries --description 'List worktree entries for archive completions'
+function __gwt_list_worktree_entries --description 'List worktree entries for archive completions'
     set -l tokens (commandline -opc)
     if test (count $tokens) -lt 3
         return
@@ -44,7 +44,7 @@ function __mkwt_list_worktree_entries --description 'List worktree entries for a
         return
     end
 
-    set -l root $__mkwt_worktrees_root
+    set -l root $__gwt_worktrees_root
     if test -z "$root"
         return
     end
@@ -100,17 +100,17 @@ function __mkwt_list_worktree_entries --description 'List worktree entries for a
     end
 end
 
-if functions -q __mkwt_list_remote_branches
-    functions -e __mkwt_list_remote_branches
+if functions -q __gwt_list_remote_branches
+    functions -e __gwt_list_remote_branches
 end
-function __mkwt_list_remote_branches --description 'List remote branches for mkwt branch subcommand'
+function __gwt_list_remote_branches --description 'List remote branches for gwt branch subcommand'
     set -l tokens (commandline -opc)
     if test (count $tokens) -lt 3
         return
     end
 
     set -l repo_name $tokens[3]
-    set -l root $__mkwt_worktrees_root
+    set -l root $__gwt_worktrees_root
     set -l repo_root $root/$repo_name
     set -l main_worktree $repo_root/.main
 
@@ -154,14 +154,14 @@ function __mkwt_list_remote_branches --description 'List remote branches for mkw
     end
 end
 
-complete -c mkwt -e
-complete -c mkwt -f
+complete -c gwt -e
+complete -c gwt -f
 
-complete -c mkwt -n '__fish_use_subcommand' -a init -d 'Bootstrap repository into .main worktree'
-complete -c mkwt -n '__fish_use_subcommand' -a new -d 'Create dated worktree from default branch'
-complete -c mkwt -n '__fish_use_subcommand' -a branch -d 'Create worktree for existing remote branch'
-complete -c mkwt -n '__fish_use_subcommand' -a archive -d 'Archive existing worktree'
+complete -c gwt -n '__fish_use_subcommand' -a setup-repo -d 'Bootstrap repository into .main worktree'
+complete -c gwt -n '__fish_use_subcommand' -a new -d 'Create prefixed dated worktree (slug optional)'
+complete -c gwt -n '__fish_use_subcommand' -a branch -d 'Create worktree for existing remote branch'
+complete -c gwt -n '__fish_use_subcommand' -a archive -d 'Archive existing worktree'
 
-complete -c mkwt -n "__fish_seen_subcommand_from new branch archive" -a '(__mkwt_list_repos_for_completion)'
-complete -c mkwt -n "__fish_seen_subcommand_from archive" -a '(__mkwt_list_worktree_entries)'
-complete -c mkwt -n "__fish_seen_subcommand_from branch" -a '(__mkwt_list_remote_branches)'
+complete -c gwt -n "__fish_seen_subcommand_from new branch archive" -a '(__gwt_list_repos_for_completion)'
+complete -c gwt -n "__fish_seen_subcommand_from archive" -a '(__gwt_list_worktree_entries)'
+complete -c gwt -n "__fish_seen_subcommand_from branch" -a '(__gwt_list_remote_branches)'
