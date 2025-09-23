@@ -161,6 +161,7 @@ complete -c gwt -n '__fish_use_subcommand' -a setup-repo -d 'Bootstrap repositor
 complete -c gwt -n '__fish_use_subcommand' -a new -d 'Create prefixed dated worktree (slug optional)'
 complete -c gwt -n '__fish_use_subcommand' -a branch -d 'Create worktree for existing remote branch'
 complete -c gwt -n '__fish_use_subcommand' -a archive -d 'Archive existing worktree'
+complete -c gwt -n '__fish_use_subcommand' -a zellij -d 'Attach canonical Zellij session for worktree'
 
 complete -c gwt -n "__fish_seen_subcommand_from new branch archive" -a '(__gwt_list_repos_for_completion)'
 complete -c gwt -n "__fish_seen_subcommand_from archive" -a '(__gwt_list_worktree_entries)'

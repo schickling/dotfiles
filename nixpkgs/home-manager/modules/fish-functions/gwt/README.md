@@ -10,6 +10,7 @@
 | `new`        | Create `<github-user>/YYYY-MM-DD-slug` off the default ref  |
 | `branch`     | Materialise a worktree for an existing remote branch        |
 | `archive`    | Move a worktree under `.archive` and prune related metadata |
+| `zellij`     | Attach to (or create) the canonical Zellij session for a worktree |
 
 Example session:
 
@@ -22,9 +23,14 @@ $ gwt new livestore chore-fix-ci
 
 $ gwt new livestore
 /home/schickling/code/worktrees/livestore/schickling--2025-09-23-bright-curie-42
+
+$ cd /home/schickling/code/worktrees/livestore/schickling--2025-09-23-bright-curie-42
+$ gwt zellij
+gwt: attaching to zellij session 'livestore--schickling--2025-09-23-bright-curie-42'
 ```
 
 The second `gwt new` example shows the random Docker-style slug that is generated when no slug is provided.
+The `gwt zellij` subcommand must be run from inside a worktree directory and refuses to start if you are already inside another Zellij session.
 
 ## Testing changes
 - Run `home-manager switch --flake .#$(hostname)` from the repository root to rebuild your profile and reload the function and completions.

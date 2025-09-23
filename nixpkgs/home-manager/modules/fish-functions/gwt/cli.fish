@@ -94,6 +94,7 @@ set -l usage_lines \
     "  gwt new <repo> [slug]" \
     "  gwt branch <repo> <remote/branch>" \
     "  gwt archive <repo> <worktree|branch>" \
+    "  gwt zellij" \
     "" \
     "Examples:" \
     "  gwt setup-repo livestore git@github.com:schickling/livestore.git" \
@@ -541,6 +542,59 @@ switch $argv[1]
         end
 
         set target_dir $archive_target
+
+    case zellij
+        if set -q ZELLIJ_SESSION_NAME
+            echo "gwt: already inside zellij session '$ZELLIJ_SESSION_NAME'" >&2
+            return 1
+        end
+
+        if not type -q zellij
+            echo "gwt: zellij binary not found in PATH" >&2
+            return 1
+        end
+
+        set -l cwd (pwd)
+        set -l root $__gwt_worktrees_root
+        if test -z "$root"
+            echo "gwt: worktree root not configured" >&2
+            return 1
+        end
+
+        if not string match -q -- "$root/*" $cwd
+            echo "gwt: current directory '$cwd' is not within $root" >&2
+            return 1
+        end
+
+        set -l root_pattern (string escape --style=regex $root)
+        set -l relative (string replace -r "^$root_pattern/" "" -- $cwd)
+        set -l path_parts (string split '/' -- $relative)
+        if test (count $path_parts) -lt 2
+            echo "gwt: run this subcommand from inside a specific worktree directory" >&2
+            return 1
+        end
+
+        set -l repo_name $path_parts[1]
+        set -l default_branch_component $path_parts[2]
+
+        set -l branch_name (git -C $cwd rev-parse --abbrev-ref HEAD 2>/dev/null)
+        if test $status -ne 0 -o -z "$branch_name" -o "$branch_name" = HEAD
+            set branch_name $default_branch_component
+        end
+
+        set -l session_name (__gwt_sanitize_path "$repo_name/$branch_name")
+        if test -z "$session_name"
+            set session_name (__gwt_sanitize_path $repo_name)
+        end
+
+        if test -z "$session_name"
+            echo "gwt: failed to derive session name" >&2
+            return 1
+        end
+
+        echo "gwt: attaching to zellij session '$session_name'" >&2
+        zellij attach -c $session_name
+        return $status
 
     case '*'
         for line in $usage_lines
