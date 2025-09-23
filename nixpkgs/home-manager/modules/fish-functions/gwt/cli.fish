@@ -421,15 +421,58 @@ switch $argv[1]
         set target_dir $target
 
     case archive
-        if test (count $argv) -lt 3
+        set -l use_cwd 0
+        set -l inferred_path ""
+        set -l inferred_branch ""
+        set -l repo_name ""
+        set -l identifier ""
+
+        if test (count $argv) -ge 3
+            set repo_name $argv[2]
+            set identifier $argv[3]
+        else if test (count $argv) -eq 1
+            set use_cwd 1
+
+            set -l cwd (pwd)
+            set -l root $__gwt_worktrees_root
+            if test -z "$root"
+                echo "gwt: worktree root not configured" >&2
+                return 1
+            end
+
+            if not string match -q -- "$root/*" $cwd
+                echo "gwt: current directory '$cwd' is not within $root" >&2
+                return 1
+            end
+
+            set -l root_pattern (string escape --style=regex $root)
+            set -l relative (string replace -r "^$root_pattern/" "" -- $cwd)
+            set -l path_parts (string split '/' -- $relative)
+            if test (count $path_parts) -lt 2
+                echo "gwt: run this subcommand from inside a specific worktree directory" >&2
+                return 1
+            end
+
+            set repo_name $path_parts[1]
+            set identifier $path_parts[2]
+            set inferred_path $root/$repo_name/$identifier
+
+            if not test -d $inferred_path
+                echo "gwt: expected worktree directory $inferred_path missing" >&2
+                return 1
+            end
+
+            set inferred_branch (git -C $inferred_path rev-parse --abbrev-ref HEAD 2>/dev/null)
+            if test -z "$inferred_branch" -o "$inferred_branch" = HEAD
+                set inferred_branch ""
+            end
+        else
             for line in $usage_lines
                 echo $line >&2
             end
             return 1
         end
 
-        set -l repo_name $argv[2]
-        set -l identifier $argv[3]
         set -l repo_root $worktrees_root/$repo_name
         set -l main_worktree $repo_root/.main
 
@@ -455,6 +498,9 @@ switch $argv[1]
 
         set -l sanitized_identifier (__gwt_sanitize_path $identifier)
         set -l branch_lookup $identifier
+        if test $use_cwd -eq 1; and test -n "$inferred_branch"
+            set branch_lookup $inferred_branch
+        end
         if string match -q '*/*' -- $identifier
             set -l split_parts (string split -m1 '/' -- $identifier)
             if test (count $split_parts) -ge 2
@@ -467,6 +513,9 @@ switch $argv[1]
             set candidate_paths $candidate_paths $repo_root/$sanitized_identifier
         end
         set candidate_paths $candidate_paths $repo_root/$identifier
+        if test -n "$inferred_path"
+            set candidate_paths $candidate_paths $inferred_path
+        end
 
         set -l target_path ""
         set -l target_branch ""
