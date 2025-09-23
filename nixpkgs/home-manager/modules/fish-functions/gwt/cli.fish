@@ -144,8 +144,8 @@ switch $argv[1]
         end
 
     case new
-        set -l new_args $argv[2..-1]
-        argparse 'carry-changes' -- $new_args
+        set -l invocation $argv[2..-1]
+        argparse 'carry-changes' -- $invocation
         if test $status -ne 0
             return 1
         end
@@ -155,8 +155,8 @@ switch $argv[1]
             set carry_changes 1
         end
 
-        set -l positionals $_argv
-        set -e _argv
+        set -l positionals $argv
+        set -e argv
         set -e _flag_carry_changes
 
         if test (count $positionals) -lt 1
