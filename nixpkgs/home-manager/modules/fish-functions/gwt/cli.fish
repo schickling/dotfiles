@@ -701,6 +701,26 @@ switch $argv[1]
             return 1
         end
 
+        # Confirm before performing destructive archive actions (interactive shells only)
+        if status --is-interactive
+            set -l base_name (basename $target_path)
+            set -l branch_note "unknown"
+            if test -n "$target_branch"
+                set branch_note $target_branch
+            else if test -n "$branch_lookup"
+                set branch_note $branch_lookup
+            end
+            set -l prompt_msg "gwt: archive '$repo_name/$base_name' (branch: $branch_note)? [y/N] "
+            read -l -P "$prompt_msg" __gwt_confirm_archive
+            switch (string lower -- $__gwt_confirm_archive)
+                case y yes
+                    # proceed
+                case '' n no '*'
+                    echo "gwt: archive cancelled" >&2
+                    return 0
+            end
+        end
+
         set -l archive_dir $repo_root/.archive
         mkdir -p $archive_dir
 
