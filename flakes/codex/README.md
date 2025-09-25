@@ -31,9 +31,9 @@ nix run github:schickling/nix-config?dir=flakes/codex
 
 ## Version
 
-Current version: **0.40.0-alpha.1**
+Current version: **0.41.0**
 
-Based on release `rust-v0.40.0-alpha.1` from the official OpenAI Codex repository.
+Based on release `rust-v0.41.0` from the official OpenAI Codex repository.
 
 ## About Codex
 
