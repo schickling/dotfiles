@@ -6,6 +6,12 @@
 
   nix.enable = false; # Disable nix-darwin's Nix management (using Determinate Systems installer)
 
+  environment.etc."nix/nix.custom.conf".text = ''
+    # Additional binary caches shared across hosts
+    extra-substituters = https://devenv.cachix.org
+    extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+  '';
+
   # Unfree packages are configured centrally in flake.nix
 
   system.activationScripts.extraActivation.text = ''
