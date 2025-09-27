@@ -78,6 +78,7 @@
 
     # compression
     zip
+    unzip
     pigz # parallel gzip
     lz4
 
