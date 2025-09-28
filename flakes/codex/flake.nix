@@ -12,29 +12,29 @@
         pkgs = import nixpkgs { inherit system; };
 
         # Version information from the latest release
-        version = "0.41.0";
+        version = "0.42.0";
         tag = "rust-v${version}";
 
         # Platform-specific download URLs, hashes, and binary names
         sources = {
           x86_64-linux = {
             url = "https://github.com/openai/codex/releases/download/${tag}/codex-x86_64-unknown-linux-gnu.tar.gz";
-            sha256 = "81bd57827b8c3d03082cf118c7332b19864c400959b9d25e4ae7b7a7a0f9c494";
+            sha256 = "0b87da1bd496bdc8638053adab5718b4edd271c8415d171b70cbf1149e47b2f8";
             binaryName = "codex-x86_64-unknown-linux-gnu";
           };
           aarch64-linux = {
             url = "https://github.com/openai/codex/releases/download/${tag}/codex-aarch64-unknown-linux-gnu.tar.gz";
-            sha256 = "5a79a1f0f828f027af97a0f2c277d520b97030ea3d7477b3663d16edbe501886";
+            sha256 = "ab62aa22062c97d04fb255c95008970f493b57c654c9a1787db22175a8113ff0";
             binaryName = "codex-aarch64-unknown-linux-gnu";
           };
           x86_64-darwin = {
             url = "https://github.com/openai/codex/releases/download/${tag}/codex-x86_64-apple-darwin.tar.gz";
-            sha256 = "33360f7500f4f1f5d712ee16e464ab93db35fd69831c21ab402515dff00cc5c1";
+            sha256 = "2366eb3ab5cc687fb856c93c3b370c52b1d87f9fbcd71de5f46df07b81d1485f";
             binaryName = "codex-x86_64-apple-darwin";
           };
           aarch64-darwin = {
             url = "https://github.com/openai/codex/releases/download/${tag}/codex-aarch64-apple-darwin.tar.gz";
-            sha256 = "0c9f4f2d73a8efe4cb4d5da6a5604017a475462f2d6ae3fd1ec8514bc5bc7e30";
+            sha256 = "7da40252c9690badd992b9b0dd6a1b6f6d03f4e7d715e524030bf3b35f3f273b";
             binaryName = "codex-aarch64-apple-darwin";
           };
         };
