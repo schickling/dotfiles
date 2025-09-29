@@ -11,17 +11,6 @@ in
     ../server-common.nix
     ../../modules/onepassword.nix
   ];
-
-  # Override Tailscale package to skip failing tests (NixOS 25.05 bug)
-  # See: https://github.com/NixOS/nixpkgs/issues/438765
-  nixpkgs.overlays = [
-    (final: prev: {
-      tailscale = prev.tailscale.overrideAttrs (oldAttrs: {
-        doCheck = false;  # Skip portlist tests that fail in NixOS 25.05 build sandbox
-      });
-    })
-  ];
-
   # Use systemd-boot as the boot loader with UEFI support.
   # systemd-boot is more reliable than GRUB for UEFI on newer servers like AX102.
   boot.loader.systemd-boot.enable = true;
