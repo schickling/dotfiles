@@ -22,6 +22,9 @@ in
         set -x TERM xterm-256color
       end
 
+      # Advertise 24-bit color support for tools (e.g. git-delta, bat)
+      set -x COLORTERM truecolor
+
       # Enable color in grep
       set -x GREP_OPTIONS '--color=auto'
       set -x GREP_COLOR 'mt=3;33'
