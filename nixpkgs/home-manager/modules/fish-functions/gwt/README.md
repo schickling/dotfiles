@@ -29,7 +29,7 @@ $ gwt new livestore --carry-changes
 
 $ cd /home/schickling/code/worktrees/livestore/schickling--2025-09-23-bright-curie-42
 $ gwt zellij
-gwt: attaching to zellij session 'livestore--schickling--2025-09-23-bright-curie-42'
+gwt: attaching to zellij session 'livestore-25-09-23-bright-curie-42'
 ```
 
 The second `gwt new` example shows the random Docker-style slug that is generated when no slug is provided.
