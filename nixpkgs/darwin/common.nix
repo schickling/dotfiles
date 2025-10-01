@@ -4,13 +4,21 @@
     ../modules/onepassword.nix
   ];
 
-  nix.enable = false; # Disable nix-darwin's Nix management (using Determinate Systems installer)
+  # We use Determinate Systems' Nix installer on macOS and keep nix-darwin's
+  # own Nix management disabled to avoid conflicts over files in /etc.
+  nix.enable = false; # Nix managed outside of nix-darwin (Determinate Systems)
 
-  environment.etc."nix/nix.custom.conf".text = ''
-    # Additional binary caches shared across hosts
-    extra-substituters = https://devenv.cachix.org
-    extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
-  '';
+  # IMPORTANT: /etc/nix/nix.custom.conf is created by Determinate Systems' installer
+  # (see header in that file). Managing the same path from nix-darwin causes
+  # activation to abort with "Unexpected files in /etc" if the file already
+  # exists and is not a nix store symlink. We therefore do NOT declare
+  # environment.etc."nix/nix.custom.conf" here.
+  # The current DS-managed file already contains the desired cache settings:
+  #   extra-substituters = https://devenv.cachix.org
+  #   extra-trusted-public-keys = devenv.cachix.org-1:...
+  # If these need to change in the future, either update the DS-managed file
+  # manually or migrate ownership of that path to nix-darwin (rename existing
+  # file to *.before-nix-darwin and declare environment.etc accordingly).
 
   # Unfree packages are configured centrally in flake.nix
 
