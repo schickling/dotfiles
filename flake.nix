@@ -138,6 +138,7 @@
       common = {
         sshKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX 1Password SSH"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMrYafhnbSO2w68ANOTdIIF9evk1oZT3yF1jw+XJxQhc dev3"
         ];
       };
     };

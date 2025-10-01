@@ -43,6 +43,7 @@ in
       ../nixpkgs/darwin/remote-builder.nix
       inputs.home-manager.darwinModules.home-manager
       {
+        myAuthorizedKeys.sshKeys = inputs.self.common.sshKeys;
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.schickling = import homeManagerPath;

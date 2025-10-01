@@ -1,9 +1,19 @@
 { pkgs, config, lib, ... }:
 {
+  options = {
+    # Central source for authorized keys (populated from flake common.sshKeys)
+    myAuthorizedKeys.sshKeys = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "List of authorized public keys for user schickling";
+    };
+  };
   imports = [
     ./common.nix
     ./sdcard-autosave.nix
   ];
+
+  config = {
 
   # Shared Darwin configuration for all machines
   #   Tailscale IPs so SSH is reachable exclusively over the tailnet.
@@ -86,4 +96,12 @@
       StandardOutPath = "/var/log/pf-tailssh.out.log";
     };
   };
+
+  # Authorized keys for user 'schickling' via AuthorizedKeysCommand
+  # Keep StrictModes enabled by avoiding symlinked ~/.ssh/authorized_keys.
+  # Keys are sourced from flake's common.sshKeys via builders.nix.
+  environment.etc."ssh/nix_authorized_keys.d/schickling".text =
+    lib.concatStringsSep "\n" (config.myAuthorizedKeys.sshKeys ++ [""]);
+  };
 }
+
