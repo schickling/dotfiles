@@ -34,4 +34,4 @@
     set -x PATH $PATH /usr/local/bin 
     set -x PATH $PATH "$HOME/.local/bin"
   '';
-} 
+}
