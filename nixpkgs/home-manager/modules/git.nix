@@ -8,8 +8,10 @@
     delta = {
       enable = true;
       options = {
-        syntax-theme = "Solarized (dark)";
+        "true-color" = "always";
         side-by-side = true;
+        # Delta assumes a light palette otherwise and the colors wash out in dark terminals.
+        dark = true;
       };
     };
 

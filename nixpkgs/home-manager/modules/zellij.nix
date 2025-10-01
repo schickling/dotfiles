@@ -12,6 +12,8 @@
 
     show_startup_tips false
 
+    pane_frames false
+
     keybinds {
       // stop ⌥→ from spawning a floating pane
       unbind "Alt f"

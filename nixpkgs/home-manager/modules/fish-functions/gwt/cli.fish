@@ -805,10 +805,39 @@ switch $argv[1]
             set branch_name $default_branch_component
         end
 
-        set -l session_name (__gwt_sanitize_path "$repo_name/$branch_name")
-        if test -z "$session_name"
-            set session_name (__gwt_sanitize_path $repo_name)
+        set -l github_username (git -C $cwd config --get github.user 2>/dev/null)
+        if test -z "$github_username"
+            set github_username (git config --global --get github.user 2>/dev/null)
         end
+
+        if test -n "$github_username"; and string match -q -- "$github_username/*" $branch_name
+            set -l escaped_username (string escape --style=regex $github_username)
+            set -l stripped_branch (string replace -r "^$escaped_username/" "" -- $branch_name)
+            if test -n "$stripped_branch"
+                set branch_name $stripped_branch
+            end
+        end
+
+        if string match -rq '^[0-9]{4}-' $branch_name
+            set branch_name (string replace -r '^([0-9]{2})([0-9]{2})(-.*)$' '$2$3' -- $branch_name)
+        end
+
+        set branch_name (string replace -a '/' '-' -- $branch_name)
+
+        set -l sanitized_repo (__gwt_sanitize_path (string replace -a '/' '-' -- $repo_name))
+        set -l sanitized_branch (__gwt_sanitize_path $branch_name)
+
+        set -l session_components
+        if test -n "$sanitized_repo"
+            set session_components $sanitized_repo
+        end
+        if test -n "$sanitized_branch"
+            set session_components $session_components $sanitized_branch
+        end
+
+        set -l session_name (string join '-' $session_components)
+        set session_name (string replace -ra '-{2,}' '-' -- $session_name)
+        set session_name (string trim -c '-' -- $session_name)
 
         if test -z "$session_name"
             echo "gwt: failed to derive session name" >&2
