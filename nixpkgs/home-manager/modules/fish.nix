@@ -107,7 +107,7 @@ in
         end
 
         # Invoke Home Manager directly against the repo flake without changing directories
-        home-manager switch --flake ~/.config#$host
+        home-manager switch --flake ~/.dotfiles#$host
       '';
 
       whatsmyip = ''
