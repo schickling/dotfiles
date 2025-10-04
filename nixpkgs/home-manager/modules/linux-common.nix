@@ -8,6 +8,7 @@
     ./git.nix
     ./lazygit.nix
     ./neovim.nix
+    ./tools.nix
     ./pnpm.nix
     ./ssh.nix
     ./zellij.nix

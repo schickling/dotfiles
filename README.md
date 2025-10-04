@@ -2,12 +2,21 @@
 
 Almost everything is set up using Nix.
 
-## Includes
+## Declarative config (Home Manager)
 
-- fish
-- tmux
-- neovim
-- ...
+The following user-level tools are managed declaratively via Home Manager modules in `nixpkgs/home-manager/modules`:
+
+- fish, git, neovim, lazygit, ssh, zellij, tmux (existing)
+- NEW: GitHub CLI (`gh`), Ghostty, lsd, bat, ripgrep (grouped in `nixpkgs/home-manager/modules/tools.nix`)
+
+Notes
+- `gh`: Only non-secret `config.yml` is managed. Do not manage `hosts.yml` (tokens).
+- `ghostty`: Managed via `xdg.configFile` to write `~/.config/ghostty/config` (see `modules/tools.nix`). Switch to a native `programs.ghostty` module if available in your HM channel.
+- If any of these had `~/.config/<name>` pointing into the repo, remove the symlink so Home Manager writes real files outside the repo.
+
+Apply
+- macOS (darwin): `nix build .#darwinConfigurations.mbp2025.system; ./result/sw/bin/darwin-rebuild switch --flake .`
+- Linux (dev hosts): `home-manager switch --flake ~/.dotfiles#<host>`
 
 ## Gitpod workflows
 
