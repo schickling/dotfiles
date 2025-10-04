@@ -100,9 +100,14 @@ in
       '';
 
       hm = ''
-        pushd ~/.dotfiles
-        home-manager switch --flake .#$argv[1]
-        popd
+        # Use current hostname by default; allow override via first arg
+        set host (hostname)
+        if test (count $argv) -gt 0
+          set host $argv[1]
+        end
+
+        # Invoke Home Manager directly against the repo flake without changing directories
+        home-manager switch --flake ~/.config#$host
       '';
 
       whatsmyip = ''

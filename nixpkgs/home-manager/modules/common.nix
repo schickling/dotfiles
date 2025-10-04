@@ -23,6 +23,7 @@
     rename
     neofetch # fancy system + hardware info
     tealdeer # fast tldr
+    glow # nice markdown reader
     zoxide # habitual `cd`
 
     # Requires a patched font
