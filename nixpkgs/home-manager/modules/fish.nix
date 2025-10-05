@@ -6,7 +6,9 @@ in
 {
   # Ensure local grit env integration persists across hosts via HM
   home.file.".config/fish/conf.d/grit.env.fish".text = ''
-    source "$HOME/.grit/bin/env.fish"
+    if test -f "$HOME/.grit/bin/env.fish"
+      source "$HOME/.grit/bin/env.fish"
+    end
   '';
   home.file.".config/fish/completions/gwt.fish".text = gwtCompletionText;
   home.file.".config/fish/completions/portctl.fish".text = portctlCompletionText;
