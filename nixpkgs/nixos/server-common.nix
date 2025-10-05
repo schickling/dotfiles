@@ -36,4 +36,13 @@
     # here, NOT in environment.systemPackages
   ];
 
+  # Eternal Terminal server on all NixOS servers
+  services.eternal-terminal = {
+    enable = true;
+    # defaults: port = 2022; verbosity = 0; silent = false; logSize = 20MB
+  };
+
+  # Only expose ET on Tailscale interface to keep parity with SSH exposure
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = lib.mkAfter [ 2022 ];
+
 } 

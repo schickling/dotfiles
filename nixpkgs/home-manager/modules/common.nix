@@ -13,6 +13,7 @@
     gnupg
     tmux
     wget
+    eternal-terminal
     bat
     bottom
     glances # alternative to `bottom` but written in Python (so it's slower)
