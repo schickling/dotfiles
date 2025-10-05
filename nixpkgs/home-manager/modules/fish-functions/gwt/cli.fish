@@ -856,7 +856,7 @@ switch $argv[1]
         end
 
         set -l session_name (string join '-' $session_components)
-        set session_name (string replace -ra '-{2,}' '-' -- $session_name)
+        set session_name (string replace -ra -- '-{2,}' '-' $session_name)
         set session_name (string trim -c '-' -- $session_name)
 
         if test -z "$session_name"
