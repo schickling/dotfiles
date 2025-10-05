@@ -77,8 +77,60 @@ in
     extraUpFlags = [ "--ssh" "--advertise-exit-node" ];
   };
 
+  # Caddy reverse proxy for Zellij Web using Tailscale-issued certificates.
+  # Serves https://dev3.tail8108.ts.net and proxies to the user Zellij Web server
+  # listening on localhost. This avoids self-signed certs and works out of the box
+  # with Tailscale's MagicDNS and certs.
+  services.caddy = {
+    enable = true;
+    package = pkgs.caddy;
+    extraConfig = ''
+      dev3.tail8108.ts.net {
+        tls /var/lib/tailscale-certs/dev3.crt /var/lib/tailscale-certs/dev3.key
+        reverse_proxy 127.0.0.1:8082
+      }
+    '';
+  };
+
+  # Generate and renew Tailscale certificates for Caddy.
+  systemd.tmpfiles.rules = [
+    "d /var/lib/tailscale-certs 0750 root caddy - -"
+  ];
+
+  systemd.services.tailscale-cert-dev3 = {
+    description = "Obtain/renew Tailscale cert for dev3";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = lib.escapeShellArgs [
+        "${pkgs.tailscale}/bin/tailscale" "cert"
+        "--cert-file" "/var/lib/tailscale-certs/dev3.crt"
+        "--key-file" "/var/lib/tailscale-certs/dev3.key"
+        "dev3.tail8108.ts.net"
+      ];
+      ExecStartPost = [
+        (lib.escapeShellArgs [ "${pkgs.coreutils}/bin/chgrp" "caddy" "/var/lib/tailscale-certs/dev3.crt" "/var/lib/tailscale-certs/dev3.key" ])
+        (lib.escapeShellArgs [ "${pkgs.coreutils}/bin/chmod" "0640" "/var/lib/tailscale-certs/dev3.crt" "/var/lib/tailscale-certs/dev3.key" ])
+      ];
+    };
+    after = [ "tailscaled.service" ];
+    requires = [ "tailscaled.service" ];
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.timers.tailscale-cert-dev3 = {
+    wantedBy = [ "timers.target" ];
+    partOf = [ "tailscale-cert-dev3.service" ];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+    };
+  };
+
   # only allow access via tailscale
   services.openssh.openFirewall = false;
+
+  # Allow Caddy on Tailscale; tailscale0 is trusted in common config, so inbound
+  # to 443 on that interface is permitted. No need to expose on public NIC.
 
   # Machine-specific user groups (extends common user from server-common.nix)
   users.users.schickling.extraGroups = [

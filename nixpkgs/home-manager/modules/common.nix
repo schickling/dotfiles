@@ -35,7 +35,6 @@
     du-dust
     ripgrep
     graphviz
-    git-crypt
 
     ollama
 

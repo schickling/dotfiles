@@ -767,6 +767,26 @@ switch $argv[1]
         set target_dir $archive_target
 
     case zellij
+        # Enable Zellij Web sharing for newly created sessions.
+        #
+        # Background: Zellij exposes a built-in web server (see `zellij web`) that can
+        # serve terminal sessions to a browser. Two knobs control this behavior:
+        #   - `--web-server true|false` (option name: `web_server`)
+        #       Ensures a local web server is running when a new session starts so it
+        #       can be accessed via the browser (defaults to false).
+        #   - `--web-sharing on|off|disabled` (option name: `web_sharing`)
+        #       Controls whether newly created sessions opt in to being listed and
+        #       attachable via the local web server (defaults to "off").
+        #
+        # Nix-managed server: On Linux, a systemd user service (configured via Home
+        # Manager) auto-starts the web server and binds appropriately with TLS. The
+        # GWT tool does NOT start the web server directly anymore; it only ensures
+        # that when a new session is created it opts into web sharing.
+        #
+        # Notes:
+        # - Authentication is token-based; tokens can be managed via
+        #   `zellij web --create-token` / `--list-tokens`.
+        # - Requires zellij >= 0.43.
         if set -q ZELLIJ_SESSION_NAME
             echo "gwt: already inside zellij session '$ZELLIJ_SESSION_NAME'" >&2
             return 1
@@ -845,7 +865,10 @@ switch $argv[1]
         end
 
         echo "gwt: attaching to zellij session '$session_name'" >&2
-        zellij attach -c $session_name
+        # Attach to the session, creating it if needed with web sharing enabled.
+        # The `options` subcommand applies only to session creation in this context.
+        # The web server itself is managed by the user-level systemd service.
+        zellij attach -c $session_name options --web-server true --web-sharing on
         return $status
 
     case '*'

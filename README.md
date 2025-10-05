@@ -1,47 +1,38 @@
-# dotfiles
+# Dotfiles (Nix Flake)
 
-Almost everything is set up using Nix.
+Declarative system and user configuration with Nix. Targets macOS (nix-darwin + Home Manager) and NixOS hosts.
 
-## Declarative config (Home Manager)
+Location
+- Clone this repo at `~/.dotfiles` (assumed by paths and commands).
 
-The following user-level tools are managed declaratively via Home Manager modules in `nixpkgs/home-manager/modules`:
+Quick Start
+- macOS (darwin)
+  - `nix build .#darwinConfigurations.mbp2025.system`
+  - `./result/sw/bin/darwin-rebuild switch --flake .`
+- Home Manager (current host)
+  - `home-manager switch --flake .#$(hostname -s)`
 
-- fish, git, neovim, lazygit, ssh, zellij, tmux (existing)
-- NEW: GitHub CLI (`gh`), Ghostty, lsd, bat, ripgrep (grouped in `nixpkgs/home-manager/modules/tools.nix`)
+Layout
+- `flake.nix`, `hosts.nix` — flake entry + host matrix
+- `lib/builders.nix` — pkgs builders and helpers
+- `nixpkgs/darwin/` — shared darwin config; `remote-builder.nix` (uses `dev3`)
+- `nixpkgs/home-manager/modules/` — user modules
+  - `darwin-common.nix`, `common.nix`, `linux-common.nix`
+  - `fish.nix` (shell, aliases, functions)
+  - `tools.nix` (gh, ghostty, lsd, bat, ripgrep)
+  - `ssh.nix` (match blocks; 1Password agent)
+  - `macos/karabiner.nix`
+- `nixpkgs/nixos/` — NixOS hosts (e.g. `dev3`, `homepi`)
+- `flakes/` — local inputs (codex, opencode, vibetunnel)
+- `plan.md` — ongoing migration checklist
+
+Policies
+- Home Manager writes configs into `~/.config` (symlinks to Nix store). No repo → `~/.config` symlinks.
+- Secrets are local-only. Examples:
+  - GitHub CLI: HM manages `~/.config/gh/config.yml`. Tokens live in `~/.config/gh/hosts.yml`.
+  - npm: HM exports `NPM_CONFIG_USERCONFIG` → `~/.config/npm/npmrc`.
+- SSH is managed by HM (`~/.ssh/config`); uses 1Password agent.
 
 Notes
-- `gh`: Only non-secret `config.yml` is managed. Do not manage `hosts.yml` (tokens).
-- `ghostty`: Managed via `xdg.configFile` to write `~/.config/ghostty/config` (see `modules/tools.nix`). Switch to a native `programs.ghostty` module if available in your HM channel.
-- If any of these had `~/.config/<name>` pointing into the repo, remove the symlink so Home Manager writes real files outside the repo.
-
-Apply
-- macOS (darwin): `nix build .#darwinConfigurations.mbp2025.system; ./result/sw/bin/darwin-rebuild switch --flake .`
-- Linux (dev hosts): `home-manager switch --flake ~/.dotfiles#<host>`
-
- 
-
-## Related
-
-- Video of me helping @paulshen to set up Nix on macOS: https://youtu.be/1dzgVkgQ5mE
-
-## Inspiration
-
-### Nix
-
-- https://github.com/nitsky/config
-- https://github.com/pimeys/nixos
-- https://github.dev/Mic92/dotfiles/blob/master/nixos/eve/modules/home-assistant/weather.nix
-- https://github.com/PaulGrandperrin/nix-systems
-- https://github.com/fufexan/dotfiles (deploy-rs, distributed builds)
-- https://github.com/viperML/neoinfra
-
-## TODO
-
-- Rename to `nixconfig` and re-clone on machines as `~/.nixconfig` instead of `~/.config`
-- Move to Nix: Tmux
-- Auto-link VSC settings (e.g. via nix-darwin)
-- Improved macOS settings via nix-darwin
-
-## Notes
-
-- Currently NixOS doesn't support RPI5
+- macOS can offload builds to `dev3` (see `nixpkgs/darwin/remote-builder.nix`).
+- VS Code migration to HM is planned as a final step; current settings live in `VSCode/`.

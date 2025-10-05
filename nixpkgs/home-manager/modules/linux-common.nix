@@ -1,5 +1,4 @@
 { config, lib, pkgs, pkgsUnstable, ... }:
-
 {
   imports = [
     ./home-manager.nix
@@ -12,6 +11,7 @@
     ./pnpm.nix
     ./ssh.nix
     ./zellij.nix
+    ./zellij-web.nix
     ./claude-direnv-workaround.nix
   ];
 
@@ -35,4 +35,7 @@
     set -x PATH $PATH /usr/local/bin 
     set -x PATH $PATH "$HOME/.local/bin"
   '';
+
+  # Explicitly enable Zellij Web via HM options (override here if needed).
+  services.zellijWeb.enable = true;
 }
