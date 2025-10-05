@@ -28,7 +28,7 @@
     set -x SSH_AUTH_SOCK "$HOME/.1password/agent.sock"
     set -x PATH $PATH "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
     set -x PATH $PATH "/run/current-system/sw/bin/"
-    set -x PATH $PATH "$HOME/.config/bin"
+    set -x PATH $PATH "$HOME/.dotfiles/bin"
     set -x PATH $PATH "$HOME/.local/bin"
     set -x PATH $PATH /usr/local/bin 
   '';
