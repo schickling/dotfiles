@@ -28,17 +28,6 @@
 
   # NixOS hosts
   nixos = {
-    dev2 = {
-      system = "x86_64-linux";
-      configPath = ./nixpkgs/nixos/dev2/configuration.nix;
-      homeManagerPath = ./nixpkgs/home-manager/dev2.nix;
-      extraModules = [ "vscode-server" ];
-      deploy = {
-        hostname = "dev2";
-        sshUser = "root";
-      };
-    };
-    
     dev3 = {
       system = "x86_64-linux";
       configPath = ./nixpkgs/nixos/dev3/configuration.nix;
@@ -64,16 +53,6 @@
 
   # Home-manager only hosts
   homeManager = {
-    gitpod = {
-      system = "x86_64-linux";
-      modules = [ ./nixpkgs/home-manager/gitpod.nix ];
-    };
-    
-    dev2 = {
-      system = "x86_64-linux";
-      modules = [ ./nixpkgs/home-manager/dev2.nix ];
-    };
-    
     dev3 = {
       system = "x86_64-linux";
       modules = [ ./nixpkgs/home-manager/dev3.nix ];

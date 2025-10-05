@@ -114,14 +114,6 @@
           };
         };
 
-        dev2 = {
-          hostname = "dev2";
-          profiles.system = {
-            sshUser = "root";
-            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.dev2;
-          };
-        };
-
         dev3 = {
           hostname = "dev3";
           profiles.system = {

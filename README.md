@@ -18,11 +18,7 @@ Apply
 - macOS (darwin): `nix build .#darwinConfigurations.mbp2025.system; ./result/sw/bin/darwin-rebuild switch --flake .`
 - Linux (dev hosts): `home-manager switch --flake ~/.dotfiles#<host>`
 
-## Gitpod workflows
-
-- I've configured Gitpod to pickup the [`install.sh`](./install.sh) file to set up my dotfiles for every new workspace
-- The dotfiles setup can be skipped by setting `GITPOD_DOTFILES_SKIP=1`
-  - Example: `https://gitpod.io/#GITPOD_DOTFILES_SKIP=1/https://github.com/contentlayerdev/videos`
+ 
 
 ## Related
 
@@ -45,7 +41,6 @@ Apply
 - Move to Nix: Tmux
 - Auto-link VSC settings (e.g. via nix-darwin)
 - Improved macOS settings via nix-darwin
-- Gitpod: auto-generate `result.closure.lz` in CI [#18](https://github.com/schickling/dotfiles/issues/18)
 
 ## Notes
 

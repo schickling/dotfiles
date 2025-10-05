@@ -1,20 +1,3 @@
-# aws
-.aws filter=git-crypt diff=git-crypt
-
-# gh
-gh/hosts.yml filter=git-crypt diff=git-crypt
-
 # ssh
 nixpkgs/home-manager/modules/ssh.nix filter=git-crypt diff=git-crypt
 
-# netrc (https://everything.curl.dev/usingcurl/netrc)
-home/.netrc filter=git-crypt diff=git-crypt
-
-# npmrc
-home/.npmrc filter=git-crypt diff=git-crypt
-
-# yarn
-home/.yarnrc.yml filter=git-crypt diff=git-crypt
-
-# docker
-home/.dockercfg filter=git-crypt diff=git-crypt

@@ -116,4 +116,9 @@
     enable = true;
   };
 
+  # Make npm use XDG-configured user config file
+  home.sessionVariables = {
+    NPM_CONFIG_USERCONFIG = "${config.home.homeDirectory}/.config/npm/npmrc";
+  };
+
 }

@@ -1,4 +1,0 @@
-#! /bin/bash
-
-pgrep -i Opal | xargs sudo kill -9
-pgrep -i com.opalcamera | xargs sudo kill -9

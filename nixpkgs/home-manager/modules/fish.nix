@@ -4,6 +4,10 @@ let
   portctlCompletionText = builtins.readFile ./fish-functions/portctl/completion.fish;
 in
 {
+  # Ensure local grit env integration persists across hosts via HM
+  home.file.".config/fish/conf.d/grit.env.fish".text = ''
+    source "$HOME/.grit/bin/env.fish"
+  '';
   home.file.".config/fish/completions/gwt.fish".text = gwtCompletionText;
   home.file.".config/fish/completions/portctl.fish".text = portctlCompletionText;
 
@@ -90,6 +94,15 @@ in
       ###-end-pnpm-completion-###
     '';
     functions = {
+      kill-opal = ''
+        function kill-opal --description "Force kill Opal camera processes"
+          for name in Opal com.opalcamera
+            if pgrep -i $name >/dev/null
+              pgrep -i $name | xargs sudo kill -9
+            end
+          end
+        end
+      '';
 
       o = ''
         if test (count $argv) -eq 0
