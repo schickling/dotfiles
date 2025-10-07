@@ -11,25 +11,25 @@
       let
         pkgs = import nixpkgs { inherit system; };
 
-        version = "0.10.3";
+        version = "0.14.5";
         tag = "v${version}";
 
         sources = {
           x86_64-linux = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-linux-x64.zip";
-            sha256 = "4214c2a3bd94f6fab99a06f16af3d1abd3415b744e76ac40b565e474f851570e";
+            sha256 = "c1a2745b7fa0802905196903f39095502f3c19322a46d1f07b957a6e9033e336";
           };
           aarch64-linux = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-linux-arm64.zip";
-            sha256 = "0d6fafe9a57b22cdddf471da5f2e483656fbc4d7c1fabc20d703720eb853d62e";
+            sha256 = "ddf72ef28beda8fe6b92aeb49a8cd5848a4f933a3030e2c486a886adbcf1e453";
           };
           x86_64-darwin = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-darwin-x64.zip";
-            sha256 = "24b2fe6cd3475da1a45781353b7aa214d8cd7f1d6e5ed9b9f7b7312494aeb5d8";
+            sha256 = "a07cc41295ef924db375b0b5328ab0968af68a827e8d0cc774178e6f79e43677";
           };
           aarch64-darwin = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-darwin-arm64.zip";
-            sha256 = "36c9d63e8a084bf794e44c4ea0e98ec32e80321c85f51f653573775579f31576";
+            sha256 = "06dcdef7676a69b288e6bddebce98779dbf8734b6026107d2b21334ff6ea5646";
           };
         };
 
@@ -41,12 +41,14 @@
 
           dontBuild = true;
           dontUnpack = true;
+          dontStrip = true;
 
           src = pkgs.fetchurl {
             inherit (platformInfo) url sha256;
           };
 
-          nativeBuildInputs = [ pkgs.unzip ];
+          nativeBuildInputs = [ pkgs.unzip ]
+            ++ pkgs.lib.optionals pkgs.stdenv.isLinux [ pkgs.patchelf ];
 
           installPhase = ''
             runHook preInstall
@@ -57,13 +59,17 @@
             cp "$tmpdir/opencode" "$out/bin/opencode"
             chmod +x "$out/bin/opencode"
 
-            runHook postInstall
-          '';
+            ${pkgs.lib.optionalString pkgs.stdenv.isLinux ''
+              origSize=$(stat -c%s "$tmpdir/opencode")
+              ${pkgs.patchelf}/bin/patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
+                "$out/bin/opencode"
+              patchedSize=$(stat -c%s "$out/bin/opencode")
+              if [ "$patchedSize" -lt "$origSize" ]; then
+                tail -c +$((patchedSize + 1)) "$tmpdir/opencode" >> "$out/bin/opencode"
+              fi
+            ''}
 
-          postFixup = pkgs.lib.optionalString pkgs.stdenv.isLinux ''
-            ${pkgs.patchelf}/bin/patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-              --set-rpath "${pkgs.lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib pkgs.glibc ]}" \
-              "$out/bin/opencode"
+            runHook postInstall
           '';
 
           meta = with pkgs.lib; {
