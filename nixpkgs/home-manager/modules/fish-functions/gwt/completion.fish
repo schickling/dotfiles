@@ -103,18 +103,27 @@ end
 if functions -q __gwt_list_remote_branches
     functions -e __gwt_list_remote_branches
 end
-function __gwt_list_remote_branches --description 'List remote branches for gwt branch subcommand'
+function __gwt_list_remote_branches --description 'List remote branches for gwt new --branch'
     set -l tokens (commandline -opc)
-    if test (count $tokens) -lt 3
+    if test (count $tokens) -lt 2
         return
     end
 
-    set -l repo_name $tokens[3]
+    # Find repo positional argument after subcommand, ignoring options and their values
+    set -l repo_name ""
+    for tok in $tokens[3..-1]
+        if string match -q -- '-*' $tok
+            # skip options; option values handled implicitly by taking first non-option token as repo
+            continue
+        end
+        set repo_name $tok
+        break
+    end
     set -l root $__gwt_worktrees_root
     set -l repo_root $root/$repo_name
     set -l main_worktree $repo_root/.main
 
-    if not test -d $main_worktree
+    if test -z "$repo_name"; or not test -d $main_worktree
         return
     end
 
@@ -159,11 +168,11 @@ complete -c gwt -f
 
 complete -c gwt -n '__fish_use_subcommand' -a setup-repo -d 'Bootstrap repository into .main worktree'
 complete -c gwt -n '__fish_use_subcommand' -a new -d 'Create prefixed dated worktree (slug optional)'
-complete -c gwt -n '__fish_use_subcommand' -a branch -d 'Create worktree for existing remote branch'
 complete -c gwt -n '__fish_use_subcommand' -a archive -d 'Archive existing worktree'
 complete -c gwt -n '__fish_use_subcommand' -a zellij -d 'Attach canonical Zellij session for worktree'
 
-complete -c gwt -n "__fish_seen_subcommand_from new branch archive" -a '(__gwt_list_repos_for_completion)'
+complete -c gwt -n "__fish_seen_subcommand_from new archive" -a '(__gwt_list_repos_for_completion)'
 complete -c gwt -n "__fish_seen_subcommand_from new" -l carry-changes -d 'Carry current worktree changes into new worktree (uses patches)'
+complete -c gwt -n "__fish_seen_subcommand_from new" -l branch -d 'Create from existing remote branch'
+complete -c gwt -n "__fish_seen_subcommand_from new" -l branch -r -a '(__gwt_list_remote_branches)'
 complete -c gwt -n "__fish_seen_subcommand_from archive" -a '(__gwt_list_worktree_entries)'
-complete -c gwt -n "__fish_seen_subcommand_from branch" -a '(__gwt_list_remote_branches)'

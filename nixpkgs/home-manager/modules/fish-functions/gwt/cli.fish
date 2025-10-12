@@ -91,16 +91,16 @@ end
 set -l usage_lines \
     "Usage:" \
     "  gwt setup-repo <repo> <git-url>" \
-    "  gwt new <repo> [slug] [--carry-changes]" \
-    "  gwt branch <repo> <remote/branch>" \
+    "  gwt new <repo> [slug] [--carry-changes] [--branch <remote/branch>]" \
     "  gwt archive <repo> <worktree|branch>" \
     "  gwt zellij" \
     "      --carry-changes  Carry current worktree changes into the new worktree (uses patches)" \
+    "      --branch         Create from existing remote branch (e.g. origin/feature/foo)" \
     "" \
     "Examples:" \
     "  gwt setup-repo livestore git@github.com:schickling/livestore.git" \
     "  gwt new livestore bugfix-reconcile" \
-    "  gwt branch livestore origin/feature/improve-sync" \
+    "  gwt new livestore --branch origin/feature/improve-sync" \
     "  gwt archive livestore origin/feature/improve-sync"
 
 set -l target_dir ""
@@ -145,7 +145,7 @@ switch $argv[1]
 
     case new
         set -l invocation $argv[2..-1]
-        argparse 'carry-changes' -- $invocation
+        argparse 'carry-changes' 'branch=' -- $invocation
         if test $status -ne 0
             return 1
         end
@@ -177,6 +177,14 @@ switch $argv[1]
         if not test -d $main_worktree
             echo "gwt: worktree repo '$repo_name' not initialized. Run: gwt setup-repo $repo_name <git-url>" >&2
             return 1
+        end
+
+        # If --branch is provided, disallow passing a slug (to avoid ambiguity)
+        if set -q _flag_branch
+            if test -n "$raw_slug"
+                echo "gwt: cannot use a slug when --branch is provided" >&2
+                return 1
+            end
         end
 
         set -l carry_git_root ""
@@ -243,319 +251,380 @@ switch $argv[1]
         end
 
         set -l worktree_lines (git -C $main_worktree worktree list --porcelain)
+        # Branch mode: create worktree from an existing remote branch
+        if set -q _flag_branch
+            set -l remote_ref $_flag_branch
 
-        set -l slug_source user
-        if test -z "$raw_slug"
-            set raw_slug (__gwt_random_slug)
-            set slug_source auto
-        end
-
-        set -l slug (string lower -- $raw_slug | string replace -ra '[^a-z0-9]+' '-' | string replace -r '^-+|-+$' "")
-        if test -z "$slug"
-            if test $slug_source = auto
-                set raw_slug (__gwt_random_slug)
-                set slug (string lower -- $raw_slug | string replace -ra '[^a-z0-9]+' '-' | string replace -r '^-+|-+$' "")
-            end
-        end
-
-        if test -z "$slug"
-            if test $carry_changes -eq 1
-                command rm -f $carry_staged_patch $carry_unstaged_patch
-            end
-            echo "gwt: slug must include at least one letter or number" >&2
-            return 1
-        end
-
-        set -l github_username (git config --global --get github.user 2>/dev/null)
-        if test -z "$github_username"
-            set github_username (git -C $main_worktree config --get github.user 2>/dev/null)
-        end
-
-        if test -z "$github_username"
-            if test $carry_changes -eq 1
-                command rm -f $carry_staged_patch $carry_unstaged_patch
-            end
-            echo "gwt: GitHub username not configured. Run: git config --global github.user YOUR_USERNAME" >&2
-            return 1
-        end
-
-        set -l today (date +%Y-%m-%d)
-        set -l branch_name "$github_username/$today-$slug"
-        set -l branch_dir (__gwt_sanitize_path $branch_name)
-        if test -z "$branch_dir"
-            if test $carry_changes -eq 1
-                command rm -f $carry_staged_patch $carry_unstaged_patch
-            end
-            echo "gwt: failed to derive worktree directory name from branch $branch_name" >&2
-            return 1
-        end
-        set -l target $repo_root/$branch_dir
-
-        set -l existing_branch_path ""
-        set -l current_worktree ""
-        for line in $worktree_lines
-            if string match -q 'worktree *' $line
-                set current_worktree (string replace -r '^worktree ' "" -- $line)
-            else if string match -q 'branch *' $line
-                set -l listed_branch (string replace -r '^branch ' "" -- $line)
-                set -l short_branch (string replace -r '^refs/heads/' "" -- $listed_branch)
-                if test $short_branch = $branch_name
-                    set existing_branch_path $current_worktree
-                    break
-                end
-            end
-        end
-
-        set -l need_creation 1
-        set -l add_status 0
-        if test -n "$existing_branch_path"
-            set target $existing_branch_path
-            set need_creation 0
-        else if string match -q -- "worktree $target" $worktree_lines
-            set need_creation 0
-        else if test -d $target
-            set need_creation 0
-        end
-
-        if test $carry_changes -eq 1 -a $need_creation -eq 0
-            command rm -f $carry_staged_patch $carry_unstaged_patch
-            echo "gwt: --carry-changes requires creating a new worktree" >&2
-            return 1
-        end
-
-        if test $need_creation -eq 1
-            set -l default_ref (git -C $main_worktree symbolic-ref --quiet refs/remotes/$primary_remote/HEAD 2>/dev/null)
-            if test $status -eq 0
-                set -l default_branch (string replace -r "^refs/remotes/$primary_remote/" "" -- $default_ref)
-            else
-                set -l default_branch main
-            end
-
-            __gwt_pull_main_worktree $main_worktree
-            set -l pull_status $status
-            if test $pull_status -ne 0
+            set -l parts (string split -m1 '/' -- $remote_ref)
+            if test (count $parts) -lt 2
                 if test $carry_changes -eq 1
                     command rm -f $carry_staged_patch $carry_unstaged_patch
                 end
-                return $pull_status
+                echo "gwt: --branch value must include remote prefix (e.g. origin/main)" >&2
+                return 1
             end
 
-            git -C $main_worktree show-ref --verify --quiet "refs/heads/$branch_name"
-            set -l branch_exists $status
+            set -l remote_name $parts[1]
+            set -l branch_ref $parts[2]
+            if test -z "$branch_ref"
+                if test $carry_changes -eq 1
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
+                end
+                echo "gwt: branch name is empty" >&2
+                return 1
+            end
 
-            if test $branch_exists -eq 0
-                git -C $main_worktree worktree add $target $branch_name >/dev/null
-                set add_status $status
-            else
-                git -C $main_worktree fetch $primary_remote $default_branch >/dev/null 2>&1
+            git -C $main_worktree remote get-url $remote_name >/dev/null 2>&1
+            if test $status -ne 0
+                if test $carry_changes -eq 1
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
+                end
+                echo "gwt: remote '$remote_name' not found" >&2
+                return 1
+            end
+
+            set -l local_branch $branch_ref
+            set -l dir_name (__gwt_sanitize_path $remote_ref)
+            if test -z "$dir_name"
+                set dir_name (__gwt_sanitize_path $local_branch)
+                if test -z "$dir_name"
+                    set dir_name $local_branch
+                end
+            end
+            set -l target $repo_root/$dir_name
+
+            set -l existing_branch_path ""
+            set -l current_worktree ""
+            for line in $worktree_lines
+                if string match -q 'worktree *' $line
+                    set current_worktree (string replace -r '^worktree ' "" -- $line)
+                else if string match -q 'branch *' $line
+                    set -l listed_branch (string replace -r '^branch ' "" -- $line)
+                    set -l short_branch (string replace -r '^refs/heads/' "" -- $listed_branch)
+                    if test $short_branch = $local_branch
+                        set existing_branch_path $current_worktree
+                        break
+                    end
+                end
+            end
+
+            if test -n "$existing_branch_path"; and test $existing_branch_path != $target
+                if test -d $target
+                    set target $existing_branch_path
+                else
+                    git -C $main_worktree worktree move $existing_branch_path $target >/dev/null
+                    if test $status -ne 0
+                        if test $carry_changes -eq 1
+                            command rm -f $carry_staged_patch $carry_unstaged_patch
+                        end
+                        echo "gwt: failed to normalise worktree directory name" >&2
+                        return $status
+                    end
+                    set existing_branch_path $target
+                end
+            end
+
+            set -l need_creation 1
+            set -l add_status 0
+            if test -n "$existing_branch_path"
+                set target $existing_branch_path
+                set need_creation 0
+            else if string match -q -- "worktree $target" $worktree_lines
+                set need_creation 0
+            else if test -d $target
+                set need_creation 0
+            end
+
+            if test $carry_changes -eq 1 -a $need_creation -eq 0
+                command rm -f $carry_staged_patch $carry_unstaged_patch
+                echo "gwt: --carry-changes requires creating a new worktree" >&2
+                return 1
+            end
+
+            if test $need_creation -eq 1
+                __gwt_pull_main_worktree $main_worktree
+                set -l pull_status $status
+                if test $pull_status -ne 0
+                    if test $carry_changes -eq 1
+                        command rm -f $carry_staged_patch $carry_unstaged_patch
+                    end
+                    return $pull_status
+                end
+
+                git -C $main_worktree fetch $remote_name $branch_ref >/dev/null 2>&1
                 set -l fetch_status $status
                 if test $fetch_status -ne 0
                     if test $carry_changes -eq 1
                         command rm -f $carry_staged_patch $carry_unstaged_patch
                     end
-                    echo "gwt: failed to fetch $primary_remote/$default_branch" >&2
+                    echo "gwt: failed to fetch $remote_name/$branch_ref" >&2
                     return $fetch_status
                 end
 
-                git -C $main_worktree worktree add -b $branch_name $target $primary_remote/$default_branch >/dev/null
-                set add_status $status
+                git -C $main_worktree show-ref --verify --quiet "refs/heads/$local_branch"
+                set -l branch_exists $status
+
+                if test $branch_exists -eq 0
+                    git -C $main_worktree worktree add $target $local_branch >/dev/null
+                    set add_status $status
+                else
+                    git -C $main_worktree worktree add --track -b $local_branch $target $remote_name/$branch_ref >/dev/null
+                    set add_status $status
+                end
+
+                if test $add_status -ne 0
+                    if test $carry_changes -eq 1
+                        command rm -f $carry_staged_patch $carry_unstaged_patch
+                    end
+                    echo "gwt: failed to create worktree for $remote_name/$branch_ref" >&2
+                    return $add_status
+                end
             end
 
-            if test $add_status -ne 0
+            if not test -d $target
+                if test -n "$existing_branch_path"; and test -d $existing_branch_path
+                    set target $existing_branch_path
+                else
+                    if test $carry_changes -eq 1
+                        command rm -f $carry_staged_patch $carry_unstaged_patch
+                    end
+                    echo "gwt: expected worktree directory $target missing" >&2
+                    return 1
+                end
+            end
+
+            if test $carry_changes -eq 1
+                set -l apply_failed 0
+
+                if test -s $carry_staged_patch
+                    git -C $target apply --whitespace=nowarn --binary --index $carry_staged_patch
+                    if test $status -ne 0
+                        set apply_failed 1
+                    end
+                end
+
+                if test $apply_failed -eq 0 -a -s $carry_unstaged_patch
+                    git -C $target apply --whitespace=nowarn --binary $carry_unstaged_patch
+                    if test $status -ne 0
+                        set apply_failed 1
+                    end
+                end
+
+                if test $apply_failed -eq 0
+                    for file in $carry_untracked_files
+                        if test -z "$file"
+                            continue
+                        end
+                        set -l src_path $carry_git_root/$file
+                        set -l dest_path $target/$file
+                        set -l dest_dir (dirname $dest_path)
+                        if test "$dest_dir" != "."
+                            mkdir -p -- "$dest_dir"
+                        end
+                        command cp -p -- "$src_path" "$dest_path"
+                    end
+                end
+
+                if test -n "$carry_staged_patch" -o -n "$carry_unstaged_patch"
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
+                end
+
+                if test $apply_failed -ne 0
+                    git -C $main_worktree worktree remove --force $target >/dev/null 2>&1
+                    rm -rf $target
+                    echo "gwt: failed to carry changes into new worktree" >&2
+                    return 1
+                end
+            end
+
+            set target_dir $target
+        else
+            # Default mode: create a new dated branch off the default remote HEAD
+            set -l slug_source user
+            if test -z "$raw_slug"
+                set raw_slug (__gwt_random_slug)
+                set slug_source auto
+            end
+
+            set -l slug (string lower -- $raw_slug | string replace -ra '[^a-z0-9]+' '-' | string replace -r '^-+|-+$' "")
+            if test -z "$slug"
+                if test $slug_source = auto
+                    set raw_slug (__gwt_random_slug)
+                    set slug (string lower -- $raw_slug | string replace -ra '[^a-z0-9]+' '-' | string replace -r '^-+|-+$' "")
+                end
+            end
+
+            if test -z "$slug"
                 if test $carry_changes -eq 1
                     command rm -f $carry_staged_patch $carry_unstaged_patch
                 end
-                echo "gwt: failed to create worktree $branch_name" >&2
-                return $add_status
-            end
-        end
-
-        if not test -d $target
-            if test -n "$existing_branch_path"; and test -d $existing_branch_path
-                set target $existing_branch_path
-            else
-                if test $carry_changes -eq 1
-                    command rm -f $carry_staged_patch $carry_unstaged_patch
-                end
-                echo "gwt: expected worktree directory $target missing" >&2
+                echo "gwt: slug must include at least one letter or number" >&2
                 return 1
             end
-        end
 
-        if test $carry_changes -eq 1
-            set -l apply_failed 0
-
-            if test -s $carry_staged_patch
-                git -C $target apply --whitespace=nowarn --binary --index $carry_staged_patch
-                if test $status -ne 0
-                    set apply_failed 1
-                end
+            set -l github_username (git config --global --get github.user 2>/dev/null)
+            if test -z "$github_username"
+                set github_username (git -C $main_worktree config --get github.user 2>/dev/null)
             end
 
-            if test $apply_failed -eq 0 -a -s $carry_unstaged_patch
-                git -C $target apply --whitespace=nowarn --binary $carry_unstaged_patch
-                if test $status -ne 0
-                    set apply_failed 1
+            if test -z "$github_username"
+                if test $carry_changes -eq 1
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
                 end
+                echo "gwt: GitHub username not configured. Run: git config --global github.user YOUR_USERNAME" >&2
+                return 1
             end
 
-            if test $apply_failed -eq 0
-                for file in $carry_untracked_files
-                    if test -z "$file"
-                        continue
+            set -l today (date +%Y-%m-%d)
+            set -l branch_name "$github_username/$today-$slug"
+            set -l branch_dir (__gwt_sanitize_path $branch_name)
+            if test -z "$branch_dir"
+                if test $carry_changes -eq 1
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
+                end
+                echo "gwt: failed to derive worktree directory name from branch $branch_name" >&2
+                return 1
+            end
+            set -l target $repo_root/$branch_dir
+
+            set -l existing_branch_path ""
+            set -l current_worktree ""
+            for line in $worktree_lines
+                if string match -q 'worktree *' $line
+                    set current_worktree (string replace -r '^worktree ' "" -- $line)
+                else if string match -q 'branch *' $line
+                    set -l listed_branch (string replace -r '^branch ' "" -- $line)
+                    set -l short_branch (string replace -r '^refs/heads/' "" -- $listed_branch)
+                    if test $short_branch = $branch_name
+                        set existing_branch_path $current_worktree
+                        break
                     end
-                    set -l src_path $carry_git_root/$file
-                    set -l dest_path $target/$file
-                    set -l dest_dir (dirname $dest_path)
-                    if test "$dest_dir" != "."
-                        mkdir -p -- "$dest_dir"
-                    end
-                    command cp -p -- "$src_path" "$dest_path"
                 end
             end
 
-            if test -n "$carry_staged_patch" -o -n "$carry_unstaged_patch"
+            set -l need_creation 1
+            set -l add_status 0
+            if test -n "$existing_branch_path"
+                set target $existing_branch_path
+                set need_creation 0
+            else if string match -q -- "worktree $target" $worktree_lines
+                set need_creation 0
+            else if test -d $target
+                set need_creation 0
+            end
+
+            if test $carry_changes -eq 1 -a $need_creation -eq 0
                 command rm -f $carry_staged_patch $carry_unstaged_patch
-            end
-
-            if test $apply_failed -ne 0
-                git -C $main_worktree worktree remove --force $target >/dev/null 2>&1
-                rm -rf $target
-                echo "gwt: failed to carry changes into new worktree" >&2
+                echo "gwt: --carry-changes requires creating a new worktree" >&2
                 return 1
             end
-        end
 
-        set target_dir $target
+            if test $need_creation -eq 1
+                set -l default_ref (git -C $main_worktree symbolic-ref --quiet refs/remotes/$primary_remote/HEAD 2>/dev/null)
+                if test $status -eq 0
+                    set -l default_branch (string replace -r "^refs/remotes/$primary_remote/" "" -- $default_ref)
+                else
+                    set -l default_branch main
+                end
 
-    case branch
-        if test (count $argv) -lt 3
-            for line in $usage_lines
-                echo $line >&2
-            end
-            return 1
-        end
+                __gwt_pull_main_worktree $main_worktree
+                set -l pull_status $status
+                if test $pull_status -ne 0
+                    if test $carry_changes -eq 1
+                        command rm -f $carry_staged_patch $carry_unstaged_patch
+                    end
+                    return $pull_status
+                end
 
-        set -l repo_name $argv[2]
-        set -l remote_ref $argv[3]
-        set -l repo_root $worktrees_root/$repo_name
-        set -l main_worktree $repo_root/.main
+                git -C $main_worktree show-ref --verify --quiet "refs/heads/$branch_name"
+                set -l branch_exists $status
 
-        if not test -d $main_worktree
-            echo "gwt: worktree repo '$repo_name' not initialized. Run: gwt setup-repo $repo_name <git-url>" >&2
-            return 1
-        end
+                if test $branch_exists -eq 0
+                    git -C $main_worktree worktree add $target $branch_name >/dev/null
+                    set add_status $status
+                else
+                    git -C $main_worktree fetch $primary_remote $default_branch >/dev/null 2>&1
+                    set -l fetch_status $status
+                    if test $fetch_status -ne 0
+                        if test $carry_changes -eq 1
+                            command rm -f $carry_staged_patch $carry_unstaged_patch
+                        end
+                        echo "gwt: failed to fetch $primary_remote/$default_branch" >&2
+                        return $fetch_status
+                    end
 
-        set -l parts (string split -m1 '/' -- $remote_ref)
-        if test (count $parts) -lt 2
-            echo "gwt: branch must include remote prefix (e.g. origin/main)" >&2
-            return 1
-        end
+                    git -C $main_worktree worktree add -b $branch_name $target $primary_remote/$default_branch >/dev/null
+                    set add_status $status
+                end
 
-        set -l remote_name $parts[1]
-        set -l branch_ref $parts[2]
-        if test -z "$branch_ref"
-            echo "gwt: branch name is empty" >&2
-            return 1
-        end
-
-        git -C $main_worktree remote get-url $remote_name >/dev/null 2>&1
-        if test $status -ne 0
-            echo "gwt: remote '$remote_name' not found" >&2
-            return 1
-        end
-
-        set -l local_branch $branch_ref
-        set -l dir_name (__gwt_sanitize_path $remote_ref)
-        if test -z "$dir_name"
-            set dir_name (__gwt_sanitize_path $local_branch)
-            if test -z "$dir_name"
-                set dir_name $local_branch
-            end
-        end
-        set -l target $repo_root/$dir_name
-        set -l worktree_lines (git -C $main_worktree worktree list --porcelain)
-
-        set -l existing_branch_path ""
-        set -l current_worktree ""
-        for line in $worktree_lines
-            if string match -q 'worktree *' $line
-                set current_worktree (string replace -r '^worktree ' "" -- $line)
-            else if string match -q 'branch *' $line
-                set -l listed_branch (string replace -r '^branch ' "" -- $line)
-                set -l short_branch (string replace -r '^refs/heads/' "" -- $listed_branch)
-                if test $short_branch = $local_branch
-                    set existing_branch_path $current_worktree
-                    break
+                if test $add_status -ne 0
+                    if test $carry_changes -eq 1
+                        command rm -f $carry_staged_patch $carry_unstaged_patch
+                    end
+                    echo "gwt: failed to create worktree $branch_name" >&2
+                    return $add_status
                 end
             end
-        end
 
-        if test -n "$existing_branch_path"; and test $existing_branch_path != $target
-            if test -d $target
-                set target $existing_branch_path
-            else
-                git -C $main_worktree worktree move $existing_branch_path $target >/dev/null
-                if test $status -ne 0
-                    echo "gwt: failed to normalise worktree directory name" >&2
-                    return $status
+            if not test -d $target
+                if test -n "$existing_branch_path"; and test -d $existing_branch_path
+                    set target $existing_branch_path
+                else
+                    if test $carry_changes -eq 1
+                        command rm -f $carry_staged_patch $carry_unstaged_patch
+                    end
+                    echo "gwt: expected worktree directory $target missing" >&2
+                    return 1
                 end
-                set existing_branch_path $target
             end
+
+            if test $carry_changes -eq 1
+                set -l apply_failed 0
+
+                if test -s $carry_staged_patch
+                    git -C $target apply --whitespace=nowarn --binary --index $carry_staged_patch
+                    if test $status -ne 0
+                        set apply_failed 1
+                    end
+                end
+
+                if test $apply_failed -eq 0 -a -s $carry_unstaged_patch
+                    git -C $target apply --whitespace=nowarn --binary $carry_unstaged_patch
+                    if test $status -ne 0
+                        set apply_failed 1
+                    end
+                end
+
+                if test $apply_failed -eq 0
+                    for file in $carry_untracked_files
+                        if test -z "$file"
+                            continue
+                        end
+                        set -l src_path $carry_git_root/$file
+                        set -l dest_path $target/$file
+                        set -l dest_dir (dirname $dest_path)
+                        if test "$dest_dir" != "."
+                            mkdir -p -- "$dest_dir"
+                        end
+                        command cp -p -- "$src_path" "$dest_path"
+                    end
+                end
+
+                if test -n "$carry_staged_patch" -o -n "$carry_unstaged_patch"
+                    command rm -f $carry_staged_patch $carry_unstaged_patch
+                end
+
+                if test $apply_failed -ne 0
+                    git -C $main_worktree worktree remove --force $target >/dev/null 2>&1
+                    rm -rf $target
+                    echo "gwt: failed to carry changes into new worktree" >&2
+                    return 1
+                end
+            end
+
+            set target_dir $target
         end
 
-        set -l need_creation 1
-        set -l add_status 0
-        if test -n "$existing_branch_path"
-            set target $existing_branch_path
-            set need_creation 0
-        else if string match -q -- "worktree $target" $worktree_lines
-            set need_creation 0
-        else if test -d $target
-            set need_creation 0
-        end
-
-        if test $need_creation -eq 1
-            __gwt_pull_main_worktree $main_worktree
-            set -l pull_status $status
-            if test $pull_status -ne 0
-                return $pull_status
-            end
-
-            git -C $main_worktree fetch $remote_name $branch_ref >/dev/null 2>&1
-            set -l fetch_status $status
-            if test $fetch_status -ne 0
-                echo "gwt: failed to fetch $remote_name/$branch_ref" >&2
-                return $fetch_status
-            end
-
-            git -C $main_worktree show-ref --verify --quiet "refs/heads/$local_branch"
-            set -l branch_exists $status
-
-            if test $branch_exists -eq 0
-                git -C $main_worktree worktree add $target $local_branch >/dev/null
-                set add_status $status
-            else
-                git -C $main_worktree worktree add --track -b $local_branch $target $remote_name/$branch_ref >/dev/null
-                set add_status $status
-            end
-
-            if test $add_status -ne 0
-                echo "gwt: failed to create worktree for $remote_name/$branch_ref" >&2
-                return $add_status
-            end
-        end
-
-        if not test -d $target
-            if test -n "$existing_branch_path"; and test -d $existing_branch_path
-                set target $existing_branch_path
-            else
-                echo "gwt: expected worktree directory $target missing" >&2
-                return 1
-            end
-        end
-
-        set target_dir $target
 
     case archive
         set -l use_cwd 0

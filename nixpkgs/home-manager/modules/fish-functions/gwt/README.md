@@ -4,13 +4,12 @@
 
 ## Usage
 
-| Subcommand   | Arguments                         | Purpose                                                     |
-|--------------|-----------------------------------|-------------------------------------------------------------|
-| `setup-repo` | `<repo> <git-url>`                | Bootstrap a repository into the `.main` worktree slot       |
-| `new`        | `<repo> [slug] [--carry-changes]` | Create `<github-user>/YYYY-MM-DD-slug` off the default ref  |
-| `branch`     | `<repo> <remote/branch>`          | Materialise a worktree for an existing remote branch        |
-| `archive`    | `<repo> <worktree|branch>` *(or run inside worktree)* | Move a worktree under `.archive` and prune related metadata (prompts for confirmation in interactive shells) |
-| `zellij`     | *(run inside worktree)*           | Attach to (or create) the canonical Zellij session for a worktree |
+| Subcommand   | Arguments                                              | Purpose                                                     |
+|--------------|--------------------------------------------------------|-------------------------------------------------------------|
+| `setup-repo` | `<repo> <git-url>`                                     | Bootstrap a repository into the `.main` worktree slot       |
+| `new`        | `<repo> [slug] [--carry-changes] [--branch remote/BR]` | Create `<github-user>/YYYY-MM-DD-slug` off default ref, or from an existing remote branch with `--branch` |
+| `archive`    | `<repo> <worktree|branch>` *(or run inside worktree)*  | Move a worktree under `.archive` and prune related metadata (prompts for confirmation in interactive shells) |
+| `zellij`     | *(run inside worktree)*                                | Attach to (or create) the canonical Zellij session for a worktree |
 
 Example session:
 
@@ -26,6 +25,9 @@ $ gwt new livestore
 
 $ gwt new livestore --carry-changes
 /home/schickling/code/worktrees/livestore/schickling--2025-09-23-valiant-ada-07
+
+$ gwt new livestore --branch origin/feature/improve-sync
+/home/schickling/code/worktrees/livestore/origin--feature-improve-sync
 
 $ cd /home/schickling/code/worktrees/livestore/schickling--2025-09-23-bright-curie-42
 $ gwt zellij
