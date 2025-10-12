@@ -128,6 +128,10 @@ function __gwt_list_remote_branches --description 'List remote branches for gwt 
     end
 
     set -l current (commandline -ct)
+    # Handle equal-style option usage like `--branch=ori`
+    if test -n "$current"; and string match -q -- '--branch=*' $current
+        set current (string replace -r '^--branch=' '' -- $current)
+    end
     if test -z "$current"
         if test (count $tokens) -ge 4
             set current $tokens[4]
@@ -173,6 +177,6 @@ complete -c gwt -n '__fish_use_subcommand' -a zellij -d 'Attach canonical Zellij
 
 complete -c gwt -n "__fish_seen_subcommand_from new archive" -a '(__gwt_list_repos_for_completion)'
 complete -c gwt -n "__fish_seen_subcommand_from new" -l carry-changes -d 'Carry current worktree changes into new worktree (uses patches)'
-complete -c gwt -n "__fish_seen_subcommand_from new" -l branch -d 'Create from existing remote branch'
-complete -c gwt -n "__fish_seen_subcommand_from new" -l branch -r -a '(__gwt_list_remote_branches)'
+complete -c gwt -n "__fish_seen_subcommand_from new" -l branch -x -a '(__gwt_list_remote_branches)' -d 'Create from existing remote branch'
+complete -c gwt -n "__fish_seen_subcommand_from new" -o branch= -a '(__gwt_list_remote_branches)' -d 'Create from existing remote branch'
 complete -c gwt -n "__fish_seen_subcommand_from archive" -a '(__gwt_list_worktree_entries)'
