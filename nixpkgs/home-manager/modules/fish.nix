@@ -115,8 +115,11 @@ in
       '';
 
       hm = ''
-        # Use current hostname by default; allow override via first arg
-        set host (hostname)
+        # Use short hostname by default to match flake host keys; allow override via first arg
+        set host (hostname -s 2>/dev/null)
+        if test -z "$host"
+          set host (hostname)
+        end
         if test (count $argv) -gt 0
           set host $argv[1]
         end
