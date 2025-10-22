@@ -916,6 +916,7 @@ switch $argv[1]
         set -l sanitized_repo (__gwt_sanitize_path (string replace -a '/' '-' -- $repo_name))
         set -l sanitized_branch (__gwt_sanitize_path $branch_name)
 
+        # Session name is derived from repo + branch slug to keep it stable per worktree.
         set -l session_components
         if test -n "$sanitized_repo"
             set session_components $sanitized_repo
@@ -933,10 +934,38 @@ switch $argv[1]
             return 1
         end
 
-        echo "gwt: attaching to zellij session '$session_name'" >&2
-        # Attach to the session, creating it if needed with web sharing enabled.
-        # The `options` subcommand applies only to session creation in this context.
-        # The web server itself is managed by the user-level systemd service.
+        # Determine if the session already exists (including resurrectable/exited ones).
+        set -l session_exists 0
+        set -l existing_sessions (zellij list-sessions -ns 2>/dev/null | string split '\n')
+        for s in $existing_sessions
+            if test "$s" = "$session_name"
+                set session_exists 1
+                break
+            end
+        end
+
+        if test $session_exists -eq 0
+            echo "gwt: creating zellij session '$session_name' with initial layout" >&2
+            # Always use the named layout; if it's missing, treat as a bug and abort.
+            set -l layout_name gwt-worktree
+            # Use the canonical XDG path where Home Manager installs layouts.
+            # Intentionally avoid $XDG_CONFIG_HOME branching to keep behavior deterministic.
+            set -l layout_path ~/.config/zellij/layouts/$layout_name.kdl
+
+            if not test -f $layout_path
+                echo "gwt: expected layout '$layout_name.kdl' not found at $layout_path" >&2
+                echo "gwt: please ensure Home Manager applied and the layout is present" >&2
+                return 1
+            end
+
+            # Start the session directly with the layout; no sleeps/background required.
+            exec zellij --new-session-with-layout $layout_path --session $session_name
+        else
+            echo "gwt: attaching to zellij session '$session_name'" >&2
+        end
+
+        # Attach to the (now existing) session and ensure web-server + web-sharing are enabled.
+        # Using "options" here applies to this session attach context.
         zellij attach -c $session_name options --web-server true --web-sharing on
         return $status
 

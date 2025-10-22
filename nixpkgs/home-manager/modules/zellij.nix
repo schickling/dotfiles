@@ -7,10 +7,56 @@
     # enableFishIntegration = true;
   };
 
+  # Provide a reusable layout for GWT worktrees.
+  # It defines two tabs:
+  # - Agent: runs Codex with elevated permissions
+  # - Git: two panes, left Claude (all permissions) and right LazyGit
+  xdg.configFile."zellij/layouts/gwt-worktree.kdl".text = ''
+    // GWT worktree layout
+    // - Tab 1 (Agent): runs Codex with full permissions
+    // - Tab 2 (Git): vertical split → left Claude (all permissions), right LazyGit
+    // Includes tab/status bars (via default_tab_template) so tabs remain visible.
+    layout {
+      // Provide a standard tab scaffolding with tab-bar + status-bar
+      default_tab_template {
+        pane size=1 borderless=true {
+          plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+          plugin location="zellij:status-bar"
+        }
+      }
+
+      tab name="Agent" {
+        // Use fish -lc to evaluate aliases/direnv in a login-like shell context
+        pane command="fish" {
+          args "-lc" "codex --sandbox danger-full-access --config model_reasoning_effort=high --ask-for-approval never"
+        }
+      }
+
+      tab name="Git" {
+        // Vertical split: left Claude, right LazyGit
+        pane split_direction="vertical" {
+          pane command="fish" {
+            args "-lc" "claude --dangerously-skip-permissions"
+          }
+          pane command="fish" {
+            args "-lc" "lazygit --screen-mode half"
+          }
+        }
+      }
+    }
+  '';
+
   xdg.configFile."zellij/config.kdl".text = ''
     theme "catppuccin-macchiato"
 
     show_startup_tips false
+
+    // Ensure the web server is started so sessions can be shared when opted-in.
+    // Note: we do NOT set a global default_layout; GWT invokes its layout explicitly.
+    web_server true
 
     pane_frames false
 
