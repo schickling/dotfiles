@@ -31,9 +31,9 @@ nix run github:schickling/nix-config?dir=flakes/opencode
 
 ## Version
 
-Current version: **0.14.5**
+Current version: **0.15.16**
 
-Based on release `v0.14.5` from the official opencode repository.
+Based on release `v0.15.16` from the official opencode repository.
 
 ## About opencode
 
