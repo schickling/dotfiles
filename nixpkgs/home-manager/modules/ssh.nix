@@ -37,6 +37,12 @@
         forwardAgent = true;
       };
 
+      "pimuseum2" = {
+        hostname = "pimuseum2";
+        user = "pi";
+        forwardAgent = true;
+      };
+
       "mini2020" = {
         hostname = "mini2020";
         user = "schickling";
