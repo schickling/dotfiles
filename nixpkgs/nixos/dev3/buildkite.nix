@@ -71,6 +71,14 @@ in
         source ${agent.envFile}
       fi
     '';
+
+    hooks.pre-checkout = ''
+      #!/usr/bin/env bash
+      set -euo pipefail
+      # Normalize ownership so git clean/checkout cannot fail on root-owned artifacts (e.g. wa-sqlite dist).
+      chown -R "$BUILDKITE_AGENT_NAME":"$BUILDKITE_AGENT_NAME" "$BUILDKITE_BUILD_CHECKOUT_PATH" 2>/dev/null || true
+      chmod -R u+w "$BUILDKITE_BUILD_CHECKOUT_PATH" 2>/dev/null || true
+    '';
   }) agents;
 
   # Run each agent inside a confined chroot; only the Nix store, daemon socket,
