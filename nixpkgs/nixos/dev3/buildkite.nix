@@ -2,6 +2,7 @@
 
 let
   # Tokens are copied from the Buildkite UI to the paths below and must be chowned root:keys (g+r).
+  # To restart agents manually: sudo systemctl restart buildkite-agent-overtone.service buildkite-agent-livestore.service
   agents = {
     overtone = {
       tokenPath = "/run/keys/buildkite-overtone-token";
@@ -54,7 +55,7 @@ in
     # TODO set up `tracing-backend`
     # See https://buildkite.com/docs/agent/v3/configuration
     extraConfig = ''
-      spawn=5
+      spawn=10
     '';
 
     hooks.environment = ''
