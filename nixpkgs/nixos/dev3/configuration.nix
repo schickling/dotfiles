@@ -6,7 +6,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    (import ./buildkite.nix { self-signed-ca = self-signed-ca; inherit config pkgs pkgsUnstable; })
+    (import ./buildkite.nix { self-signed-ca = self-signed-ca; inherit config pkgs pkgsUnstable lib; })
     ../configuration-common.nix
     ../server-common.nix
     ../../modules/onepassword.nix
@@ -141,11 +141,6 @@ in
 
   # Harden nix eval for CI-driven workloads (prevents arbitrary eval escapes).
   nix.settings.restrict-eval = true;
-  nix.settings.allowed-uris = [
-    "github:" # allow flake inputs from GitHub while keeping restricted eval on
-    "https://github.com/"
-    "https://cache.nixos.org/"
-  ];
   # Point nixPath at the in-store nixpkgs to avoid restricted-eval lookups via legacy channels.
   nix.nixPath = lib.mkForce [ "nixpkgs=${pkgs.path}" ];
   # Disable legacy channels so they cannot sneak into NIX_PATH under restricted eval.

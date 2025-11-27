@@ -1,4 +1,4 @@
-{ pkgs, pkgsUnstable, config, self-signed-ca, ... }:
+{ pkgs, pkgsUnstable, config, self-signed-ca, lib, ... }:
 
 let
   # Tokens are copied from the Buildkite UI to the paths below and must be chowned root:keys (g+r).
@@ -40,12 +40,25 @@ let
     gzip
     ncurses
     nix
+    docker
     pkgsUnstable.devenv
     # TODO also set up direnv shell hook (if possible)
     direnv
   ];
 in
 {
+  # Buildkite agent requirements: allow needed URIs for flakes/caches and let agent users manage caches.
+  nix.settings.allowed-uris = lib.mkAfter [
+    "github:" # allow flake inputs from GitHub while keeping restricted eval on
+    "https://github.com/"
+    "https://cache.nixos.org/"
+  ];
+  nix.settings.trusted-users = lib.mkAfter [
+    "schickling"
+    "buildkite-agent-overtone"
+    "buildkite-agent-livestore"
+  ];
+
   services.buildkite-agents = builtins.mapAttrs (_: agent: {
     enable = true;
     inherit (agent) tags tokenPath;
@@ -85,23 +98,41 @@ in
   # Run each agent inside a confined chroot; only the Nix store, daemon socket,
   # data dir and credentials are mounted (read-only where possible).
   # Source: https://nixos.wiki/wiki/Buildkite
-  systemd.services = builtins.mapAttrs
+  systemd.services = lib.mapAttrs'
     (name: agent: {
-      confinement.enable = true;
-      confinement.packages = config.services.buildkite-agents.${name}.runtimePackages;
-      serviceConfig = {
-        BindReadOnlyPaths = [
-          agent.tokenPath
-          config.services.buildkite-agents.${name}.privateSshKeyPath
-          agent.envFile
-          "${config.environment.etc."ssl/certs/ca-certificates.crt".source}:/etc/ssl/certs/ca-certificates.crt"
-          "/etc/machine-id"
-          "/nix/store"
-        ];
-        BindPaths = [
-          config.services.buildkite-agents.${name}.dataDir
-          "/nix/var/nix/daemon-socket/socket"
-        ];
+      name = "buildkite-agent-${name}";
+      value = {
+        confinement.enable = true;
+        confinement.packages = config.services.buildkite-agents.${name}.runtimePackages;
+        serviceConfig = {
+          BindReadOnlyPaths = [
+            agent.tokenPath
+            config.services.buildkite-agents.${name}.privateSshKeyPath
+            agent.envFile
+            "${config.environment.etc."ssl/certs/ca-certificates.crt".source}:/etc/ssl/certs/ca-certificates.crt"
+            # Provide DNS configuration inside the confinement
+            "/etc/resolv.conf"
+            # Provide user/group database so git/ssh can resolve the agent uid/gid
+            "/etc/passwd"
+            "/etc/group"
+            # Provide local host mappings (e.g., localhost)
+            "/etc/hosts"
+            # Provide /usr/bin/env for shebangs inside the confinement
+            "${pkgs.coreutils}/bin/env:/usr/bin/env"
+            "/etc/machine-id"
+            "/nix/store"
+          ];
+          BindPaths = [
+            config.services.buildkite-agents.${name}.dataDir
+            "/nix/var/nix/daemon-socket/socket"
+            # Needed so docker CLI inside jobs can talk to the host daemon
+            "/var/run/docker.sock"
+          ];
+          # Let the agent user talk to docker without relaxing confinement
+          SupplementaryGroups = [ "docker" ];
+          # PrivateUsers remaps UIDs/GIDs and breaks access to the host docker.sock; disable to allow docker CLI.
+          PrivateUsers = lib.mkForce false;
+        };
       };
     })
     agents;
