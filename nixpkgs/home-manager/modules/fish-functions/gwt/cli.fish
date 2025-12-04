@@ -770,9 +770,10 @@ switch $argv[1]
             return 1
         end
 
+        set -l base_name (basename $target_path)
+
         # Confirm before performing destructive archive actions (interactive shells only)
         if status --is-interactive
-            set -l base_name (basename $target_path)
             set -l branch_note "unknown"
             if test -n "$target_branch"
                 set branch_note $target_branch
@@ -790,10 +791,66 @@ switch $argv[1]
             end
         end
 
+        # If a GWT zellij session for this worktree is running, close it after confirmation
+        if type -q zellij
+            set -l branch_for_session $target_branch
+            if test -z "$branch_for_session"
+                set branch_for_session $branch_lookup
+            end
+            if test -z "$branch_for_session"
+                set branch_for_session $base_name
+            end
+
+            set -l cleaned_branch $branch_for_session
+            if test -n "$cleaned_branch"
+                set -l github_username (git -C $target_path config --get github.user 2>/dev/null)
+                if test -z "$github_username"
+                    set github_username (git config --global --get github.user 2>/dev/null)
+                end
+
+                if test -n "$github_username"; and string match -q -- "$github_username/*" $cleaned_branch
+                    set -l escaped_username (string escape --style=regex $github_username)
+                    set cleaned_branch (string replace -r "^$escaped_username/" "" -- $cleaned_branch)
+                end
+
+                if string match -rq '^[0-9]{4}-' $cleaned_branch
+                    set cleaned_branch (string replace -r '^([0-9]{2})([0-9]{2})(-.*)$' '$2$3' -- $cleaned_branch)
+                end
+
+                set cleaned_branch (string replace -a '/' '-' -- $cleaned_branch)
+            end
+
+            set -l sanitized_repo (__gwt_sanitize_path (string replace -a '/' '-' -- $repo_name))
+            set -l sanitized_branch (__gwt_sanitize_path $cleaned_branch)
+
+            set -l session_components
+            if test -n "$sanitized_repo"
+                set session_components $sanitized_repo
+            end
+            if test -n "$sanitized_branch"
+                set session_components $session_components $sanitized_branch
+            end
+
+            set -l session_name (string join '-' $session_components)
+            set session_name (string replace -ra -- '-{2,}' '-' $session_name)
+            set session_name (string trim -c '-' -- $session_name)
+
+            if test -n "$session_name"
+                set -l active_sessions (zellij list-sessions -ns 2>/dev/null | string split '\n')
+                if contains -- $session_name $active_sessions
+                    echo "gwt: closing zellij session '$session_name' before archive" >&2
+                    zellij kill-session --session $session_name >/dev/null
+                    if test $status -ne 0
+                        echo "gwt: failed to close zellij session '$session_name'" >&2
+                        return $status
+                    end
+                end
+            end
+        end
+
         set -l archive_dir $repo_root/.archive
         mkdir -p $archive_dir
 
-        set -l base_name (basename $target_path)
         set -l archive_target $archive_dir/$base_name
         set -l counter 1
         while test -e $archive_target
@@ -825,6 +882,11 @@ switch $argv[1]
         printf '%s' "$summary" >>$archive_readme
 
         git -C $main_worktree worktree prune >/dev/null 2>&1
+
+        # Clear direnv permission on the archived directory so it no longer auto-loads
+        if type -q direnv
+            direnv deny $archive_target >/dev/null 2>&1
+        end
 
         if test -n "$target_branch"
             git -C $main_worktree show-ref --verify --quiet "refs/heads/$target_branch"

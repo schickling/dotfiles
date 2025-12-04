@@ -11,29 +11,34 @@
       let
         pkgs = import nixpkgs { inherit system; };
 
-        version = "1.0.85";
+        version = "1.0.132";
         tag = "v${version}";
 
         sources = {
           x86_64-linux = {
-            url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-linux-x64.zip";
-            sha256 = "0k16j24zlfazdkjyqcdxh3viqsavmzr9h68a35fb9ld38nwa34zq";
+            url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-linux-x64.tar.gz";
+            sha256 = "1gqjhpgci82rs0j780a00h6af05bbbgbqnp30gnqbply12w9gmj0";
+            format = "tar";
           };
           aarch64-linux = {
-            url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-linux-arm64.zip";
-            sha256 = "1c7zh30xxqqxzv5rsj1c8clmxr351qcykhwni4i3x1r6yp1a8ray";
+            url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-linux-arm64.tar.gz";
+            sha256 = "10qx7yhn61irzxp153lnc9ib78lija2y9if67jkc946g3cy3v16f";
+            format = "tar";
           };
           x86_64-darwin = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-darwin-x64.zip";
-            sha256 = "0mxmphzkb9q1hmy84sflddy45gi5g7f2aih63c7iq29jdisj1ha2";
+            sha256 = "06ry5c5vr5wg4i0mk70knkjdwi4clivz5202rkpa3b7fn1szv91m";
+            format = "zip";
           };
           aarch64-darwin = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-darwin-arm64.zip";
-            sha256 = "0gjcy5xdw8h8xwrlfjzyb4nvjq9x4m41ry991vr98zyppd4cyzmq";
+            sha256 = "14k9ym8pwjs2pgahkyw2afyzr8dq76q9vsfl107hmwygxz81nhl1";
+            format = "zip";
           };
         };
 
         platformInfo = sources.${system} or (throw "Unsupported system: ${system}");
+        archiveFormat = platformInfo.format or "zip";
 
         opencode = pkgs.stdenv.mkDerivation {
           pname = "opencode";
@@ -47,7 +52,9 @@
             inherit (platformInfo) url sha256;
           };
 
-          nativeBuildInputs = [ pkgs.unzip ]
+          nativeBuildInputs =
+            pkgs.lib.optional (archiveFormat == "zip") pkgs.unzip
+            ++ pkgs.lib.optional (archiveFormat == "tar") pkgs.gnutar
             ++ pkgs.lib.optionals pkgs.stdenv.isLinux [ pkgs.patchelf ];
 
           installPhase = ''
@@ -55,7 +62,11 @@
 
             mkdir -p $out/bin
             tmpdir=$(mktemp -d)
-            unzip -q "$src" -d "$tmpdir"
+            if [ "${archiveFormat}" = "zip" ]; then
+              unzip -q "$src" -d "$tmpdir"
+            else
+              tar -xzf "$src" -C "$tmpdir"
+            fi
             cp "$tmpdir/opencode" "$out/bin/opencode"
             chmod +x "$out/bin/opencode"
 
