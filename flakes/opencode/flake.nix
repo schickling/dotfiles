@@ -11,28 +11,28 @@
       let
         pkgs = import nixpkgs { inherit system; };
 
-        version = "1.0.132";
+        version = "1.0.150";
         tag = "v${version}";
 
         sources = {
           x86_64-linux = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-linux-x64.tar.gz";
-            sha256 = "1gqjhpgci82rs0j780a00h6af05bbbgbqnp30gnqbply12w9gmj0";
+            sha256 = "17ya7ly4n4alvdlkh8az3hc9ymqg39vy3bbaxnnd1d9bh5d6apv6";
             format = "tar";
           };
           aarch64-linux = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-linux-arm64.tar.gz";
-            sha256 = "10qx7yhn61irzxp153lnc9ib78lija2y9if67jkc946g3cy3v16f";
+            sha256 = "0gn2fwpkbrxmkqj62aw3vnndwcgsh0x1g9ip6hn9l8aj98d1ylcm";
             format = "tar";
           };
           x86_64-darwin = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-darwin-x64.zip";
-            sha256 = "06ry5c5vr5wg4i0mk70knkjdwi4clivz5202rkpa3b7fn1szv91m";
+            sha256 = "0dp3g3icb9s9gfbzg8p92j7zap37khx009ydj0d4gpdsvv0x3grq";
             format = "zip";
           };
           aarch64-darwin = {
             url = "https://github.com/sst/opencode/releases/download/${tag}/opencode-darwin-arm64.zip";
-            sha256 = "14k9ym8pwjs2pgahkyw2afyzr8dq76q9vsfl107hmwygxz81nhl1";
+            sha256 = "1x40i1ig51gniwibgml4krx16aigh6h78xwv9ywcc16bcydlmpph";
             format = "zip";
           };
         };
