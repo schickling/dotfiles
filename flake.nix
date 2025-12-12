@@ -28,9 +28,13 @@
       url = "path:./flakes/opencode";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
+    oi = {
+      url = "path:./nixpkgs/home-manager/modules/ts/oi";
+      # Don't use follows - oi has its own pinned nixpkgsBun131 for compile
+    };
   };
 
-  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel, codex, opencode }:
+  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel, codex, opencode, oi }:
     let
       # Import builders and utilities
       builders = import ./lib/builders.nix { inherit inputs; };

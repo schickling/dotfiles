@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, lib, codex, opencode, ... }:
+{ config, pkgs, pkgsUnstable, lib, codex, opencode, oi, ... }:
 {
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -41,6 +41,7 @@
     pkgsUnstable.claude-code
     codex.packages.${pkgs.system}.default
     opencode.packages.${pkgs.system}.default
+    oi.packages.${pkgs.system}.default
 
     httpstat
     curlie

@@ -1,0 +1,34 @@
+{
+  "name": "oi",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+  "bin": {
+    "oi": "./src/mod.ts"
+  },
+  "scripts": {
+    "dev": "bun run src/mod.ts",
+    "build": "bun build src/mod.ts --compile --outfile=dist/oi",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "format": "oxlint --fix"
+  },
+  "dependencies": {
+    "@effect/ai": "0.32.1",
+    "@effect/ai-openai": "0.36.0",
+    "@effect/cli": "0.72.1",
+    "@effect/platform": "0.93.7",
+    "@effect/platform-node": "0.103.0",
+    "@effect/typeclass": "0.38.0",
+    "effect": "3.19.11"
+  },
+  "devDependencies": {
+    "@effect/language-service": "0.62.1",
+    "@types/node": "^22.15.29",
+    "oxlint": "1.32.0",
+    "typescript": "^5.8.3"
+  }
+}

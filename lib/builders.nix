@@ -26,9 +26,9 @@ in
   mkHomeManagerConfig = { system, modules }: inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = mkPkgs system;
     inherit modules;
-    extraSpecialArgs = { 
+    extraSpecialArgs = {
       pkgsUnstable = mkPkgsUnstable system;
-      inherit (inputs) vibetunnel codex opencode;
+      inherit (inputs) vibetunnel codex opencode oi;
     };
   };
 
@@ -47,8 +47,8 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.schickling = import homeManagerPath;
-        home-manager.extraSpecialArgs = { 
-          inherit (inputs) nixpkgs vibetunnel codex opencode; 
+        home-manager.extraSpecialArgs = {
+          inherit (inputs) nixpkgs vibetunnel codex opencode oi;
           pkgsUnstable = mkPkgsUnstable system;
         };
       }
@@ -73,9 +73,9 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.backupFileExtension = "backup";
-        home-manager.extraSpecialArgs = { 
+        home-manager.extraSpecialArgs = {
           pkgsUnstable = mkPkgsUnstable system;
-          inherit (inputs) vibetunnel codex opencode;
+          inherit (inputs) vibetunnel codex opencode oi;
         };
         home-manager.users.${userName} = import homeManagerPath;
       }

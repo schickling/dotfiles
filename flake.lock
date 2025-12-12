@@ -153,6 +153,24 @@
         "systems": "systems_6"
       },
       "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_6": {
+      "inputs": {
+        "systems": "systems_7"
+      },
+      "locked": {
         "lastModified": 1681202837,
         "narHash": "sha256-H+Rh19JDwRtpVPAWp64F+rlEtxUWBAQW28eAi3SRSzg=",
         "owner": "numtide",
@@ -203,6 +221,22 @@
         "type": "github"
       }
     },
+    "nixpkgsBun131": {
+      "locked": {
+        "lastModified": 1761594641,
+        "narHash": "sha256-sImk6SJQASDLQo8l+0zWWaBgg7TueLS6lTvdH5pBZpo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1666250dbe4141e4ca8aaf89b40a3a51c2e36144",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1666250dbe4141e4ca8aaf89b40a3a51c2e36144",
+        "type": "github"
+      }
+    },
     "nixpkgsUnstable": {
       "locked": {
         "lastModified": 1765531001,
@@ -219,7 +253,39 @@
         "type": "github"
       }
     },
+    "nixpkgsUnstable_2": {
+      "locked": {
+        "lastModified": 1765186076,
+        "narHash": "sha256-hM20uyap1a0M9d344I692r+ik4gTMyj60cQWO+hAYP8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "addf7cf5f383a3101ecfba091b98d0a1263dc9b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1765363881,
+        "narHash": "sha256-3C3xWn8/2Zzr7sxVBmpc1H1QfxjNfta5IMFe3O9ZEPw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d2b1213bf5ec5e62d96b003ab4b5cbc42abfc0d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1682134069,
         "narHash": "sha256-TnI/ZXSmRxQDt2sjRYK/8j8iha4B4zP2cnQCZZ3vp7k=",
@@ -233,9 +299,26 @@
         "type": "indirect"
       }
     },
-    "opencode": {
+    "oi": {
       "inputs": {
         "flake-utils": "flake-utils_3",
+        "nixpkgs": "nixpkgs_2",
+        "nixpkgsBun131": "nixpkgsBun131",
+        "nixpkgsUnstable": "nixpkgsUnstable_2"
+      },
+      "locked": {
+        "path": "./nixpkgs/home-manager/modules/ts/oi",
+        "type": "path"
+      },
+      "original": {
+        "path": "./nixpkgs/home-manager/modules/ts/oi",
+        "type": "path"
+      },
+      "parent": []
+    },
+    "opencode": {
+      "inputs": {
+        "flake-utils": "flake-utils_4",
         "nixpkgs": [
           "nixpkgsUnstable"
         ]
@@ -259,6 +342,7 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgsUnstable": "nixpkgsUnstable",
+        "oi": "oi",
         "opencode": "opencode",
         "vibetunnel": "vibetunnel",
         "vscode-server": "vscode-server"
@@ -354,6 +438,21 @@
         "type": "github"
       }
     },
+    "systems_7": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "utils": {
       "inputs": {
         "systems": "systems_2"
@@ -374,7 +473,7 @@
     },
     "vibetunnel": {
       "inputs": {
-        "flake-utils": "flake-utils_4",
+        "flake-utils": "flake-utils_5",
         "nixpkgs": [
           "nixpkgsUnstable"
         ]
@@ -391,8 +490,8 @@
     },
     "vscode-server": {
       "inputs": {
-        "flake-utils": "flake-utils_5",
-        "nixpkgs": "nixpkgs_2"
+        "flake-utils": "flake-utils_6",
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1753541826,
