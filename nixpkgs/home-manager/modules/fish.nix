@@ -1,6 +1,5 @@
 { config, pkgs, libs, ... }:
 let
-  gcaiCompletionText = builtins.readFile ./fish-functions/gcai/completion.fish;
   gwtCompletionText = builtins.readFile ./fish-functions/gwt/completion.fish;
   portctlCompletionText = builtins.readFile ./fish-functions/portctl/completion.fish;
 in
@@ -11,7 +10,6 @@ in
       source "$HOME/.grit/bin/env.fish"
     end
   '';
-  home.file.".config/fish/completions/gcai.fish".text = gcaiCompletionText;
   home.file.".config/fish/completions/gwt.fish".text = gwtCompletionText;
   home.file.".config/fish/completions/portctl.fish".text = portctlCompletionText;
 
@@ -164,8 +162,6 @@ in
       fixremotevsc = ''
         ssh $argv 'for DIR in ~/.vscode-server/bin/*; rm $DIR/node; ln -s (which node) $DIR/node; end'
       '';
-
-      gcai = builtins.readFile ./fish-functions/gcai/cli.fish;
 
       _git_fast = ''
         if begin not type -q commitizen; and test -z $argv[1]; end
