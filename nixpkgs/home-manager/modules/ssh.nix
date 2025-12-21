@@ -3,18 +3,19 @@
   programs.ssh = {
 
     enable = true;
-
-    controlMaster = "auto";
-    controlPersist = "8760h";
-    controlPath = "~/.ssh/sockets/%r@%h-%p";
-
-    extraConfig = ''
-      # https://man7.org/linux/man-pages/man5/sshd_config.5.html#:~:text=domain%20socket%20files.-,StreamLocalBindUnlink,-Specifies%20whether%20to
-      StreamLocalBindUnlink yes
-    '';
+    enableDefaultConfig = false;
 
     # https://github.com/nix-community/home-manager/blob/master/modules/programs/ssh.nix
     matchBlocks = {
+      "*" = {
+        controlMaster = "auto";
+        controlPersist = "8760h";
+        controlPath = "~/.ssh/sockets/%r@%h-%p";
+        extraOptions = {
+          # https://man7.org/linux/man-pages/man5/sshd_config.5.html#:~:text=domain%20socket%20files.-,StreamLocalBindUnlink,-Specifies%20whether%20to
+          StreamLocalBindUnlink = "yes";
+        };
+      };
 
 
 

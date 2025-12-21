@@ -35,9 +35,9 @@
 
   # Common Git signing configuration
   programs.git.signing.signByDefault = true;
-  programs.git.extraConfig.user.signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX"; # from 1Password
-  programs.git.extraConfig.gpg.format = "ssh";
-  programs.git.extraConfig.gpg.ssh.program = "/usr/local/bin/op-ssh-sign";
+  programs.git.settings.user.signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBY2vg6JN45hpcl9HH279/ityPEGGOrDjY3KdyulOUmX"; # from 1Password
+  programs.git.settings.gpg.format = "ssh";
+  programs.git.settings.gpg.ssh.program = "/usr/local/bin/op-ssh-sign";
 
   programs.home-manager.enable = true;
 } 

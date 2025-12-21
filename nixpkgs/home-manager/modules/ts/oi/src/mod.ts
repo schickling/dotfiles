@@ -4,41 +4,86 @@ import { Command, Options, Prompt } from '@effect/cli'
 import type { Terminal } from '@effect/platform'
 import { NodeContext, NodeRuntime } from '@effect/platform-node'
 import { Console, Effect, Option } from 'effect'
-import { AiLive, generateCommitMessage } from './ai.ts'
+import { AiCommitLive, AiReviewLive, generateCommitMessage } from './ai.ts'
 import { ReviewAbortedError } from './errors.ts'
-import { commit, ensureGitRepo, ensureStagedChanges, runPreCommitHook } from './git.ts'
-import { reviewChanges, ReviewIssue, ReviewResult } from './review.ts'
+import { commit, ensureGitRepo, ensureStagedChanges, getRecentCommits, getUnstagedDiff, runPreCommitHook } from './git.ts'
+import { reviewChanges, ReviewIssue, ReviewResult, UnstagedSuggestion } from './review.ts'
 
-/** Format a review issue for display */
-const formatIssue = (issue: ReviewIssue): string => {
-  const location = Option.isSome(issue.file)
-    ? Option.isSome(issue.line)
-      ? `${issue.file.value}:${issue.line.value}`
-      : issue.file.value
-    : undefined
+/** Format location string for an issue */
+const formatLocation = (issue: ReviewIssue): string | undefined => {
+  if (Option.isSome(issue.file)) {
+    if (Option.isSome(issue.line)) {
+      return `${issue.file.value}:${issue.line.value}`
+    }
+    return issue.file.value
+  }
+  return undefined
+}
 
-  return location ? `  • [${location}] ${issue.message}` : `  • ${issue.message}`
+/** Format a single issue as a multi-line block */
+const formatIssueBlock = (issue: ReviewIssue, index: number): string => {
+  const lines: string[] = []
+  const location = formatLocation(issue)
+
+  lines.push(`${index}. ${location ?? 'General'}`)
+  lines.push(`   ${issue.message}`)
+
+  if (Option.isSome(issue.suggestion)) {
+    lines.push(`   → ${issue.suggestion.value}`)
+  }
+
+  return lines.join('\n')
+}
+
+/** Format issues as readable sections */
+const formatIssuesList = (issues: readonly ReviewIssue[], label: string): string => {
+  if (issues.length === 0) return ''
+
+  const lines: string[] = []
+  lines.push(`\n${label}\n`)
+
+  for (let i = 0; i < issues.length; i++) {
+    lines.push(formatIssueBlock(issues[i]!, i + 1))
+    if (i < issues.length - 1) lines.push('')
+  }
+
+  return lines.join('\n')
+}
+
+/** Format unstaged suggestions */
+const formatUnstagedSuggestions = (suggestions: readonly UnstagedSuggestion[]): string => {
+  if (suggestions.length === 0) return ''
+
+  const lines: string[] = []
+  lines.push(`\n📁 Related unstaged files to consider:\n`)
+
+  for (const suggestion of suggestions) {
+    lines.push(`  • ${suggestion.file}`)
+    lines.push(`    ${suggestion.reason}`)
+  }
+
+  return lines.join('\n')
 }
 
 /** Display review results to the user */
 const displayReviewResults = (result: ReviewResult): Effect.Effect<void> =>
   Effect.gen(function* () {
     if (result.hasBlocking) {
-      yield* Console.log('\n❌ Blocking issues found:\n')
-      for (const issue of result.blocking) {
-        yield* Console.log(formatIssue(issue))
-      }
+      yield* Console.log(formatIssuesList(result.blocking, '❌ Blocking issues (must fix before commit):'))
     }
 
     if (result.hasWarnings) {
-      yield* Console.log('\n⚠️  Warnings:\n')
-      for (const issue of result.warnings) {
-        yield* Console.log(formatIssue(issue))
-      }
+      yield* Console.log(formatIssuesList(result.warnings, '⚠️  Warnings (consider fixing):'))
     }
 
-    if (result.isClean) {
+    if (result.hasUnstagedSuggestions) {
+      yield* Console.log(formatUnstagedSuggestions(result.unstagedSuggestions))
+    }
+
+    if (result.isClean && !result.hasUnstagedSuggestions) {
       yield* Console.log('✅ No issues found in review')
+    } else if (result.isClean && result.hasUnstagedSuggestions) {
+      yield* Console.log('\n✅ No code issues found')
     }
 
     yield* Console.log('')
@@ -90,9 +135,15 @@ const commitCommand = Command.make('commit', { noVerify, skipReview, context: re
       // Step 2: Review changes (unless skipped)
       if (!skipReview) {
         yield* Console.log('Reviewing staged changes...')
+        const [unstagedDiff, recentCommits] = yield* Effect.all([
+          getUnstagedDiff,
+          getRecentCommits(5),
+        ])
         const review = yield* reviewChanges(diff, {
           context: Option.getOrUndefined(context),
-        })
+          unstagedDiff: unstagedDiff || undefined,
+          recentCommits: recentCommits || undefined,
+        }).pipe(Effect.provide(AiReviewLive))
         yield* displayReviewResults(review)
 
         // Block on blocking issues
@@ -115,7 +166,7 @@ const commitCommand = Command.make('commit', { noVerify, skipReview, context: re
 
       // Step 3: Generate commit message
       yield* Console.log('Generating commit message...')
-      const message = yield* generateCommitMessage(diff)
+      const message = yield* generateCommitMessage(diff).pipe(Effect.provide(AiCommitLive))
 
       yield* Console.log('\nGenerated commit message:')
       yield* Console.log('---')
@@ -137,9 +188,15 @@ const reviewCommand = Command.make('review', { context: reviewContext }).pipe(
       const diff = yield* ensureStagedChanges
 
       yield* Console.log('Reviewing staged changes...')
+      const [unstagedDiff, recentCommits] = yield* Effect.all([
+        getUnstagedDiff,
+        getRecentCommits(5),
+      ])
       const review = yield* reviewChanges(diff, {
         context: Option.getOrUndefined(context),
-      })
+        unstagedDiff: unstagedDiff || undefined,
+        recentCommits: recentCommits || undefined,
+      }).pipe(Effect.provide(AiReviewLive))
       yield* displayReviewResults(review)
 
       if (review.hasBlocking) {
@@ -160,7 +217,6 @@ const cli = Command.run(oi, {
 })
 
 Effect.suspend(() => cli(process.argv)).pipe(
-  Effect.provide(AiLive),
   Effect.provide(NodeContext.layer),
   NodeRuntime.runMain,
 )

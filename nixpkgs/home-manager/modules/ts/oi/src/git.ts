@@ -53,6 +53,54 @@ export const getStagedDiff: Effect.Effect<
   return result.trim()
 }).pipe(Effect.withSpan('git.getStagedDiff'))
 
+/** Gets the unstaged diff (working directory changes not yet staged) */
+export const getUnstagedDiff: Effect.Effect<
+  string,
+  GitCommandError,
+  CommandExecutor.CommandExecutor
+> = Effect.gen(function* () {
+  const command = Command.make('git', 'diff')
+  const result = yield* Command.string(command).pipe(
+    Effect.catchAll((cause) =>
+      Effect.fail(
+        new GitCommandError({
+          cause,
+          command: 'git diff',
+          message: 'Failed to get unstaged diff',
+        }),
+      ),
+    ),
+  )
+  return result.trim()
+}).pipe(Effect.withSpan('git.getUnstagedDiff'))
+
+/** Gets recent commit history (last N commits, one-line format) */
+export const getRecentCommits = (
+  count: number = 5,
+): Effect.Effect<string, GitCommandError, CommandExecutor.CommandExecutor> =>
+  Effect.gen(function* () {
+    const command = Command.make(
+      'git',
+      'log',
+      `--oneline`,
+      `-n`,
+      `${count}`,
+      '--pretty=format:%h %s',
+    )
+    const result = yield* Command.string(command).pipe(
+      Effect.catchAll((cause) =>
+        Effect.fail(
+          new GitCommandError({
+            cause,
+            command: `git log --oneline -n ${count}`,
+            message: 'Failed to get recent commits',
+          }),
+        ),
+      ),
+    )
+    return result.trim()
+  }).pipe(Effect.withSpan('git.getRecentCommits'))
+
 /** Ensures there are staged changes, fails with NoStagedChangesError otherwise */
 export const ensureStagedChanges: Effect.Effect<
   string,
@@ -74,23 +122,24 @@ export const runPreCommitHook: Effect.Effect<
   PreCommitHookError | GitCommandError,
   CommandExecutor.CommandExecutor
 > = Effect.gen(function* () {
-  // Get the git directory to find the hooks
-  const gitDirCommand = Command.make('git', 'rev-parse', '--git-dir')
-  const gitDir = yield* Command.string(gitDirCommand).pipe(
+  // Get the hooks directory using git's own resolution (respects core.hooksPath config)
+  const hooksPathCommand = Command.make('git', 'rev-parse', '--git-path', 'hooks')
+  const hooksDir = yield* Command.string(hooksPathCommand).pipe(
     Effect.map((s) => s.trim()),
     Effect.catchAll((cause) =>
       Effect.fail(
         new GitCommandError({
           cause,
-          command: 'git rev-parse --git-dir',
-          message: 'Failed to get git directory',
+          command: 'git rev-parse --git-path hooks',
+          message: 'Failed to get hooks directory',
         }),
       ),
     ),
   )
 
-  // Check if pre-commit hook exists
-  const hookPath = `${gitDir}/hooks/pre-commit`
+  const hookPath = `${hooksDir}/pre-commit`
+
+  // Check if pre-commit hook exists and is executable
   const testCommand = Command.make('test', '-x', hookPath)
   const hookExists = yield* Command.exitCode(testCommand).pipe(
     Effect.map((code) => code === 0),
@@ -102,8 +151,22 @@ export const runPreCommitHook: Effect.Effect<
     return
   }
 
-  // Run the pre-commit hook
-  const hookCommand = Command.make(hookPath)
+  // Run the pre-commit hook from the repo root
+  const repoRootCommand = Command.make('git', 'rev-parse', '--show-toplevel')
+  const repoRoot = yield* Command.string(repoRootCommand).pipe(
+    Effect.map((s) => s.trim()),
+    Effect.catchAll((cause) =>
+      Effect.fail(
+        new GitCommandError({
+          cause,
+          command: 'git rev-parse --show-toplevel',
+          message: 'Failed to get repo root',
+        }),
+      ),
+    ),
+  )
+
+  const hookCommand = Command.make(hookPath).pipe(Command.workingDirectory(repoRoot))
   const exitCode = yield* Command.exitCode(hookCommand).pipe(
     Effect.catchAll((cause) =>
       Effect.fail(

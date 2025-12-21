@@ -24,7 +24,7 @@
       vim-javascript
       typescript-vim
       rust-vim
-    ] ++ lib.optionals (pkgs.stdenv.system != "aarch64-linux") [
+    ] ++ lib.optionals (pkgs.stdenv.hostPlatform.system != "aarch64-linux") [
       vim-go
     ];
 

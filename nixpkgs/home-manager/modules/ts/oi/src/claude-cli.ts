@@ -17,6 +17,37 @@ export interface ClaudeCliOptions {
   readonly allowedTools?: string
 }
 
+const formatCommandForDisplay = (command: string, args: readonly string[]): string => {
+  const parts = [command, ...args].map((part) => {
+    if (part.length === 0) return '\'\''
+    if (/^[A-Za-z0-9_./:-]+$/.test(part)) return part
+    return JSON.stringify(part)
+  })
+
+  return parts.join(' ')
+}
+
+const truncateForDisplay = (text: string, maxChars: number): string => {
+  const trimmed = text.trim()
+  if (trimmed.length <= maxChars) return trimmed
+  return `${trimmed.slice(0, maxChars)}\n… (truncated ${trimmed.length - maxChars} chars)`
+}
+
+const extractClaudeJsonError = (stdout: string): string | undefined => {
+  const lines = stdout.trim().split('\n').filter((line) => line.trim().length > 0)
+  for (const line of lines) {
+    try {
+      const parsed = JSON.parse(line) as ClaudeCliJsonOutput
+      if (parsed.type === 'result' && parsed.subtype === 'error') {
+        return parsed.result ?? 'Unknown error'
+      }
+    } catch {
+      // ignore non-JSON lines
+    }
+  }
+  return undefined
+}
+
 /** Converts Effect AI prompt to a string for claude CLI */
 const promptToString = (
   prompt: Prompt.Prompt,
@@ -110,6 +141,7 @@ export const make = (
         }
 
         const command = Command.make('claude', ...args).pipe(Command.stdin('pipe'))
+        const commandDisplay = formatCommandForDisplay('claude', args)
 
         const result = yield* Effect.scoped(
           Effect.gen(function* () {
@@ -120,21 +152,47 @@ export const make = (
               Stream.run(process.stdin),
             )
 
-            const stdout = yield* Stream.runCollect(
-              Stream.decodeText(process.stdout),
-            ).pipe(Effect.map((chunks) => Array.from(chunks).join('')))
+            const collectStdout = Stream.runCollect(Stream.decodeText(process.stdout)).pipe(
+              Effect.map((chunks) => Array.from(chunks).join('')),
+            )
 
-            const exitCode = yield* process.exitCode
+            const collectStderr = Stream.runCollect(Stream.decodeText(process.stderr)).pipe(
+              Effect.map((chunks) => Array.from(chunks).join('')),
+            )
 
-            return { stdout, exitCode }
+            const [stdout, stderr, exitCode] = yield* Effect.all(
+              [collectStdout, collectStderr, process.exitCode],
+              { concurrency: 'unbounded' },
+            )
+
+            return { stdout, stderr, exitCode }
           }),
         ).pipe(Effect.mapError(wrapPlatformError))
 
         if (result.exitCode !== 0) {
+          const claudeError = extractClaudeJsonError(result.stdout)
+          const stderrDisplay =
+            result.stderr.trim().length > 0
+              ? `stderr:\n${truncateForDisplay(result.stderr, 20_000)}`
+              : undefined
+          const stdoutDisplay =
+            result.stdout.trim().length > 0
+              ? `stdout:\n${truncateForDisplay(result.stdout, 20_000)}`
+              : undefined
+
+          const parts = [
+            `Claude CLI exited with code ${result.exitCode}.`,
+            `Command: ${commandDisplay}`,
+            claudeError ? `Claude error: ${claudeError}` : undefined,
+            stderrDisplay,
+            stdoutDisplay,
+            'Hint: run `claude -p "ping"` to verify the CLI works outside oi.',
+          ].filter((part): part is string => part !== undefined)
+
           return yield* new AiError.UnknownError({
             module: 'claude-cli',
             method: 'generateText',
-            description: `Claude CLI exited with code ${result.exitCode}`,
+            description: parts.join('\n\n'),
           })
         }
 

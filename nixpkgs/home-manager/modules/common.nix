@@ -1,4 +1,7 @@
 { config, pkgs, pkgsUnstable, lib, codex, opencode, oi, ... }:
+let
+  hostSystem = pkgs.stdenv.hostPlatform.system;
+in
 {
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -32,16 +35,16 @@
     lsd
     tree
     # better du alternative
-    du-dust
+    dust
     ripgrep
     graphviz
 
     ollama
 
     pkgsUnstable.claude-code
-    codex.packages.${pkgs.system}.default
-    opencode.packages.${pkgs.system}.default
-    oi.packages.${pkgs.system}.default
+    codex.packages.${hostSystem}.default
+    opencode.packages.${hostSystem}.default
+    oi.packages.${hostSystem}.default
 
     httpstat
     curlie
@@ -92,11 +95,10 @@
 
     git
     # github cli
-    gitAndTools.gh
+    gh
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils # provides `dd` with --status=progress
-    wifi-password
 
     pinentry_mac # needed for GPG (get rid of this soon)
   ] ++ lib.optionals stdenv.isLinux [
@@ -114,6 +116,20 @@
 
   programs.dircolors = {
     enable = true;
+  };
+
+  # Disable HM manpages to avoid the upstream options.json builtins.toFile warning; re-enable once fixed or if we need `man home-configuration.nix` again. https://github.com/nix-community/home-manager/issues/7935
+  manual.manpages.enable = false;
+
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      "true-color" = "always";
+      side-by-side = true;
+      # Delta assumes a light palette otherwise and the colors wash out in dark terminals.
+      dark = true;
+    };
   };
 
   # Make npm use XDG-configured user config file

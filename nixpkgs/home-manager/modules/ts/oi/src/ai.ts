@@ -7,6 +7,8 @@ import * as ClaudeCli from './claude-cli.ts'
 import { AiGenerationError, EmptyCommitMessageError } from './errors.ts'
 
 const SYSTEM_PROMPT = `You are a senior engineer writing a git commit message for the staged diff below. Produce text in this exact format: A single short first line summary (<=72 chars), then a blank line, then a concise list of semantic changes (bullets or short paragraphs). Do not add quotes, prefixes, git trailers, or commentary. Only describe changes present in the staged diff.`
+const CLAUDE_REVIEW_MODEL = 'opus'
+const CLAUDE_COMMIT_MODEL = 'sonnet'
 
 /** Generates a commit message from a diff using AI */
 export const generateCommitMessage = (
@@ -61,7 +63,12 @@ export const OpenAiLive = Layer.unwrapEffect(
 ).pipe(Layer.provide(FetchHttpClient.layer))
 
 /** Layer providing Claude CLI as the LanguageModel */
-export const ClaudeCliLive = ClaudeCli.layer({ model: 'sonnet' }).pipe(
+export const ClaudeCliReviewLive = ClaudeCli.layer({ model: CLAUDE_REVIEW_MODEL }).pipe(
+  Layer.provide(NodeCommandExecutor.layer),
+)
+
+/** Layer providing Claude CLI as the LanguageModel */
+export const ClaudeCliCommitLive = ClaudeCli.layer({ model: CLAUDE_COMMIT_MODEL }).pipe(
   Layer.provide(NodeCommandExecutor.layer),
 )
 
@@ -69,7 +76,7 @@ export const ClaudeCliLive = ClaudeCli.layer({ model: 'sonnet' }).pipe(
  * Smart layer that uses OpenAI if OPENAI_API_KEY is set, otherwise Claude CLI.
  * Prefers Claude CLI since it doesn't require separate API key management.
  */
-export const AiLive = Layer.unwrapEffect(
+export const AiReviewLive = Layer.unwrapEffect(
   Effect.gen(function* () {
     const openAiKey = yield* Config.option(Config.redacted('OPENAI_API_KEY'))
 
@@ -77,6 +84,22 @@ export const AiLive = Layer.unwrapEffect(
       return OpenAiLive
     }
 
-    return ClaudeCliLive
+    return ClaudeCliReviewLive
+  }),
+)
+
+/**
+ * Smart layer that uses OpenAI if OPENAI_API_KEY is set, otherwise Claude CLI.
+ * Prefers Claude CLI since it doesn't require separate API key management.
+ */
+export const AiCommitLive = Layer.unwrapEffect(
+  Effect.gen(function* () {
+    const openAiKey = yield* Config.option(Config.redacted('OPENAI_API_KEY'))
+
+    if (Option.isSome(openAiKey)) {
+      return OpenAiLive
+    }
+
+    return ClaudeCliCommitLive
   }),
 )
