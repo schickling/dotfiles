@@ -17,6 +17,15 @@ in
     enable = true;
     interactiveShellInit = ''
       set PATH /nix/var/nix/profiles/default/bin ~/.cargo/bin ~/.deno/bin $GOPATH/bin ~/.npm-global-packages/bin $PATH
+      if test -n "$TMPDIR"; and not test -d "$TMPDIR"
+        set -e TMPDIR
+      end
+      if test -z "$TMPDIR"
+        set tmpdir (getconf DARWIN_USER_TEMP_DIR 2>/dev/null)
+        if test -n "$tmpdir"
+          set -x TMPDIR $tmpdir
+        end
+      end
 
       # Setup terminal, and turn on colors
       if test -z "$TERM"

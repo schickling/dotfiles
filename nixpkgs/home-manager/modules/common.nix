@@ -96,6 +96,7 @@ in
     git
     # github cli
     gh
+    jujutsu
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils # provides `dd` with --status=progress
