@@ -13,6 +13,7 @@
     ./zellij.nix
     ./zellij-web.nix
     ./claude-direnv-workaround.nix
+    ./claude.nix
   ];
 
   home.stateVersion = "20.09";

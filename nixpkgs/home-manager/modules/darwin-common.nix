@@ -14,6 +14,7 @@
     ./ssh.nix
     ./zellij.nix
     ./claude-direnv-workaround.nix
+    ./claude.nix
   ];
 
   programs.ssh.extraConfig = ''
