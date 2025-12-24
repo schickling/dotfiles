@@ -27,7 +27,7 @@
 
           outputHashAlgo = "sha256";
           outputHashMode = "recursive";
-          outputHash = "sha256-egvTFqHZEZUtVKem4mTErq1GApHhVi/U6gnzJzM45SQ=";
+          outputHash = "sha256-D+m+MDQf85RTpAfzQbnE7sAj+Uk07r/Sm4E1oWHa9Nc=";
 
           buildPhase = ''
             export HOME=$(mktemp -d)
@@ -37,6 +37,11 @@
           installPhase = ''
             mkdir -p $out
             cp -r node_modules $out/
+
+            # bun leaves a dangling .bin/download-msgpackr-prebuilds symlink because the
+            # msgpackr optional dependency resolves to the scoped platform package only.
+            # Nix's fixup phase rejects broken links, so prune them ahead of time.
+            find -L $out -xtype l -delete
           '';
         };
       in
