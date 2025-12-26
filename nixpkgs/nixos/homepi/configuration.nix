@@ -87,11 +87,15 @@
   };
 
   # Machine-specific user groups (extends common user from server-common.nix)
-  users.users.schickling.extraGroups = [
-    "wheel"
-    "docker"
-    # "podman"
-  ];
+  users.users.schickling = {
+    extraGroups = [
+      "wheel"
+      "docker"
+      # "podman"
+    ];
+    # Allow console login with password (change after first login!)
+    initialPassword = "nixos";
+  };
 
   # Machine-specific Docker configuration (extends common Docker from server-common.nix)
   # virtualisation.docker.extraOptions = ''--iptables=false --ip6tables=false'';
