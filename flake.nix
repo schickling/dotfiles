@@ -20,6 +20,10 @@
       url = "path:./flakes/vibetunnel";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
+    amp = {
+      url = "path:./flakes/amp";
+      inputs.nixpkgs.follows = "nixpkgsUnstable";
+    };
     codex = {
       url = "path:./flakes/codex";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
@@ -34,7 +38,7 @@
     };
   };
 
-  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel, codex, opencode, oi }:
+  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel, amp, codex, opencode, oi }:
     let
       # Import builders and utilities
       builders = import ./lib/builders.nix { inherit inputs; };

@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, lib, codex, opencode, oi, ... }:
+{ config, pkgs, pkgsUnstable, lib, amp, codex, opencode, oi, ... }:
 let
   hostSystem = pkgs.stdenv.hostPlatform.system;
 in
@@ -42,6 +42,7 @@ in
     ollama
 
     pkgsUnstable.claude-code
+    amp.packages.${hostSystem}.default
     codex.packages.${hostSystem}.default
     opencode.packages.${hostSystem}.default
     oi.packages.${hostSystem}.default

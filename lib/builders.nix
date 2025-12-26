@@ -2,7 +2,7 @@
 
 let
   # Centralized list of allowed unfree packages
-  allowedUnfreePackages = [ "1password" "1password-cli" "claude-code" ];
+  allowedUnfreePackages = [ "1password" "1password-cli" "claude-code" "amp" ];
   
   # Helper function to create unfree predicate
   mkUnfreePredicate = lib: pkg: builtins.elem (lib.getName pkg) allowedUnfreePackages;
@@ -28,7 +28,7 @@ in
     inherit modules;
     extraSpecialArgs = {
       pkgsUnstable = mkPkgsUnstable system;
-      inherit (inputs) vibetunnel codex opencode oi;
+      inherit (inputs) vibetunnel amp codex opencode oi;
     };
   };
 
@@ -48,7 +48,7 @@ in
         home-manager.useUserPackages = true;
         home-manager.users.schickling = import homeManagerPath;
         home-manager.extraSpecialArgs = {
-          inherit (inputs) nixpkgs vibetunnel codex opencode oi;
+          inherit (inputs) nixpkgs vibetunnel amp codex opencode oi;
           pkgsUnstable = mkPkgsUnstable system;
         };
       }
@@ -75,7 +75,7 @@ in
         home-manager.backupFileExtension = "backup";
         home-manager.extraSpecialArgs = {
           pkgsUnstable = mkPkgsUnstable system;
-          inherit (inputs) vibetunnel codex opencode oi;
+          inherit (inputs) vibetunnel amp codex opencode oi;
         };
         home-manager.users.${userName} = import homeManagerPath;
       }
