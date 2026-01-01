@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, lib, amp, codex, opencode, oi, ... }:
+{ config, pkgs, pkgsUnstable, lib, amp, codex, opencode, oi, op-secret-cache, ... }:
 let
   hostSystem = pkgs.stdenv.hostPlatform.system;
 in
@@ -42,10 +42,15 @@ in
     ollama
 
     pkgsUnstable.claude-code
+  ] ++ lib.optionals (hostSystem != "aarch64-linux") [
+    # AI coding tools - skip on aarch64-linux due to cross-compilation issues
     amp.packages.${hostSystem}.default
     codex.packages.${hostSystem}.default
     opencode.packages.${hostSystem}.default
     oi.packages.${hostSystem}.default
+    # 1Password secret cache - skip on aarch64-linux due to cross-compilation issues
+    op-secret-cache.packages.${hostSystem}.default
+  ] ++ [
 
     httpstat
     curlie
