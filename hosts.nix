@@ -4,7 +4,7 @@
     mbp2025 = {
       system = "aarch64-darwin";
       configPath = ./nixpkgs/darwin/darwin-shared.nix;
-      homeManagerPath = ./nixpkgs/home-manager/modules/darwin-common.nix;
+      homeManagerPath = ./nixpkgs/home-manager/mbp2025.nix;
     };
     
     mbp2021 = {
