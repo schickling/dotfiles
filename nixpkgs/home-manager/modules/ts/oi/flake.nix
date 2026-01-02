@@ -27,7 +27,7 @@
 
           outputHashAlgo = "sha256";
           outputHashMode = "recursive";
-          outputHash = "sha256-mh1iypGEtZKJQnMlujNL4Er7Q4AB7ED7OCvczsB9m4k=";
+          outputHash = "sha256-D+m+MDQf85RTpAfzQbnE7sAj+Uk07r/Sm4E1oWHa9Nc=";
 
           buildPhase = ''
             export HOME=$(mktemp -d)

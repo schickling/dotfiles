@@ -15,24 +15,24 @@
             pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "amp" ];
         };
 
-        version = "0.0.1766750480-gd79e9b";
+        version = "0.0.1767386224-g46ed64";
 
         sources = {
           x86_64-linux = {
             url = "https://storage.googleapis.com/amp-public-assets-prod-0/cli/${version}/amp-linux-x64";
-            sha256 = "0gidqbpgza3xqywdk5w7aw6yx49qb72xkixccalcmn1h30sxcksh";
+            sha256 = "1pik6h17av97k4rrmdcgc9n622nq8cpk9qciwy43s0kyawsb3106";
           };
           aarch64-linux = {
             url = "https://storage.googleapis.com/amp-public-assets-prod-0/cli/${version}/amp-linux-arm64";
-            sha256 = "0ybaf4yx5k5m9vis3mh94lzx2w3pajjx53z9ln1fdlb1sibbcxda";
+            sha256 = "0s2r013gwp5p7svqik4byqmh8j2qz1rv9vhy0hffck4dh3hyrxvf";
           };
           x86_64-darwin = {
             url = "https://storage.googleapis.com/amp-public-assets-prod-0/cli/${version}/amp-darwin-x64";
-            sha256 = "0ls182h7zsji1wrjy8fanbqczph0bgsb8akd7sn9m4spqw23yvcl";
+            sha256 = "0xdqd8fd95y5i0bgwwxznrw9xrwaryrrr4yzl2kb111sfd999s4n";
           };
           aarch64-darwin = {
             url = "https://storage.googleapis.com/amp-public-assets-prod-0/cli/${version}/amp-darwin-arm64";
-            sha256 = "1ck1f275sxjv3y77y0pp8s1jnm35x1m61vlf77ibfwbgb2a60z8f";
+            sha256 = "0xjiwjx97zqj1zsziy5l0k8kry13y5bak5hw750375a0i8z1z26w";
           };
         };
 
@@ -55,8 +55,7 @@
             runHook preInstall
 
             mkdir -p $out/bin
-            cp $src $out/bin/amp
-            chmod +x $out/bin/amp
+            install -m 0755 $src $out/bin/amp
 
             ${pkgs.lib.optionalString pkgs.stdenv.isLinux ''
               if ${pkgs.patchelf}/bin/patchelf --print-interpreter $out/bin/amp >/dev/null 2>&1; then
