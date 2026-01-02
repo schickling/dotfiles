@@ -20,6 +20,10 @@
       url = "path:./flakes/vibetunnel";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
+    amp = {
+      url = "path:./flakes/amp";
+      inputs.nixpkgs.follows = "nixpkgsUnstable";
+    };
     codex = {
       url = "path:./flakes/codex";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
@@ -36,9 +40,13 @@
       url = "path:./nixpkgs/home-manager/modules/ts/oi";
       # Don't use follows - oi has its own pinned nixpkgsBun131 for compile
     };
+    op-secret-cache = {
+      url = "path:./nixpkgs/home-manager/modules/ts/op-secret-cache";
+      # Don't use follows - has its own pinned nixpkgsBun131 for compile
+    };
   };
 
-  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel, codex, opencode, oi, attic }:
+  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel, amp, codex, opencode, oi, attic, op-secret-cache }:
     let
       # Import builders and utilities
       builders = import ./lib/builders.nix { inherit inputs; };

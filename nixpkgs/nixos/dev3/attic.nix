@@ -3,6 +3,7 @@
 {
   services.atticd = {
     enable = true;
+    package = pkgsUnstable.attic-server;
     environmentFile = "/run/atticd/env";
 
     settings = {

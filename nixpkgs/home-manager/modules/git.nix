@@ -19,6 +19,9 @@
       rerere.enabled = true;
       # Automatically stage resolved conflicts when rerere applies a resolution
       rerere.autoupdate = true;
+
+      # Allow HTTPS submodules in CI (e.g. Vercel) while keeping SSH locally.
+      url."git@github.com:".insteadOf = "https://github.com/";
     };
 
     lfs = {

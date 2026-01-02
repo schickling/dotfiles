@@ -1,0 +1,62 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+homeassistant:
+  name: Schickling Eggisried
+  latitude: 47.959236
+  longitude: 10.298256
+  elevation: 669
+  unit_system: metric
+  external_url: http://homepi:8123
+  internal_url: http://192.168.1.153:8123
+
+http:
+  use_x_forwarded_for: true
+  # IP Address 172.21.0.3 is a private IP address.
+  # Private IP addresses are used inside a local area network (LAN) and are not visible on the internet.
+  # Private IP addresses are defined in RFC 1918 (IPv4) and RFC 4193 (IPv6).
+  trusted_proxies:
+    - 172.21.0.3
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+sensor:
+  - platform: command_line
+    name: CPU Temperature
+    command: 'cat /sys/class/thermal/thermal_zone0/temp'
+    unit_of_measurement: '°C'
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+light:
+  - platform: group
+    name: Bedroom Lights (All)
+    entities:
+      - light.bulb_top_1
+      - light.bulb_top_2
+      - light.bulb_stairs_1
+      - light.bulb_stairs_2
+  - platform: group
+    name: Bedroom Lights (Top)
+    entities:
+      - light.bulb_top_1
+      - light.bulb_top_2
+  - platform: group
+    name: Bedroom Lights (Stairs)
+    entities:
+      - light.bulb_stairs_1
+      - light.bulb_stairs_2
+
+lovelace:
+  mode: yaml
+  resources:
+    - url: /local/mini-media-player-bundle.js?v=1.12.1
+      type: module
+    - url: /local/weather-chart-card.js?v=1.2.0
+      type: module

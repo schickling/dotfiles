@@ -2,21 +2,34 @@
 
 let
   # Centralized list of allowed unfree packages
-  allowedUnfreePackages = [ "1password" "1password-cli" "claude-code" ];
-  
+  allowedUnfreePackages = [ "1password" "1password-cli" "claude-code" "amp" ];
+
   # Helper function to create unfree predicate
   mkUnfreePredicate = lib: pkg: builtins.elem (lib.getName pkg) allowedUnfreePackages;
-  
+
+  # Overlay to fix packages that fail to build under binfmt/QEMU emulation
+  binfmtFixesOverlay = final: prev: {
+    # Fish tests fail on aarch64-linux when built via binfmt/QEMU emulation on x86_64.
+    # Timing-sensitive pexpect tests (torn_escapes.py, noshebang.fish) fail under QEMU.
+    # Tracking issue: https://github.com/NixOS/nixpkgs/issues/475953
+    # Remove this overlay once the issue is closed.
+    fish = prev.fish.overrideAttrs (old: {
+      doCheck = false;
+    });
+  };
+
   # Helper function to create pkgs with unfree predicate
   mkPkgs = system: import inputs.nixpkgs {
     inherit system;
     config.allowUnfreePredicate = mkUnfreePredicate inputs.nixpkgs.lib;
+    overlays = [ binfmtFixesOverlay ];
   };
-  
+
   # Helper function to create pkgsUnstable with unfree predicate
   mkPkgsUnstable = system: import inputs.nixpkgsUnstable {
     inherit system;
     config.allowUnfreePredicate = mkUnfreePredicate inputs.nixpkgs.lib;
+    overlays = [ binfmtFixesOverlay ];
   };
 in
 {
@@ -28,7 +41,7 @@ in
     inherit modules;
     extraSpecialArgs = {
       pkgsUnstable = mkPkgsUnstable system;
-      inherit (inputs) vibetunnel codex opencode oi;
+      inherit (inputs) vibetunnel amp codex opencode oi op-secret-cache;
     };
   };
 
@@ -48,7 +61,7 @@ in
         home-manager.useUserPackages = true;
         home-manager.users.schickling = import homeManagerPath;
         home-manager.extraSpecialArgs = {
-          inherit (inputs) nixpkgs vibetunnel codex opencode oi;
+          inherit (inputs) nixpkgs vibetunnel amp codex opencode oi op-secret-cache;
           pkgsUnstable = mkPkgsUnstable system;
         };
       }
@@ -75,7 +88,7 @@ in
         home-manager.backupFileExtension = "backup";
         home-manager.extraSpecialArgs = {
           pkgsUnstable = mkPkgsUnstable system;
-          inherit (inputs) vibetunnel codex opencode oi;
+          inherit (inputs) vibetunnel amp codex opencode oi op-secret-cache;
         };
         home-manager.users.${userName} = import homeManagerPath;
       }

@@ -23,7 +23,7 @@ Layout
   - `ssh.nix` (match blocks; 1Password agent)
   - `macos/karabiner.nix`
 - `nixpkgs/nixos/` — NixOS hosts (e.g. `dev3`, `homepi`)
-- `flakes/` — local inputs (codex, opencode, vibetunnel)
+- `flakes/` — local inputs (amp, codex, opencode, vibetunnel)
 - `plan.md` — ongoing migration checklist
 
 Policies

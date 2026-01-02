@@ -1,5 +1,5 @@
 {
-  description = "oi - AI-assisted git commit CLI built with Effect";
+  description = "op-secret-cache - Cache 1Password secrets locally for faster access";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -19,7 +19,7 @@
 
         # Fixed-output derivation to fetch dependencies
         deps = pkgs.stdenv.mkDerivation {
-          pname = "oi-deps";
+          pname = "op-secret-cache-deps";
           version = "0.1.0";
           src = ./.;
 
@@ -27,7 +27,9 @@
 
           outputHashAlgo = "sha256";
           outputHashMode = "recursive";
-          outputHash = "sha256-mh1iypGEtZKJQnMlujNL4Er7Q4AB7ED7OCvczsB9m4k=";
+          # NOTE: Update this hash when dependencies change
+          # Run: nix build .#deps --rebuild 2>&1 | grep 'got:'
+          outputHash = "sha256-PWxmEjd9sVEh7pZZe9u2AX9uF60kiMaI3iQ8Ndi3ecU=";
 
           buildPhase = ''
             export HOME=$(mktemp -d)
@@ -38,9 +40,7 @@
             mkdir -p $out
             cp -r node_modules $out/
 
-            # bun leaves a dangling .bin/download-msgpackr-prebuilds symlink because the
-            # msgpackr optional dependency resolves to the scoped platform package only.
-            # Nix's fixup phase rejects broken links, so prune them ahead of time.
+            # bun leaves dangling symlinks for optional dependencies
             find -L $out -xtype l -delete
           '';
         };
@@ -53,14 +53,15 @@
           ];
         };
 
+        packages.deps = deps;
+
         packages.default = pkgs.stdenv.mkDerivation {
-          pname = "oi";
+          pname = "op-secret-cache";
           version = "0.1.0";
           src = ./.;
 
           nativeBuildInputs = [
             # Use bun 1.3.1 for compile - later versions have sandbox issues
-            # See: https://github.com/oven-sh/bun/issues/24645
             pkgsBun131.bun
             pkgsUnstable.oxlint
           ];
@@ -82,21 +83,21 @@
 
             # Build standalone binary
             echo "Building standalone binary with bun $(bun --version)..."
-            bun build src/mod.ts --compile --outfile=oi
+            bun build src/mod.ts --compile --outfile=op-secret-cache
 
             # Final verification
-            if [ ! -s oi ]; then
+            if [ ! -s op-secret-cache ]; then
               echo "ERROR: Failed to create binary"
               exit 1
             fi
 
-            echo "Binary created: $(ls -lh oi)"
+            echo "Binary created: $(ls -lh op-secret-cache)"
 
-            # Generate shell completions (suppress log output)
+            # Generate shell completions
             echo "Generating shell completions..."
-            ./oi --log-level none --completions fish > oi.fish
-            ./oi --log-level none --completions bash > oi.bash
-            ./oi --log-level none --completions zsh > _oi
+            ./op-secret-cache --log-level none --completions fish > op-secret-cache.fish
+            ./op-secret-cache --log-level none --completions bash > op-secret-cache.bash
+            ./op-secret-cache --log-level none --completions zsh > _op-secret-cache
           '';
 
           installPhase = ''
@@ -105,18 +106,18 @@
             mkdir -p $out/share/bash-completion/completions
             mkdir -p $out/share/zsh/site-functions
 
-            cp oi $out/bin/oi
-            chmod +x $out/bin/oi
+            cp op-secret-cache $out/bin/op-secret-cache
+            chmod +x $out/bin/op-secret-cache
 
             # Install shell completions
-            cp oi.fish $out/share/fish/vendor_completions.d/oi.fish
-            cp oi.bash $out/share/bash-completion/completions/oi
-            cp _oi $out/share/zsh/site-functions/_oi
+            cp op-secret-cache.fish $out/share/fish/vendor_completions.d/op-secret-cache.fish
+            cp op-secret-cache.bash $out/share/bash-completion/completions/op-secret-cache
+            cp _op-secret-cache $out/share/zsh/site-functions/_op-secret-cache
           '';
 
           meta = {
-            description = "AI-assisted git commit CLI built with Effect";
-            mainProgram = "oi";
+            description = "Cache 1Password secrets locally for faster access";
+            mainProgram = "op-secret-cache";
           };
         };
       });

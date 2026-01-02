@@ -7,3 +7,16 @@
 tmp*
 result
 result.closure.lz4
+node_modules
+
+# Unpoller local data/logs
+prometheus-data/
+grafana-data/
+grafana-logs/
+grafana-plugins/
+unpoller.log
+unpoller.err.log
+prometheus.log
+prometheus.err.log
+grafana.log
+grafana.err.log
