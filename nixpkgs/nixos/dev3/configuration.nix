@@ -10,6 +10,7 @@ in
     ../configuration-common.nix
     ../server-common.nix
     ../../modules/onepassword.nix
+    ./attic.nix
   ];
   # Use systemd-boot as the boot loader with UEFI support.
   # systemd-boot is more reliable than GRUB for UEFI on newer servers like AX102.

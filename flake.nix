@@ -28,13 +28,17 @@
       url = "path:./flakes/opencode";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
+    attic = {
+      url = "github:zhaofengli/attic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     oi = {
       url = "path:./nixpkgs/home-manager/modules/ts/oi";
       # Don't use follows - oi has its own pinned nixpkgsBun131 for compile
     };
   };
 
-  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel, codex, opencode, oi }:
+  outputs = inputs @ { self, flake-utils, darwin, vscode-server, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager, vibetunnel, codex, opencode, oi, attic }:
     let
       # Import builders and utilities
       builders = import ./lib/builders.nix { inherit inputs; };
@@ -43,6 +47,7 @@
       # Helper to resolve extra modules
       resolveExtraModules = extraModules: map (name: 
         if name == "vscode-server" then vscode-server.nixosModule
+        else if name == "attic" then attic.nixosModules.atticd
         else name
       ) extraModules;
     in

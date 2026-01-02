@@ -32,7 +32,7 @@
       system = "x86_64-linux";
       configPath = ./nixpkgs/nixos/dev3/configuration.nix;
       homeManagerPath = ./nixpkgs/home-manager/dev3.nix;
-      extraModules = [ "vscode-server" ];
+      extraModules = [ "vscode-server" "attic" ];
       deploy = {
         hostname = "dev3";
         sshUser = "root";
