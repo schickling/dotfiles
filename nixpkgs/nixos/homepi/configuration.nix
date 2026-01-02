@@ -3,6 +3,8 @@
 {
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
+    ./home-assistant.nix
+    ./matterbridge.nix
     # ./tailscale.nix
     ../configuration-common.nix
     ../server-common.nix
@@ -13,7 +15,7 @@
     # TODO re-enable when fixed https://github.com/NixOS/nixpkgs/issues/154163
     # kernelPackages = pkgs.linuxPackages_rpi4;
 
-    tmpOnTmpfs = true;
+    tmp.useTmpfs = true;
     initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
     # ttyAMA0 is the serial console broken out to the GPIO
     kernelParams = [
@@ -53,12 +55,14 @@
       # enable = false; # I've found it's easiest to disable the firewall during Homekit pairing
 
       allowedUDPPorts = [
-        5353 # Needed for Homekit Secure Video - (Bonjour Multicast DNS - https://support.apple.com/en-us/HT202944)
+        5353 # mDNS (Bonjour) for device discovery
+        5540 # Matter protocol
       ];
       allowedTCPPorts = [
         1400 # Sonos https://www.home-assistant.io/integrations/sonos/#network-requirements
-        21063 # Homekit Bridge HA https://www.home-assistant.io/integrations/homekit/#port
+        5540 # Matter protocol
         8123 # Home Assistant
+        8283 # Matterbridge web UI
       ];
       allowedTCPPortRanges = [
         { from = 30000; to = 50000; } # Random port range of Scrypted https://github.com/koush/scrypted/blob/a511130c2934b0a51b16bd1297df972248cc1619/plugins/homekit/src/hap-utils.ts#L100
